@@ -1,49 +1,51 @@
 package sebastienstdenis.scheduleBuilder;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.HashMap;
-import java.util.Properties;
 
+// Builder is used to compute and return a list of valid 
+//    Schedules based on the courses provided to it 
 public class Builder {
-	private ArrayList<Section> sections;
+	private ArrayList<Section> allSections;
 	private Calendar cal;
-	private ArrayList<Schedule> schedules;
-	private HashMap<String, Integer> assocNums;
-	private String[] ignoreSecs; // must be sorted in ascending order
-	private boolean omitClosed;
+	private HashMap<String, Integer> assocNums; // map of Course names to it's current assoc_number being used
 	
-	private String baseURL;
-	private String apiKey;
+	private ArrayList<Schedule> validSchedules;
+
+	private String[] ignoredSections; // Section types to ignore (ex: "TUT")
+	private boolean omitClosed; // don't include schedules that are closed/full
 	
 	public Builder() {
 		resetBuilder();
-		
 	}
 	
-	void resetBuilder() {
-		sections = new ArrayList<Section>();
+	// resetBuilder resets the fields of the Builder object to its post-initialization state
+	private void resetBuilder() {
+		allSections = new ArrayList<Section>();
 		cal = new Calendar();
-		schedules = new ArrayList<Schedule>();
 		assocNums = new HashMap<String, Integer>();
-		ignoreSecs = null;
+		
+		validSchedules = new ArrayList<Schedule>();
+		
+		ignoredSections = null;
 		omitClosed = false;
 	}
 	
-	void nextSection(ListIterator<Section> secIt) {
+	// nextSection adds all valid schedules to validSchedules starting at the Section
+	//    pointed to by secIt and ahead (calls itself recursively and with recursion)
+	private void nextSection(ListIterator<Section> secIt) {
 		if (secIt.hasNext()) {
 			Section sec = secIt.next();
 			
-			int foundPos = Arrays.binarySearch(ignoreSecs, sec.getClassType());
-			if (foundPos >= 0 && foundPos < ignoreSecs.length && ignoreSecs[foundPos].equals(sec.getClassType())) {
-				nextSection(sections.listIterator(secIt.nextIndex()));
+			int foundPos = Arrays.binarySearch(ignoredSections, sec.getType());
+			if (foundPos >= 0 && foundPos < ignoredSections.length && ignoredSections[foundPos].equals(sec.getType())) {
+				nextSection(allSections.listIterator(secIt.nextIndex()));
 				return;
 			}
 			
-			int compLen = sec.componentsLen();
+			int compLen = sec.componentsSize();
 			for (int pos = 0; pos < compLen; ++pos) {
 				Component comp = sec.getComponent(pos);
 				
@@ -53,6 +55,7 @@ public class Builder {
 				
 				String course = comp.getName();
 				int assocClass = comp.getAssocClass();
+				// if there is a value in assocNums for this class, comp's assocClass must match it or be 99
 				if (assocNums.containsKey(course) && assocClass != 99 && assocClass != assocNums.get(course)) {
 						continue;
 				}				
@@ -64,69 +67,52 @@ public class Builder {
 						addedAssoc = true;
 					}
 					
-					nextSection(sections.listIterator(secIt.nextIndex()));
-					cal.removeComponent(comp);
+					// this will return after eventually reaching the end of allSections or
+					//    having no more possibilities.  Afterwards, we remove the
+					//    just-added component and try again with the next.
+					nextSection(allSections.listIterator(secIt.nextIndex()));
 					
+					cal.removeComponent(comp); // backtracking
 					if (addedAssoc) {
 						assocNums.remove(course);
 					}
 				}
 			}			
-		} else {
-			schedules.add(cal.makeSchedule());
+		} else { // no more Sections, add calendar to validSchedules
+			validSchedules.add(cal.makeSchedule());
 		}
 	}
 	
-	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoreSecs, boolean omitClosed) {
+	// getSchedules returns a list of all possible schedules based on classes, term, ignoredSections, and omitClosed
+	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections, boolean omitClosed) {
 		resetBuilder();
-		this.ignoreSecs = ignoreSecs; 
-		Arrays.sort(ignoreSecs);
+		this.ignoredSections = ignoredSections; 
+		Arrays.sort(ignoredSections);
 		this.omitClosed = omitClosed;
 		
 		for (int pos = 0; pos < classes.length; ++pos) {
 			try {
-				sections.addAll(UWAPIClient.getSections(classes[pos], term, baseURL, apiKey));
+				allSections.addAll(UWAPIClient.getSections(classes[pos], term));
 			} catch (UWAPIException e) {
 				return new ArrayList<Schedule>();
 			}
 		}
 		
-		sections.sort((sec1, sec2) -> Integer.compare(sec1.componentsLen(), sec2.componentsLen()));
+		allSections.sort((sec1, sec2) -> Integer.compare(sec1.componentsSize(), sec2.componentsSize()));
 		
-		nextSection(sections.listIterator());
+		nextSection(allSections.listIterator());
 		
-		ArrayList<Schedule> result = schedules;
-		resetBuilder();		
-		
-		return result;
+		return validSchedules;
 	}
 	
-	void getProperties() throws IOException {		
-		FileInputStream input = new FileInputStream("resources/config.properties");
-		
-		Properties prop = new Properties();
-		prop.load(input);
-		
-		this.baseURL = prop.getProperty("uwbaseurl");
-		this.apiKey = prop.getProperty("uwapikey");
-		
-		input.close();
-	}
 	
+	// REMOVE THIS
 	public static void main(String[] args) {
 		String[] classes = {"CHEM 120", "CHEM 120L", "MATH 114", "MATH 127", "PHYS 10", "PHYS 121", "PHYS 131L"};
 		String term = "1169";
 		String[] ignoreSecs = {"TUT", "LAB", "SEM"};
 		
-		Builder builder = new Builder();		
-
-		try {
-			builder.getProperties();
-		} catch(IOException e) {
-			System.out.println("could not read config.properties");
-			return;
-		}
-		
+		Builder builder = new Builder();
 		ArrayList<Schedule> scheds = builder.getSchedules(classes, term, ignoreSecs, false);
 		
 		int schedsLen = scheds.size();

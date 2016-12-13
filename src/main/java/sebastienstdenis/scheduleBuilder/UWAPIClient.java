@@ -1,5 +1,6 @@
 package sebastienstdenis.scheduleBuilder;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -7,14 +8,31 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.Properties;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
 
-// UWAPIClient is use to access the UW API and return objects representing the returned data
+// UWAPIClient is used to returns arrays of Section objects
+//    representing course data of the UW API
 class UWAPIClient {
 	
-	// Objects used to deserialize JSON data into
+	private static String baseURL;
+	private static String apiKey;
+	
+	static{
+		try(FileInputStream input = new FileInputStream("resources/config.properties")) {
+			Properties prop = new Properties();
+			prop.load(input);
+			
+			baseURL = prop.getProperty("uwbaseurl");
+			apiKey = prop.getProperty("uwapikey");
+		} catch (IOException exc) {
+			exc.printStackTrace();
+		}		
+	}
+	
+	// UWAPI json data is deserialized into these classes
 	private class JSONCourse {		
 		private class JSONComponent {		
 			private class JSONBlock {
@@ -49,9 +67,9 @@ class UWAPIClient {
 		JSONComponent[] data;
 	}
 	
-	// getJSON returns a string containing the JSON data from the UW API of the course className for the term term.
+	// getJSON returns a JSON data from the UW API for the provided className and term.
 	// className must be of format "ABC 123", term a 4-digit string
-	private static String getJSON(String className, String term, String baseURL, String apiKey) throws MalformedURLException, IOException {
+	private static String getJSON(String className, String term) throws MalformedURLException, IOException {
 		String[] classNameSplit = className.toUpperCase().split(" ");
 		
 		String url = baseURL + term + 
@@ -75,12 +93,12 @@ class UWAPIClient {
 	}
 	
 	
-	// getSections returns a list of Sections of the UW API data for class className and term term.
+	// getSections returns a list of Sections based on UW API data for the provided className and term.
 	// className must be of format "ABC 123", term a 4-digit string
-	static ArrayList<Section> getSections(String className, String term, String baseURL, String apiKey) throws UWAPIException {
+	static ArrayList<Section> getSections(String className, String term) throws UWAPIException {
 		JSONCourse obj;		
 		try {
-			String data = getJSON(className, term, baseURL, apiKey);
+			String data = getJSON(className, term);
 			
 			Gson gson = new Gson();			
 			obj = gson.fromJson(data, JSONCourse.class);
@@ -98,8 +116,7 @@ class UWAPIClient {
 		for (int pos = 0; pos < obj.data.length; ++pos) { // cycle through each component ("LEC 001", "LEC 002", "TUT 101", ...)
 			JSONCourse.JSONComponent curr = obj.data[pos];
 			
-			String name = curr.subject + " " + curr.catalog_number;
-			
+			String name = curr.subject + " " + curr.catalog_number;			
 			boolean closed = (curr.enrollment_total >= curr.enrollment_capacity);
 			
 			Component comp = new Component(name, curr.class_number, curr.section, curr.associated_class, closed);
@@ -108,6 +125,7 @@ class UWAPIClient {
 				JSONCourse.JSONComponent.JSONBlock currJBlock =  curr.classes[blockPos];
 				
 				if (currJBlock.date.start_time == null || currJBlock.date.end_time == null || currJBlock.date.weekdays == null) {
+					// ignore blocks with no specified time
 					continue NextComponent;
 				}
 				
@@ -134,7 +152,7 @@ class UWAPIClient {
 				comp.addBlock(block);
 			}
 			
-			if (comp.blocksLength() == 0) {
+			if (comp.blocksSize() == 0) {
 				continue NextComponent;
 			}
 			
@@ -146,7 +164,7 @@ class UWAPIClient {
 			// add the component to the correct Section in sections
 			while (secIt.hasNext()) {
 				Section sec = secIt.next();
-				if (sec.getClassType().equals(compType)) {
+				if (sec.getType().equals(compType)) {
 					sec.addComponent(comp);
 					added = true;
 					break;

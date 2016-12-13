@@ -3,25 +3,18 @@ package sebastienstdenis.scheduleBuilder;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+// Schedule represents a complete course schedule, with a set on Component objects
 class Schedule {
 	private ArrayList<Component> components;
 	
 	private boolean closed;
 	
-	ArrayList<Component> getComponents() {
-		return components;
-	}
+	private int score;
 	
-	boolean getClosed() {
-		return closed;
-	}
-	
-	// scores
-	
-	Schedule(ArrayList<Component> components) {
-		this.components = new ArrayList<Component>(components);
-		
-		this.closed = false;
+	Schedule(ArrayList<Component> components, int score) {
+		this.components = new ArrayList<Component>(components);		
+		this.closed = false;		
+		this.score = score;
 		
 		ListIterator<Component> compIt = components.listIterator();
 		while (compIt.hasNext()) {
@@ -32,7 +25,22 @@ class Schedule {
 		}		
 	}
 	
+	// getComponents returns the components field
+	ArrayList<Component> getComponents() {
+		return components;
+	}
+	
+	// getClosed returns the closed field
+	boolean getClosed() {
+		return closed;
+	}
+	
+	// getScore returns the score field
+	int getScore() {
+		return score;
+	}
+	
 	public String toString() {
-		return components.toString();		
+		return String.format("%d %s", score, components.toString());		
 	}
 }

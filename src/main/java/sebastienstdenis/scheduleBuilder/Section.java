@@ -2,37 +2,43 @@ package sebastienstdenis.scheduleBuilder;
 
 import java.util.ArrayList;
 
-class Section { // each course has a Section object for "LEC", another for "TUT", ...
+// Section represents all components of a section of
+//    a course (eg. add "LEC" components of CS 241)
+class Section {
 	private ArrayList<Component> components;
-	private String classType; // "LEC"
+	private String type; // ex: "LEC"
 	
 	Section() {
-		this.classType = "";
+		this.type = "";
 		components = new ArrayList<Component>();
 	}
 	
-	Section(String classType) {
-		this.classType = classType;
+	Section(String type) {
+		this.type = type;
 		components = new ArrayList<Component>();
 	}
 	
-	String getClassType() {
-		return classType;
-	}
-	
-	int componentsLen() {
-		return components.size();
-	}
-	
+	// getComponent returns the Component at position ind in components
 	Component getComponent(int ind) {
 		return components.get(ind);
 	}
 	
+	// componentsSize returns the amount of Components in the components field
+	int componentsSize() {
+		return components.size();
+	}
+
+	// getType returns the type field
+	String getType() {
+		return type;
+	}
+	
+	// addComponent adds comp to the components field
 	void addComponent(Component comp) {
 		components.add(comp);
 	}
 		
 	public String toString() {
-		return String.format("\n\tSection: classType - %s, components - \n\t\t%s", classType, components.toString());
+		return String.format("\n\tSection: classType - %s, components - \n\t\t%s", type, components.toString());
 	}
 }
