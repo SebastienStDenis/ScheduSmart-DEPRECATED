@@ -121,6 +121,8 @@ class UWAPIClient {
 			
 			Component comp = new Component(name, curr.class_number, curr.section, curr.associated_class, closed);
 			
+			String compType = (curr.section.split(" "))[0];
+			
 			for (int blockPos = 0; blockPos < curr.classes.length; ++blockPos) { // cycle through each block of the component
 				JSONCourse.JSONComponent.JSONBlock currJBlock =  curr.classes[blockPos];
 				
@@ -147,7 +149,7 @@ class UWAPIClient {
 				//System.out.println(currJBlock.date.weekdays);
 				//System.out.println(curr.catalog_number);
 				Block block = new Block(currJBlock.date.start_time, currJBlock.date.end_time,
-						currJBlock.date.weekdays, location, currJBlock.date.start_date, currJBlock.date.end_date);
+						currJBlock.date.weekdays, location, currJBlock.date.start_date, currJBlock.date.end_date, compType);
 				
 				comp.addBlock(block);
 			}
@@ -156,7 +158,7 @@ class UWAPIClient {
 				continue NextComponent;
 			}
 			
-			String compType = (comp.getSectionName().split(" "))[0];
+			
 			
 			ListIterator<Section> secIt = sections.listIterator();
 			boolean added = false;

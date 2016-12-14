@@ -9,9 +9,9 @@ class Schedule {
 	
 	private boolean closed;
 	
-	private int score;
+	private double score;
 	
-	Schedule(ArrayList<Component> components, int score) {
+	Schedule(ArrayList<Component> components, double score) {
 		this.components = new ArrayList<Component>(components);		
 		this.closed = false;		
 		this.score = score;
@@ -36,11 +36,11 @@ class Schedule {
 	}
 	
 	// getScore returns the score field
-	int getScore() {
+	double getScore() {
 		return score;
 	}
 	
 	public String toString() {
-		return String.format("%d %s", score, components.toString());		
+		return String.format("%f %s", score, components.toString());		
 	}
 }

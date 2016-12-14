@@ -22,7 +22,7 @@ class Calendar {
 	static final int SLOTS_IN_DAY = 48;
 	
 	Calendar() {		
-		timeTable = new HashMap<String, ArrayList<LinkedList<Block>>>();		
+		this.timeTable = new HashMap<String, ArrayList<LinkedList<Block>>>();
 		resetCalendar();		
 	}	
 	
@@ -218,13 +218,134 @@ class Calendar {
 		components.remove(comp);		
 	}
 	
-	// TODO: this
-	private int calulateScore() {
-		return 0;
+	// setScorePreferences sets the scorePreferences field to scorePreferences
+	void setScorePreferences(ScorePreferences scorePreferences) {
+		this.scorePreferences = scorePreferences;
+	}
+	
+	// onlyTests returns true if all Blocks in blocks have sectionType "TST"
+	private boolean onlyTests(LinkedList<Block> blocks) {
+		ListIterator<Block> blocksIt = blocks.listIterator();
+		
+		while (blocksIt.hasNext()) {
+			Block block = blocksIt.next();
+			if (!block.getSectionType().equals("TST")) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	// calculateScore use a top-secret ultra-precise algorithm to return a
+	//    score of the current calendar based on the options in scorePreferences.
+	//    Considers the amount of morning classes, afternoon classes, school
+	//    days and the average day length.  (This algorithm is not very good)
+	private double calculateScore() {		
+		double noEarlyCount = 0;
+		double noLateCount = 0;		
+		double shortDaysCount = 0;		
+		double schoolDays = 0;
+		
+		for (int daysPos = 0; daysPos < DAYS.length; ++daysPos) {
+			ArrayList<LinkedList<Block>> day = timeTable.get(DAYS[daysPos]);
+		
+			boolean dayStarted = false;
+			
+			int startInd = 0;      // index of first slot of day
+			int endInd = 0;        // index of last slot of day
+			double classHours = 0; // total class hours of day
+			
+			for (int ind = 0; ind < SLOTS_IN_DAY; ++ind) {
+				LinkedList<Block> slot = day.get(ind);
+				
+				if (slot.size() == 0 || onlyTests(slot)) {
+					// don't consider "TST" sections for calculating score
+					continue;
+				} else {
+					if (!dayStarted) {
+						startInd = ind;
+						dayStarted = true;
+						classHours += 0.5;
+					}
+					classHours += 0.5;
+					endInd = ind;
+				}
+			}
+			
+			if (dayStarted) {
+				++schoolDays;
+				
+				if (startInd <= 16) {
+					noEarlyCount += (startInd-16) / 2;
+				} else if (startInd <= 26) {
+					noEarlyCount += startInd - 16;
+				} else {
+					noEarlyCount += 10;
+				}
+				
+				if (endInd <= 24) {
+					noLateCount += 10;
+				} else if (endInd <= 34) {
+					noLateCount += 34 - endInd;
+				} else {
+					noLateCount += (34-endInd)/2.0;
+				}
+			
+				if (classHours <= 1) {
+					shortDaysCount += 10;
+				} else if (classHours <= 6) {
+					shortDaysCount += (6-classHours) * 2;
+				} else {
+					shortDaysCount += (6-classHours);
+				}
+			}
+		}
+		
+		double score = 0;
+		
+		if (schoolDays != 0) {
+			noEarlyCount /= schoolDays;
+			noLateCount /= schoolDays;
+			switch (scorePreferences.getClassTimes()) {
+			case 1:
+				score += 2*noEarlyCount;
+				score += noLateCount;
+				break;
+			case 2:
+				score += noEarlyCount;
+				score += 2*noLateCount;
+				break;
+			default:
+				score += noEarlyCount;
+				score += noLateCount;
+				break	;			
+			}
+			
+			shortDaysCount /= schoolDays;
+			switch (scorePreferences.getClassTimes()) {
+			case 1:
+				score += 2*shortDaysCount;
+				score += 7-schoolDays;
+				break;
+			case 2:
+				score += shortDaysCount;
+				score += 2*(7-schoolDays);
+				break;
+			default:
+				score += shortDaysCount;
+				score += 7-schoolDays;
+				break;			
+			}
+		} else {
+			score = 0;
+		}		
+		
+		return score;
 	}
 	
 	// makeSchedule returns a Schedule object based on the current contents of the Calendar
 	Schedule makeSchedule() {
-		return new Schedule(components, calulateScore());
+		return new Schedule(components, calculateScore());
 	}
 }

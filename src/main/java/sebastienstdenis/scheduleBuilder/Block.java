@@ -12,14 +12,17 @@ class Block {
 	private String[] days; // valid entries are "M", "T", "W", "Th", "F"
 		
 	private String location;
+	
+	private String sectionType;
 		
-	Block(String startTime, String endTime, String days, String location, String startDate, String endDate) {
+	Block(String startTime, String endTime, String days, String location, String startDate, String endDate, String sectionType) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.days = parseDays(days);
 		this.location = location;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.sectionType = sectionType;
 		
 	}
 	
@@ -70,6 +73,11 @@ class Block {
 	// getDays returns the days field
 	String[] getDays() {
 		return days;
+	}
+	
+	// getSectionType returns the sectionType field
+	String getSectionType() {
+		return sectionType;
 	}
 	
 	public String toString() {
