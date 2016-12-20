@@ -18,11 +18,12 @@ class Calendar {
 	
 	ScorePreferences scorePreferences;
 	
-	static final String[] DAYS = {"SU", "M", "T", "W", "Th", "F", "S"};
+	static final String[] DAYS = {"Su", "M", "T", "W", "Th", "F", "S"};
 	static final int SLOTS_IN_DAY = 48;
 	
 	Calendar() {		
 		this.timeTable = new HashMap<String, ArrayList<LinkedList<Block>>>();
+		this.scorePreferences = new ScorePreferences();
 		resetCalendar();		
 	}	
 	
@@ -42,7 +43,7 @@ class Calendar {
 	private int getSlotInd(String time) {
 		String[] hourMin = time.split(":");
 		
-		// check if it has 2 values, o/w erroe
+		// check if it has 2 values, o/w error
 		
 		int hour = Integer.parseInt(hourMin[0]);
 		int min = Integer.parseInt(hourMin[1]);
@@ -319,7 +320,7 @@ class Calendar {
 			default:
 				score += noEarlyCount;
 				score += noLateCount;
-				break	;			
+				break;			
 			}
 			
 			shortDaysCount /= schoolDays;

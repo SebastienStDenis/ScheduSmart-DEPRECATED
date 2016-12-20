@@ -52,6 +52,7 @@ class UWAPIClient {
 				
 				JSONDate date;
 				JSONLocation location;
+				String[] instructors;
 			}
 			
 			String subject;
@@ -107,7 +108,7 @@ class UWAPIClient {
 				throw new UWAPIException();
 			}
 		} catch (Throwable e) {
-			throw new UWAPIException("Could not get course information");
+			throw new UWAPIException("Error accessing course information");
 		}
 		
 		ArrayList<Section> sections = new ArrayList<Section>();
@@ -146,10 +147,26 @@ class UWAPIClient {
 					location = currJBlock.location.building + " " + currJBlock.location.room;
 				}
 				
+				String instructors = "";
+				int instrLen = currJBlock.instructors.length;
+				if (instrLen >= 1) {
+					String[] instrSplit = currJBlock.instructors[0].split(",");
+					
+					if (instrSplit.length == 1) {
+						instructors = instrSplit[0];
+					} else if (instrSplit.length > 1) {
+						instructors = instrSplit[1] + " " + instrSplit[0];
+					}
+					
+					if (instrLen > 1) {
+						instructors += String.format(" (+%d)", instrLen - 1);
+					}
+				}
+				
 				//System.out.println(currJBlock.date.weekdays);
 				//System.out.println(curr.catalog_number);
-				Block block = new Block(currJBlock.date.start_time, currJBlock.date.end_time,
-						currJBlock.date.weekdays, location, currJBlock.date.start_date, currJBlock.date.end_date, compType);
+				Block block = new Block(currJBlock.date.start_time, currJBlock.date.end_time, currJBlock.date.weekdays,
+						location, currJBlock.date.start_date, currJBlock.date.end_date, instructors, compType);
 				
 				comp.addBlock(block);
 			}
@@ -178,10 +195,6 @@ class UWAPIClient {
 				sec.addComponent(comp);
 				sections.add(sec);
 			}			
-		}
-		
-		if (sections.size() == 0) {
-			throw new UWAPIException("No course section information - likely cancelled");
 		}
 				
 		return sections;		

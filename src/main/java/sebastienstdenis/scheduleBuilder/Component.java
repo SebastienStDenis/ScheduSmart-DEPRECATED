@@ -71,9 +71,9 @@ class Component {
 	
 	public String toString() {
 		
-		//return String.format("\n\t\tComponent: name - %s, classNumber - %d, sectionName - %s, assocClass - %d, closed - %b, blocks - \n\t\t\t%s", 
-		//		name, classNumber, sectionName, assocClass, closed, blocks.toString());
+		return String.format("\n\t\tComponent: name - %s, classNumber - %d, sectionName - %s, assocClass - %d, closed - %b, blocks - \n\t\t\t%s", 
+				name, classNumber, sectionName, assocClass, closed, blocks.toString());
 				
-		return String.format("(%s %s (%d))", name, sectionName, assocClass);
+		//return String.format("(%s %s (%d))", name, sectionName, assocClass);
 	}
 }

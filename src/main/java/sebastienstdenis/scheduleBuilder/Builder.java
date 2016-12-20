@@ -98,7 +98,7 @@ public class Builder {
 	}
 	
 	// getSchedules returns a list of all possible schedules based on classes, term, ignoredSections, and omitClosed
-	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections, boolean omitClosed, ScorePreferences scorePreferences) {
+	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections, boolean omitClosed, ScorePreferences scorePreferences) throws UWAPIException {
 		resetBuilder();
 		
 		cal.setScorePreferences(scorePreferences);
@@ -107,11 +107,7 @@ public class Builder {
 		this.omitClosed = omitClosed;
 		
 		for (int pos = 0; pos < classes.length; ++pos) {
-			try {
-				allSections.addAll(UWAPIClient.getSections(classes[pos], term));
-			} catch (UWAPIException e) {
-				return new ArrayList<Schedule>();
-			}
+			allSections.addAll(UWAPIClient.getSections(classes[pos], term));
 		}
 		
 		allSections.sort((sec1, sec2) -> Integer.compare(sec1.componentsSize(), sec2.componentsSize()));
@@ -123,7 +119,7 @@ public class Builder {
 	
 	
 	// REMOVE THIS
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UWAPIException {
 		//String[] classes = {"CHEM 120", "CHEM 120L", "MATH 114", "MATH 127", "PHYS 10", "PHYS 121", "PHYS 131L"};
 		String[] classes = {"CS 240", "CS 241", "CS 251", "STV 205"};
 		

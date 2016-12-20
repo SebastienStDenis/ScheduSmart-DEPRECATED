@@ -13,15 +13,19 @@ class Block {
 		
 	private String location;
 	
+	private String instructors;
+	
 	private String sectionType;
 		
-	Block(String startTime, String endTime, String days, String location, String startDate, String endDate, String sectionType) {
+	Block(String startTime, String endTime, String days, String location,
+			String startDate,	String endDate, String instructors, String sectionType) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.days = parseDays(days);
 		this.location = location;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.instructors = instructors;
 		this.sectionType = sectionType;
 		
 	}
@@ -81,6 +85,6 @@ class Block {
 	}
 	
 	public String toString() {
-		return String.format("\n\t\t\tBlock: startTime - %s, endTime - %s, days - %s, location - %s, startDate - %s, endDate - %s", startTime, endTime, Arrays.toString(days), location, startDate, endDate);
+		return String.format("\n\t\t\tBlock: startTime - %s, endTime - %s, days - %s, location - %s, startDate - %s, endDate - %s, instructors - %s", startTime, endTime, Arrays.toString(days), location, startDate, endDate, instructors);
 	}
 }
