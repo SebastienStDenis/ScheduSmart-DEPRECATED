@@ -12,10 +12,6 @@ public class BlockTest {
 		Block block = new Block(null, null, days, null, null, null, null, null);
 		assertArrayEquals(block.getDays(), new String[]{"M", "Th", "F"});
 		
-		days = "";
-		block = new Block(null, null, days, null, null, null, null, null);
-		assertArrayEquals(block.getDays(), new String[]{});
-		
 		days = "Su";
 		block = new Block(null, null, days, null, null, null, null, null);
 		assertArrayEquals(block.getDays(), new String[]{"Su"});

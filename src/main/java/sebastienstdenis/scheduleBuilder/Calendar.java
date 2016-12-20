@@ -39,33 +39,43 @@ class Calendar {
 		}
 	}
 	
-	// getSlotInd returns the proper timeTable index (0-47) corresponding to time
-	private int getSlotInd(String time) {
+	// getSlotInd returns the proper timeTable index (0-48) corresponding to time
+	private int getSlotInd(String time) throws IllegalArgumentException {
 		String[] hourMin = time.split(":");
 		
-		// check if it has 2 values, o/w error
+		if (hourMin.length != 2) {
+			throw new IllegalArgumentException("Provided time cannot be parsed: " + time);
+		}
 		
 		int hour = Integer.parseInt(hourMin[0]);
 		int min = Integer.parseInt(hourMin[1]);
 		
-		if (min == 20 || min == 30) {
-			return 2 * hour + 1;
-		} else if (min == 50) {
-			return 2 * (hour + 1);
-		} else {
+		if (min == 0) {
 			return 2 * hour;
+		} else if (min <= 30) {
+			return 2 * hour + 1;
+		} else {
+			return 2 * (hour + 1);
 		}		
 	}
 	
 	// compareDates returns 0 if the dates are equal, <0 if date1 comes before date2, >0 otherwise
-	private static int compareDates(String date1, String date2) {
+	private static int compareDates(String date1, String date2) throws IllegalArgumentException {
 		String[] monthDay1 = date1.split("/");
-		// check if two values, o/w error
+		
+		if (monthDay1.length != 2) {
+			throw new IllegalArgumentException("Provided date cannot be parsed: " + date1);
+		}
+		
 		int month1 = Integer.parseInt(monthDay1[0]);
 		int day1 = Integer.parseInt(monthDay1[1]);
 		
 		String[] monthDay2 = date2.split("/");
-		// check if two values, o/w error
+		
+		if (monthDay2.length != 2) {
+			throw new IllegalArgumentException("Provided date cannot be parsed: " + date2);
+		}
+
 		int month2 = Integer.parseInt(monthDay2[0]);
 		int day2 = Integer.parseInt(monthDay2[1]);
 		
@@ -85,21 +95,27 @@ class Calendar {
 	// addComponent adds comp to the Calendar.  True is returned if comp was added without clashes.
 	//    Otherwise, false is returned and nothing is added to the Calendar.
 	boolean addComponent(Component comp) {
-		//System.out.printf("Adding %s, %s:\n", comp.getName(), comp.getSectionName());
-		
 		int blocksLen = comp.blocksSize();
 		
 		for (int pos = 0; pos < blocksLen; ++pos) { // before adding anything, check for possible clashes
 			Block block = comp.getBlock(pos);
-			int startInd = getSlotInd(block.getStartTime());
-			int endInd = getSlotInd(block.getEndTime());
+			
+			int startInd = 0;
+			int endInd = 0;
+			
+			try {
+				startInd = getSlotInd(block.getStartTime());
+				endInd = getSlotInd(block.getEndTime());
+			} catch (IllegalArgumentException e) {
+				return false;
+			}
+				
 			String[] days = block.getDays();
 					
 			// for each day in days, we will iterate through all timeTable slots from startInd (incl.) to endInd (excl.)
 			for (int daysPos = 0; daysPos < days.length; ++daysPos) {
 				NextSlot:
 				for (int slot = startInd; slot < endInd; ++slot) {
-					//System.out.printf("trying - day: %s, slot: %d\n", days[daysPos], slot);
 					LinkedList<Block> blockList = timeTable.get(days[daysPos]).get(slot);
 					int listLen = blockList.size();
 					
@@ -119,22 +135,24 @@ class Calendar {
 						// we then check if this block clashes with block. If not, then our block will not clash if added.
 						while (blockIt.hasNext()) {
 							Block currBlock = blockIt.next();
-							int compareStart = compareDates(startDate, currBlock.getStartDate());
+							int compareStart = 0;
+							
+							try {
+								compareStart = compareDates(startDate, currBlock.getStartDate());
+							} catch (Exception e) {
+								return false;
+							}
 							
 							if (compareStart == 0) {
-								//System.out.printf("%s vs %s = %d\n", startDate, currBlock.getStartDate(), compareStart);
-								//System.out.println("failed 1");
 								return false;
 							} else if (compareStart < 0) {
 								if (compareDates(block.getEndDate(), currBlock.getStartDate()) >= 0) {
-									//System.out.println("failed 2");
 									return false;
 								} else {
 									continue NextSlot;
 								}
 							} else if (compareStart > 0) {
 								if (compareDates(startDate, currBlock.getEndDate()) <= 0) {
-									//System.out.println("failed 3");
 									return false;
 								}
 							}
@@ -190,8 +208,17 @@ class Calendar {
 		//    addComponent (above), remove the blocks of comp
 		for (int pos = 0; pos < blocksLen; ++pos) {
 			Block block = comp.getBlock(pos);
-			int startInd = getSlotInd(block.getStartTime());
-			int endInd = getSlotInd(block.getEndTime());
+			
+			int startInd = 0;
+			int endInd = 0;
+			
+			try {
+				startInd = getSlotInd(block.getStartTime());
+				endInd = getSlotInd(block.getEndTime());
+			} catch (IllegalArgumentException e) {
+				continue;
+			}
+			
 			String[] days = block.getDays();
 				
 			for (int daysPos = 0; daysPos < days.length; ++daysPos) {

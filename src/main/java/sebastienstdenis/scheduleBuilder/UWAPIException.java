@@ -11,4 +11,8 @@ class UWAPIException extends Exception {
 	UWAPIException(String msg) {
 		super(msg);
 	}
+	
+	public String getMessage() {
+		return String.format("UW API Error: %s", super.getMessage());
+	}
 }

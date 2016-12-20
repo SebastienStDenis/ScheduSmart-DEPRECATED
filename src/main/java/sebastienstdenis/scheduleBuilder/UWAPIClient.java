@@ -108,7 +108,7 @@ class UWAPIClient {
 				throw new UWAPIException();
 			}
 		} catch (Throwable e) {
-			throw new UWAPIException("Error accessing course information");
+			throw new UWAPIException("cannot access course information for " + className + ", " + term);
 		}
 		
 		ArrayList<Section> sections = new ArrayList<Section>();
@@ -128,7 +128,7 @@ class UWAPIClient {
 				JSONCourse.JSONComponent.JSONBlock currJBlock =  curr.classes[blockPos];
 				
 				if (currJBlock.date.start_time == null || currJBlock.date.end_time == null || currJBlock.date.weekdays == null) {
-					// ignore blocks with no specified time
+					// ignore blocks with no specified time or weekdays
 					continue NextComponent;
 				}
 				
@@ -163,10 +163,14 @@ class UWAPIClient {
 					}
 				}
 				
-				//System.out.println(currJBlock.date.weekdays);
-				//System.out.println(curr.catalog_number);
-				Block block = new Block(currJBlock.date.start_time, currJBlock.date.end_time, currJBlock.date.weekdays,
+				Block block = null;
+				
+				try {
+					block = new Block(currJBlock.date.start_time, currJBlock.date.end_time, currJBlock.date.weekdays,
 						location, currJBlock.date.start_date, currJBlock.date.end_date, instructors, compType);
+				} catch (IllegalArgumentException e) {
+					continue NextComponent;
+				}
 				
 				comp.addBlock(block);
 			}

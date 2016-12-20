@@ -41,6 +41,6 @@ class Schedule {
 	}
 	
 	public String toString() {
-		return String.format("%f %s", score, components.toString());		
+		return String.format("Schedule: score - %f, %s", score, components.toString());		
 	}
 }

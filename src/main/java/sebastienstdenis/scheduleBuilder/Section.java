@@ -39,6 +39,6 @@ class Section {
 	}
 		
 	public String toString() {
-		return String.format("\n\tSection: classType - %s, components - \n\t\t%s", type, components.toString());
+		return String.format("Section: %s, components -  %s", type, components.toString());
 	}
 }
