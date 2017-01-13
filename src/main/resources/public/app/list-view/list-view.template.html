@@ -1,0 +1,9 @@
+<md-list ng-repeat="course in Schedules.schedules[Schedules.index].components">
+     <md-subheader class="md-no-sticky" style="background-color: silver">{{ course[0].name }}</md-subheader>
+     <md-list-item  style="height: 50px;"ng-repeat="comp in course" ng-click="null">
+       <div class="md-list-item-text" layout="column">
+         <h3>{{ comp.sectionName }} ({{ comp.classNumber }}), {{ Schedules.getProfs(comp) }}</h3>
+       </div>
+     </md-list-item>		        
+     <md-divider ng-if="!$last"></md-divider>     
+</md-list>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UW Schedule Builder</title>
+		
+	
+	<link rel="shortcut icon" href="assets/img/favicon.ico">
+	<link rel="stylesheet" href="assets/css/main.css">
+	
+  	<!-- Angular Material style sheet -->
+  	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  	
+</head>
+<body ng-app="uwScheduleBuilderApp" layout="row" ng-controller="AppController as ctrl" style="min-width: 283px" ng-cloak>  
+  <md-sidenav ng-hide="ctrl.loading" md-is-open="ctrl.sidenavOpen" flex md-whiteframe="5" md-component-id="left"
+  	md-is-locked-open="$mdMedia('gt-sm')" class="md-sidenav-left" layout="column" layout-align="start stretch">		
+		<search flex="noshrink" layout="row"></search>	
+  </md-sidenav>  
+  
+  <div layout="column" layout-fill>  		
+  		<md-toolbar class="md-primary md-hue-2">		
+	    	<div md-whiteframe="3" class="md-toolbar-tools">
+	      		<md-button md-no-ink md-border class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
+		        	<md-icon hide-gt-sm md-font-set="material-icons"> search </md-icon>		        	
+		      	</md-button>
+	      		
+	      		<span flex></span>
+	      		
+	      		<span hide show-gt-sm class="md-headline">UWScheduleBuilder</span>
+	      		<span hide-gt-sm>UWScheduleBuilder</span>
+	      		
+	      		<span flex></span>
+										      		
+	      		<md-button ng-href="{{ ctrl.isList() ? '#!/week' : '#!/list' }}" class="md-icon-button">
+	        		<md-icon md-font-set="material-icons"> {{ ctrl.isList() ? 'view_week' : 'view_list' }} </md-icon>
+	      		</md-button>	      		
+		    </div>			
+	  	</md-toolbar>
+	  	
+	  	<div ng-hide="!ctrl.loading" layout="row" layout-align="center center" flex>
+  			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  		</div>
+	  	
+	  	<md-content ng-hide="ctrl.loading" layout="column" flex>
+	  		<div layout="row" flex="noshrink" layout-align="space-between stretch">
+	  			<div style="width: 50px"></div>
+	  			
+	  			<div layout="column" flex="noshrink" layout-align="center center">
+		  			<div layout="row" flex="none" layout-align="center center">
+			  			<md-button class="md-small" ng-click="ctrl.schedules.prevSchedule()">Prev</md-button>
+						<md-button class="md-small" ng-disabled="true"> {{ ctrl.schedules.index + 1 }} / {{ ctrl.schedules.schedules.length }} </md-button>
+						<md-button class="md-small" ng-click="ctrl.schedules.nextSchedule()">Next</md-button>		  		
+			  		</div>
+			  		
+			  		<div style="margin: 6px;" md-whiteframe="2" layout-align="center center">
+			  			<div ng-view></div>
+			  		</div>
+		  		</div>		  		
+		  		
+		  		<div style="width: 50px" layout="column" layout-align="end center">
+		  			<md-button href="http://google.com" class="md-icon-button launch" target="_blank">
+				        <md-icon md-font-set="material-icons">feedback</md-icon>
+				    </md-button>
+				    <md-button href="http://google.com" class="md-icon-button launch" target="_blank">
+				        <md-icon md-font-set="material-icons">code</md-icon>
+				    </md-button>
+		      		<md-button style="margin-bottom: 5px;" href="http://google.com" class="md-icon-button launch" target="_blank">
+				        <md-icon md-font-set="material-icons">help</md-icon>
+				    </md-button>
+		  		</div>		
+	  		</div>	    	
+	  	</md-content>
+	</div>	
+
+	<!-- Angular.js Libraries -->
+  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+  	  	
+  	<script src="app/app.module.js"></script>
+  	<script src="app/app.config.js"></script>
+  	<script src="app/app.controller.js"></script>
+  	<script src="app/list-view/list-view.module.js"></script>
+  	<script src="app/list-view/list-view.component.js"></script>
+  	<script src="app/week-view/week-view.module.js"></script>
+  	<script src="app/week-view/week-view.component.js"></script>
+  	<script src="app/search/search.module.js"></script>
+  	<script src="app/search/search.component.js"></script>
+  	<script src="app/schedules/schedules.module.js"></script>
+  	<script src="app/schedules/schedules.service.js"></script>
+
+  	<!-- Angular Material Library -->
+  	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+</body>
+</html>
