@@ -1,10 +1,10 @@
-package sebastienstdenis.scheduleBuilder;
+package com.uwschedulebuilder.builder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 // Block represents a set of class times for a certain component
-class Block {	
+public class Block {	
 	private String startTime;
 	private String endTime;
 	private String startDate;
@@ -17,7 +17,7 @@ class Block {
 	
 	private String sectionType;
 		
-	Block(String startTime, String endTime, String days, String location,
+	public Block(String startTime, String endTime, String days, String location,
 			String startDate,	String endDate, String instructors, String sectionType) throws IllegalArgumentException {
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -58,37 +58,37 @@ class Block {
 	}
 	
 	// hasDates returns true if the block has specified dates
-	boolean hasDates() {
+	public boolean hasDates() {
 		return startDate != null && endDate != null;
 	}
 	
 	// getStartTime returns the startTime field
-	String getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 	
 	// getEndTime returns the endTime field
-	String getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 		
 	// getStartDate returns the startDate field
-	String getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 	
 	// getEndDate returns the endDate field
-	String getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 	
 	// getDays returns the days field
-	String[] getDays() {
+	public String[] getDays() {
 		return days;
 	}
 	
 	// getSectionType returns the sectionType field
-	String getSectionType() {
+	public String getSectionType() {
 		return sectionType;
 	}
 	

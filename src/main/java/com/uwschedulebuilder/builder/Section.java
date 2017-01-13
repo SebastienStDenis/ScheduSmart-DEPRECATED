@@ -1,40 +1,40 @@
-package sebastienstdenis.scheduleBuilder;
+package com.uwschedulebuilder.builder;
 
 import java.util.ArrayList;
 
 // Section represents all components of a section of
 //    a course (eg. add "LEC" components of CS 241)
-class Section {
+public class Section {
 	private ArrayList<Component> components;
 	private String type; // ex: "LEC"
 	
-	Section() {
+	public Section() {
 		this.type = "";
 		components = new ArrayList<Component>();
 	}
 	
-	Section(String type) {
+	public Section(String type) {
 		this.type = type;
 		components = new ArrayList<Component>();
 	}
 	
 	// getComponent returns the Component at position ind in components
-	Component getComponent(int ind) {
+	public Component getComponent(int ind) {
 		return components.get(ind);
 	}
 	
 	// componentsSize returns the amount of Components in the components field
-	int componentsSize() {
+	public int componentsSize() {
 		return components.size();
 	}
 
 	// getType returns the type field
-	String getType() {
+	public String getType() {
 		return type;
 	}
 	
 	// addComponent adds comp to the components field
-	void addComponent(Component comp) {
+	public void addComponent(Component comp) {
 		components.add(comp);
 	}
 		

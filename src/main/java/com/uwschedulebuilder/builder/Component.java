@@ -1,10 +1,10 @@
-package sebastienstdenis.scheduleBuilder;
+package com.uwschedulebuilder.builder;
 
 import java.util.ArrayList;
 
 
 // Component represents one course component of a certain course (ex: CS 241 TUT 001)
-class Component {
+public class Component {
 	private String name; // ex: "CS 241"
 	private int classNumber; // ex: "1234"
 	private String sectionName; // ex: "TUT 001"
@@ -14,7 +14,7 @@ class Component {
 	
 	private ArrayList<Block> blocks;
 	
-	Component(String name, int classNumber, String sectionName, int assocClass, boolean closed) {
+	public Component(String name, int classNumber, String sectionName, int assocClass, boolean closed) {
 		this.name = name;
 		this.classNumber = classNumber;
 		this.sectionName = sectionName;
@@ -25,47 +25,47 @@ class Component {
 	}
 	
 	// getName returns the name field 
-	String getName() {
+	public String getName() {
 		return name;
 	}
 	
 	// getClassNumber returns the classNumber field
-	int getClassNumber() {
+	public int getClassNumber() {
 		return classNumber;
 	}
 	
 	//getSectionName returns the sectionName field
-	String getSectionName() {
+	public String getSectionName() {
 		return sectionName;
 	}
 	
 	// getAssocClass returns the assocClass field
-	int getAssocClass() {
+	public int getAssocClass() {
 		return assocClass;
 	}
 	
 	// getClosed returns the closed field
-	boolean getClosed() {
+	public boolean getClosed() {
 		return closed;
 	}
 	
 	// setClosed sets the closed field to the value of closed
-	void setClosed(boolean closed) {
+	public void setClosed(boolean closed) {
 		this.closed = closed;
 	}
 	
 	// getBlock returns the block at position ind of the blocks fields
-	Block getBlock(int ind) {
+	public Block getBlock(int ind) {
 		return blocks.get(ind);
 	}
 	
 	// addBlock adds block to the blocks field
-	void addBlock(Block block) {		
+	public void addBlock(Block block) {		
 		blocks.add(block);
 	}
 	
 	// blocksSize returns the amount of blocks in the blocks field
-	int blocksSize() {
+	public int blocksSize() {
 		return blocks.size();
 	}
 	

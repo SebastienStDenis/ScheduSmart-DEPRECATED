@@ -1,4 +1,4 @@
-package sebastienstdenis.scheduleBuilder;
+package com.uwschedulebuilder.builder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.ListIterator;
 
 // Calendar takes Component objects, determines if they make a valid
 //    schedule and return a Schedule object from them
-class Calendar {
+public class Calendar {
 	
 	// the keys are days "M", "T", ... and the values are arrays of 48 linked lists (corresponding
 	//    to the 48 half-hours in the day - index 0 is 0:00, index 1 is 0:30, ...).
@@ -28,7 +28,7 @@ class Calendar {
 	}	
 	
 	// resetCalendar() resets the Calendar object to its post-initialization state
-	void resetCalendar() {
+	public void resetCalendar() {
 		components = new ArrayList<Component>();
 		for (int pos = 0; pos < DAYS.length; ++ pos) {
 			ArrayList<LinkedList<Block>> dayArr = new ArrayList<LinkedList<Block>>(SLOTS_IN_DAY);
@@ -94,7 +94,7 @@ class Calendar {
 	
 	// addComponent adds comp to the Calendar.  True is returned if comp was added without clashes.
 	//    Otherwise, false is returned and nothing is added to the Calendar.
-	boolean addComponent(Component comp) {
+	public boolean addComponent(Component comp) {
 		int blocksLen = comp.blocksSize();
 		
 		for (int pos = 0; pos < blocksLen; ++pos) { // before adding anything, check for possible clashes
@@ -201,7 +201,7 @@ class Calendar {
 	
 	// removeComponent will remove comp from the Calendar.  This assumes that
 	//    comp has previously been fully added to the Calendar and is still there.
-	void removeComponent(Component comp) {
+	public void removeComponent(Component comp) {
 		int blocksLen = comp.blocksSize();
 		
 		// iterate through all relevant slots of timeTable just like in
@@ -247,7 +247,7 @@ class Calendar {
 	}
 	
 	// setScorePreferences sets the scorePreferences field to scorePreferences
-	void setScorePreferences(ScorePreferences scorePreferences) {
+	public void setScorePreferences(ScorePreferences scorePreferences) {
 		this.scorePreferences = scorePreferences;
 	}
 	
@@ -265,7 +265,7 @@ class Calendar {
 		return true;
 	}
 	
-	// calculateScore use a top-secret ultra-precise algorithm to return a
+	// calculateScore uses a top-secret ultra-precise algorithm to return a
 	//    score of the current calendar based on the options in scorePreferences.
 	//    Considers the amount of morning classes, afternoon classes, school
 	//    days and the average day length.  (This algorithm is not very good)
@@ -337,16 +337,16 @@ class Calendar {
 			noLateCount /= schoolDays;
 			switch (scorePreferences.getClassTimes()) {
 			case 1:
-				score += 2*noEarlyCount;
-				score += noLateCount;
+				score += 2*noLateCount;
+				score += noEarlyCount;
 				break;
 			case 2:
-				score += noEarlyCount;
-				score += 2*noLateCount;
+				score += noLateCount;
+				score += 2*noEarlyCount;
 				break;
 			default:
-				score += noEarlyCount;
 				score += noLateCount;
+				score += noEarlyCount;
 				break;			
 			}
 			
@@ -373,7 +373,7 @@ class Calendar {
 	}
 	
 	// makeSchedule returns a Schedule object based on the current contents of the Calendar
-	Schedule makeSchedule() {
+	public Schedule makeSchedule() {
 		return new Schedule(components, calculateScore());
 	}
 }

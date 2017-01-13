@@ -1,12 +1,16 @@
-package sebastienstdenis.scheduleBuilder;
+package com.uwschedulebuilder.builder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ListIterator;
+
+import com.uwschedulebuilder.uwapiclient.UWAPIClient;
+import com.uwschedulebuilder.uwapiclient.UWAPIException;
+
 import java.util.HashMap;
 
 // Builder is used to compute and return a list of valid 
-//    Schedules based on the courses provided to it 
+//    Schedules based on the courses provided to it
 public class Builder {
 	private ArrayList<Section> allSections;
 	private Calendar cal;
@@ -53,11 +57,13 @@ public class Builder {
 		if (secIt.hasNext()) {
 			Section sec = secIt.next();
 			
-			int foundPos = Arrays.binarySearch(ignoredSections, sec.getType());
-			if (foundPos >= 0 && foundPos < ignoredSections.length && ignoredSections[foundPos].equals(sec.getType())) {
-				nextSection(allSections.listIterator(secIt.nextIndex()));
-				return;
-			}
+			if (ignoredSections != null && ignoredSections.length > 0) {
+				int foundPos = Arrays.binarySearch(ignoredSections, sec.getType());
+				if (foundPos >= 0 && foundPos < ignoredSections.length && ignoredSections[foundPos].equals(sec.getType())) {
+					nextSection(allSections.listIterator(secIt.nextIndex()));
+					return;
+				}
+			}			
 			
 			int compLen = sec.componentsSize();
 			for (int pos = 0; pos < compLen; ++pos) {
@@ -102,8 +108,12 @@ public class Builder {
 		resetBuilder();
 		
 		cal.setScorePreferences(scorePreferences);
-		this.ignoredSections = ignoredSections; 
-		Arrays.sort(ignoredSections);
+		
+		if (ignoredSections != null) {
+			this.ignoredSections = ignoredSections; 
+			Arrays.sort(ignoredSections);
+		}		
+		
 		this.omitClosed = omitClosed;
 		
 		for (int pos = 0; pos < classes.length; ++pos) {
@@ -115,28 +125,5 @@ public class Builder {
 		nextSection(allSections.listIterator());
 		
 		return validSchedules;
-	}
-	
-	
-	// REMOVE THIS
-	public static void main(String[] args) throws UWAPIException {
-		//String[] classes = {"CHEM 120", "CHEM 120L", "MATH 114", "MATH 127", "PHYS 10", "PHYS 121", "PHYS 131L"};
-		String[] classes = {"CS 240", "CS 241", "CS 251", "STV 205"};
-		
-		String term = "1171";
-		String[] ignoreSecs = {"SEM", "TUT"};
-		ScorePreferences prefs = new ScorePreferences(1, 1);
-		
-		Builder builder = new Builder();
-		ArrayList<Schedule> scheds = builder.getSchedules(classes, term, ignoreSecs, false, prefs);
-		
-		int schedsLen = scheds.size();
-		
-
-		for (int pos = 0; pos < schedsLen; ++pos) {
-			System.out.println(scheds.get(pos));
-		}
-		System.out.println(schedsLen);
-		
 	}
 }
