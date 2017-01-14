@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UW Schedule Builder</title>
+    <title>ScheduSmart - University of Waterloo</title>
 		
 	
 	<link rel="shortcut icon" href="assets/img/favicon.ico">
@@ -10,7 +10,8 @@
 	
   	<!-- Angular Material style sheet -->
   	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  	
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+  	<link href="https://fonts.googleapis.com/css?family=Dawning of a New Day" rel="stylesheet">	
 </head>
 <body ng-app="uwScheduleBuilderApp" layout="row" ng-controller="AppController as ctrl" style="min-width: 283px" ng-cloak>  
   <md-sidenav ng-hide="ctrl.loading" md-is-open="ctrl.sidenavOpen" flex md-whiteframe="5" md-component-id="left"
@@ -22,18 +23,18 @@
   		<md-toolbar class="md-primary md-hue-2">		
 	    	<div md-whiteframe="3" class="md-toolbar-tools">
 	      		<md-button md-no-ink md-border class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
-		        	<md-icon hide-gt-sm md-font-set="material-icons"> search </md-icon>		        	
+		        	<i hide-gt-sm class="material-icons">search</i>		        	
 		      	</md-button>
 	      		
 	      		<span flex></span>
 	      		
-	      		<span hide show-gt-sm class="md-headline">UWScheduleBuilder</span>
-	      		<span hide-gt-sm>UWScheduleBuilder</span>
+	      		<span hide show-gt-sm class="md-headline">ScheduSmart</span>
+	      		<span hide-gt-sm>ScheduSmart</span>
 	      		
 	      		<span flex></span>
 										      		
 	      		<md-button ng-href="{{ ctrl.isList() ? '#!/week' : '#!/list' }}" class="md-icon-button">
-	        		<md-icon md-font-set="material-icons"> {{ ctrl.isList() ? 'view_week' : 'view_list' }} </md-icon>
+	        		<i class="material-icons"> {{ ctrl.isList() ? 'view_week' : 'view_list' }} </i>
 	      		</md-button>	      		
 		    </div>			
 	  	</md-toolbar>
@@ -59,10 +60,10 @@
 		  		</div>		  		
 		  		
 		  		<div style="width: 50px" layout="column" layout-align="end center">
-		  			<md-button href="http://google.com" class="md-icon-button launch" target="_blank">
+		  			<md-button href="https://github.com/SebastienStDenis/UWScheduleBuilder/issues" class="md-icon-button launch" target="_blank">
 				        <md-icon md-font-set="material-icons">feedback</md-icon>
 				    </md-button>
-				    <md-button href="http://google.com" class="md-icon-button launch" target="_blank">
+				    <md-button href="https://github.com/SebastienStDenis/UWScheduleBuilder" class="md-icon-button launch" target="_blank">
 				        <md-icon md-font-set="material-icons">code</md-icon>
 				    </md-button>
 		      		<md-button style="margin-bottom: 5px;" href="http://google.com" class="md-icon-button launch" target="_blank">
