@@ -198,7 +198,7 @@ public class UWAPIClient {
 				throw new UWAPIException();
 			}
 		} catch (Throwable e) {
-			throw new UWAPIException("cannot access course information for " + className + ", " + term);
+			throw new UWAPIException("cannot access course information for course " + className + ", term " + term);
 		}
 		
 		ArrayList<Section> sections = new ArrayList<Section>();

@@ -55,7 +55,13 @@
 	
 	<md-divider style="width: 90%"></md-divider>
 	
-	<md-button ng-disabled="$ctrl.noCourses()" ng-click="$ctrl.getSchedules()" class="md-raised md-accent">Search</md-button>
+	<div layout="row" layout-align="center center">
+		<div style="width: 40px;"></div>
+		<md-button ng-disabled="$ctrl.noCourses()" ng-click="$ctrl.getSchedules()" class="md-raised md-accent">Search</md-button>
+		<md-button class="md-icon-button" ng-click="$ctrl.showHelp()">
+			<md-icon md-font-set="material-icons">help</md-icon>
+		</md-button>
+	</div>
 	
 	<div></div>	
 </md-content>

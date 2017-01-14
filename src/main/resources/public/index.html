@@ -16,10 +16,14 @@
 <body ng-app="uwScheduleBuilderApp" layout="row" ng-controller="AppController as ctrl" style="min-width: 283px" ng-cloak>  
   <md-sidenav ng-hide="ctrl.loading" md-is-open="ctrl.sidenavOpen" flex md-whiteframe="5" md-component-id="left"
   	md-is-locked-open="$mdMedia('gt-sm')" class="md-sidenav-left" layout="column" layout-align="start stretch">		
-		<search flex="noshrink" layout="row"></search>	
-  </md-sidenav>  
+	  <search flex="noshrink" layout="row"></search>	
+  </md-sidenav>
+  	  	
+  <div ng-hide="!ctrl.loading" layout="row" layout-align="center center" flex>
+	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
   
-  <div layout="column" layout-fill>  		
+  <div layout="column" layout-fill ng-hide="ctrl.loading">  		
   		<md-toolbar class="md-primary md-hue-2">		
 	    	<div md-whiteframe="3" class="md-toolbar-tools">
 	      		<md-button md-no-ink md-border class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
@@ -39,11 +43,7 @@
 		    </div>			
 	  	</md-toolbar>
 	  	
-	  	<div ng-hide="!ctrl.loading" layout="row" layout-align="center center" flex>
-  			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
-  		</div>
-	  	
-	  	<md-content ng-hide="ctrl.loading" layout="column" flex>
+	  	<md-content layout="column" flex>
 	  		<div layout="row" flex="noshrink" layout-align="space-between stretch">
 	  			<div style="width: 50px"></div>
 	  			
@@ -66,7 +66,7 @@
 				    <md-button href="https://github.com/SebastienStDenis/UWScheduleBuilder" class="md-icon-button launch" target="_blank">
 				        <md-icon md-font-set="material-icons">code</md-icon>
 				    </md-button>
-		      		<md-button style="margin-bottom: 5px;" href="http://google.com" class="md-icon-button launch" target="_blank">
+		      		<md-button style="margin-bottom: 5px;" class="md-icon-button" ng-click="ctrl.showHelp()">
 				        <md-icon md-font-set="material-icons">help</md-icon>
 				    </md-button>
 		  		</div>		
@@ -80,6 +80,7 @@
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
   	  	
   	<script src="app/app.module.js"></script>
   	<script src="app/app.config.js"></script>

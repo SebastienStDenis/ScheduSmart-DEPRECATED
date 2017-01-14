@@ -1,0 +1,20 @@
+<md-dialog style="max-width: 800px">
+  <md-dialog-content style="padding: 24px; ">
+    	<h2>Welcome to ScheduSmart!</h2>
+	    <p>This application allows you to find the best class schedule based on your preferences. Here are some tips for getting started:</p>
+		<ul>
+			<li>Begin by opening the left search menu, and selecting your term and courses.</li>
+			<li>Section types selected under 'ignore sections' will be disregarded by the algorithm.</li>
+			<li>Under 'prefered class time', selecting 'morning' will make the algorithm prefer morning classes, and 'afternoon' will make it prefer afternoon classes.</li>
+			<li>Under 'day length preference', selecting 'shorter days' will make the algorithm balance out class time evenly across the week, and 'less school days' will make it move all class time to the same days, maximizing the amount of class-free days.</li>
+			<li>Selecting 'ignore closed sections' will ignore sections that are full, cancelled or otherwise closed.</li>
+			<li>Once ready to generate schedules, press 'Search'.</li>
+			<li>The schedules will be ordered from best to worst. Use the 'Prev' and 'Next' buttons to navigate them.</li>
+			<li>Use the button at the top-right of the page to switch between week view and list view for each calendar.</li>
+		</ul>
+		<p> Tip:  Too many schedules returned? Try ignoring section types (under 'ignore sections') that have many options, like TUTs.</p>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+  </md-dialog-actions>
+</md-dialog>

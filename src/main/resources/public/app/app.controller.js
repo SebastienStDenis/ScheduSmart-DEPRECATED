@@ -1,6 +1,6 @@
 angular.
 	module('uwScheduleBuilderApp').
-	controller('AppController', ['$scope', '$location', '$mdSidenav', 'Schedules', function AppController($scope, $location, $mdSidenav, Schedules) {
+	controller('AppController', ['$scope', '$location', '$mdSidenav', '$mdDialog', 'Schedules', function AppController($scope, $location, $mdSidenav, $mdDialog, Schedules) {
 	  var self = this;
 		
 	  self.openSideNav = function() {
@@ -13,15 +13,33 @@ angular.
 		    self.loading = false;
 	  });
 	  
-	  this.sidenavOpen = true;
+	  self.sidenavOpen = true;
 	  
-	  this.schedules = Schedules;
+	  self.schedules = Schedules;
 	  
-	  this.notSmall = function() {
+	  self.notSmall = function() {
 		  return true;
 	  }
 	  
-	  this.isList = function() {
+	  self.isList = function() {
 		  return $location.path() == '/list';
 	  }
+	  
+	  self.showHelp = function() {
+		  $mdDialog.show({
+              controller: function DialogController($scope, $mdDialog) {
+            	  $scope.closeDialog = function() {
+                      $mdDialog.hide();
+                  }
+              },
+              templateUrl: 'assets/html/helpDialog.html',
+              parent: angular.element(document.body),
+              clickOutsideToClose: false,
+              fullscreen: false,
+            })
+	  }
+	  
+	  $scope.$on('ShowHelp', function() {
+		  self.showHelp()
+	  });
 }]);

@@ -13,6 +13,6 @@ public class UWAPIException extends Exception {
 	}
 	
 	public String getMessage() {
-		return String.format("UW API Error: %s", super.getMessage());
+		return super.getMessage();
 	}
 }

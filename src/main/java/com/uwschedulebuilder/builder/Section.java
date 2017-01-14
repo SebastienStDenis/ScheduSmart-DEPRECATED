@@ -3,7 +3,7 @@ package com.uwschedulebuilder.builder;
 import java.util.ArrayList;
 
 // Section represents all components of a section of
-//    a course (eg. add "LEC" components of CS 241)
+//    a course (eg. all "LEC" components of CS 241)
 public class Section {
 	private ArrayList<Component> components;
 	private String type; // ex: "LEC"

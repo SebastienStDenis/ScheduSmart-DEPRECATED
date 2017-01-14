@@ -2,10 +2,10 @@ angular.
 	module('search').
 	component('search', {
 		templateUrl: 'app/search/search.template.html',
-		controller: ['$scope', '$http', '$mdSidenav', 'Schedules',
-			function ListViewController($scope, $http, $mdSidenav, Schedules) {
+		controller: ['$scope', '$http', '$mdSidenav', '$mdDialog', 'Schedules',
+			function ListViewController($scope, $http, $mdSidenav, $mdDialog, Schedules) {
 				var self = this;
-				
+								
 				self.terms = [];
 				self.termInd = 0;
 				
@@ -14,15 +14,19 @@ angular.
 				$http.get('api/v1/allcourses').success(function (data) {
 					self.terms = data;
 					$scope.$emit('SearchReady')
-				}).error(function (data, status) {
-					console.log('Error: ' + data);
+				}).error(function (data, status) {					
+					$mdDialog
+			        .show(
+			        		$mdDialog.alert({
+					            title: 'Error',
+					            textContent: 'Cannot access service. Please try again later.',
+					            ok: 'Close'
+			          }));
 				});
 				
 				self.courses = [];
 				
-				self.addCourse = function() {
-					  // !!! change selectedItem to self.selectedItem ???
-					
+				self.addCourse = function() {					
 					  if (self.searchText && self.courses.indexOf(self.selectedItem) == -1) {
 						  self.courses.push(self.selectedItem);
 					  }
@@ -71,8 +75,12 @@ angular.
 					  
 					path = '/api/v1/schedules?term=1171&courses=CS240&courses=CS241&courses=CS251&courses=STV205&classtime=1&daylength=2&omitclosed=1';
 					
-					var result = Schedules.getSchedules(path, $mdSidenav('left').toggle);
-				}			
+					Schedules.getSchedules(path, $mdSidenav('left').toggle);
+				}
+				
+				self.showHelp = function() {
+					$scope.$emit('ShowHelp')
+				}
 		}
 	]
 });
