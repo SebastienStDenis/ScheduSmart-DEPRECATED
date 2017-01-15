@@ -17,8 +17,13 @@ angular.
 	  
 	  self.schedules = Schedules;
 	  
-	  self.notSmall = function() {
-		  return true;
+	  self.displayIndex = function() {
+		  var schedCount = self.schedules.schedules.length;
+		  if (schedCount == 0) {
+			  return 'no schedules';
+		  } else {
+			  return String(self.schedules.index+1) + ' / ' + String(schedCount);
+		  }
 	  }
 	  
 	  self.isList = function() {

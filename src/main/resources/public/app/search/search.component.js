@@ -24,7 +24,7 @@ angular.
 			          }));
 				});
 				
-				self.courses = [];
+				self.courses = ['REMOVE'];
 				
 				self.addCourse = function() {					
 					  if (self.searchText && self.courses.indexOf(self.selectedItem) == -1) {
@@ -73,7 +73,7 @@ angular.
 					path += '&daylength=' + self.dayLength;
 					path += '&omitclosed=' + (self.omitClosed ? '1' : '0');
 					  
-					path = '/api/v1/schedules?term=1171&courses=CS240&courses=CS241&courses=CS251&courses=STV205&classtime=1&daylength=2&omitclosed=1';
+					path = '/api/v1/schedules?term=1171&courses=CS240&courses=CS241&courses=CS251&courses=STV205&classtime=1&daylength=2&omitclosed=0';
 					
 					Schedules.getSchedules(path, $mdSidenav('left').toggle);
 				}

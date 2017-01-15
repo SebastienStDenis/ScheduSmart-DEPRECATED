@@ -236,28 +236,12 @@ public class UWAPIClient {
 				} else {
 					location = currJBlock.location.building + " " + currJBlock.location.room;
 				}
-				
-				String instructors = "";
-				int instrLen = currJBlock.instructors.length;
-				if (instrLen >= 1) {
-					String[] instrSplit = currJBlock.instructors[0].split(",");
-					
-					if (instrSplit.length == 1) {
-						instructors = instrSplit[0];
-					} else if (instrSplit.length > 1) {
-						instructors = instrSplit[1] + " " + instrSplit[0];
-					}
-					
-					if (instrLen > 1) {
-						instructors += String.format(" (+%d)", instrLen - 1);
-					}
-				}
-				
+								
 				Block block = null;
 				
 				try {
 					block = new Block(currJBlock.date.start_time, currJBlock.date.end_time, currJBlock.date.weekdays,
-						location, currJBlock.date.start_date, currJBlock.date.end_date, instructors, compType);
+						location, currJBlock.date.start_date, currJBlock.date.end_date, currJBlock.instructors, compType);
 				} catch (IllegalArgumentException e) {
 					continue NextComponent;
 				}

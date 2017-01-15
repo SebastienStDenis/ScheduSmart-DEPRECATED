@@ -75,7 +75,7 @@ public class BuilderResource {
 		String[] ignoredSecs = request.queryParamsValues("ignore");
 		int classTime = Integer.parseInt(request.queryParams("classtime"));
 		int dayPref = Integer.parseInt(request.queryParams("daylength"));
-		boolean omitClosed = (request.queryParams("omitclosed") == "1");
+		boolean omitClosed = request.queryParams("omitclosed").equals("1");
 		
 		ArrayList<Schedule> scheduleList = builder.getSchedules(courses, term, ignoredSecs, omitClosed, new ScorePreferences(classTime, dayPref));
 		int scheduleCount = scheduleList.size();

@@ -2,8 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ScheduSmart - University of Waterloo</title>
-		
+    <title>ScheduSmart - University of Waterloo</title>		
 	
 	<link rel="shortcut icon" href="assets/img/favicon.ico">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -13,7 +12,7 @@
   	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
   	<link href="https://fonts.googleapis.com/css?family=Dawning of a New Day" rel="stylesheet">	
 </head>
-<body ng-app="uwScheduleBuilderApp" layout="row" ng-controller="AppController as ctrl" style="min-width: 283px" ng-cloak>  
+<body ng-app="uwScheduleBuilderApp" layout="row" ng-controller="AppController as ctrl" ng-cloak>  
   <md-sidenav ng-hide="ctrl.loading" md-is-open="ctrl.sidenavOpen" flex md-whiteframe="5" md-component-id="left"
   	md-is-locked-open="$mdMedia('gt-sm')" class="md-sidenav-left" layout="column" layout-align="start stretch">		
 	  <search flex="noshrink" layout="row"></search>	
@@ -29,8 +28,8 @@
 	      		<md-button md-no-ink md-border class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
 		        	<i hide-gt-sm class="material-icons">search</i>		        	
 		      	</md-button>
-	      		
-	      		<span flex></span>
+		      	
+		      	<span flex></span>
 	      		
 	      		<span hide show-gt-sm class="md-headline">ScheduSmart</span>
 	      		<span hide-gt-sm>ScheduSmart</span>
@@ -43,23 +42,23 @@
 		    </div>			
 	  	</md-toolbar>
 	  	
-	  	<md-content layout="column" flex>
+	  	<md-content layout="column" flex> 
 	  		<div layout="row" flex="noshrink" layout-align="space-between stretch">
-	  			<div style="width: 50px"></div>
-	  			
+	  			<div style="min-width: 50px;"></div>
+	  			 			
 	  			<div layout="column" flex="noshrink" layout-align="center center">
 		  			<div layout="row" flex="none" layout-align="center center">
 			  			<md-button class="md-small" ng-click="ctrl.schedules.prevSchedule()">Prev</md-button>
-						<md-button class="md-small" ng-disabled="true"> {{ ctrl.schedules.index + 1 }} / {{ ctrl.schedules.schedules.length }} </md-button>
+						<md-button class="md-small" ng-disabled="true"> {{ ctrl.displayIndex() }} </md-button>
 						<md-button class="md-small" ng-click="ctrl.schedules.nextSchedule()">Next</md-button>		  		
 			  		</div>
 			  		
-			  		<div style="margin: 6px;" md-whiteframe="2" layout-align="center center">
+			  		<div style="margin-bottom: 16px;" md-whiteframe="2" layout-align="center center">
 			  			<div ng-view></div>
 			  		</div>
 		  		</div>		  		
 		  		
-		  		<div style="width: 50px" layout="column" layout-align="end center">
+		  		<div style="min-width: 50px" layout="column" layout-align="end center">
 		  			<md-button href="https://github.com/SebastienStDenis/UWScheduleBuilder/issues" class="md-icon-button launch" target="_blank">
 				        <md-icon md-font-set="material-icons">feedback</md-icon>
 				    </md-button>
@@ -69,8 +68,8 @@
 		      		<md-button style="margin-bottom: 5px;" class="md-icon-button" ng-click="ctrl.showHelp()">
 				        <md-icon md-font-set="material-icons">help</md-icon>
 				    </md-button>
-		  		</div>		
-	  		</div>	    	
+		  		</div>    
+		  	</div>	
 	  	</md-content>
 	</div>	
 

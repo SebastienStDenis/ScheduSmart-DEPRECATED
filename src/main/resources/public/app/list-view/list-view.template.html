@@ -1,9 +1,26 @@
-<md-list ng-repeat="course in Schedules.schedules[Schedules.index].components">
-     <md-subheader class="md-no-sticky" style="background-color: silver">{{ course[0].name }}</md-subheader>
-     <md-list-item  style="height: 50px;"ng-repeat="comp in course" ng-click="null">
-       <div class="md-list-item-text" layout="column">
-         <h3>{{ comp.sectionName }} ({{ comp.classNumber }}), {{ Schedules.getProfs(comp) }}</h3>
-       </div>
-     </md-list-item>		        
-     <md-divider ng-if="!$last"></md-divider>     
-</md-list>
+<div style="min-width: 400px" ng-repeat="course in $ctrl.Schedules.schedules[$ctrl.Schedules.index].components" >
+	<md-toolbar class="md-theme-light">
+	    <h2 class="md-toolbar-tools">
+	      <span>{{ course[0].name }}</span>
+	    </h2>
+	</md-toolbar>
+	
+	<md-content>
+	    <md-list>
+	      <md-list-item class="md-2-line" ng-repeat="comp in course">
+	        <div class="md-list-item-text">
+	          <h3>{{ comp.sectionName }} ({{ comp.classNumber }})</h3>
+	          <p>{{ $ctrl.Schedules.getInstructors(comp) }}, {{ $ctrl.Schedules.getLocations(comp) }}</p>
+	        </div>
+	        <md-icon style="margin-left: 5px;"md-font-set="material-icons" ng-if="comp.closed">
+	        	<md-tooltip md-direction="left">
+          			Closed
+        		</md-tooltip>
+	        	error
+        	</md-icon>
+			</md-button>	        
+	        <md-divider ng-if="!$last"></md-divider>
+	      </md-list-item>
+	    </md-list>
+	</md-content>
+</div>

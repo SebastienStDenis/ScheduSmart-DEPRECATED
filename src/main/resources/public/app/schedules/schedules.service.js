@@ -19,6 +19,7 @@ angular.
 				
 				$http.get(path).success(function (data) {
 					self.schedules = data;
+					self.index = 0;
 					$mdDialog.cancel();
 					
 					if (self.schedules.length == 0) {
@@ -48,8 +49,54 @@ angular.
 				});
 			},
 			
-			getProfs: function (component) {
-				return 'Prof. Feridun';
+			getInstructors: function (component) {
+				var instr = 'TBA';
+				
+				for (var i = 0; i < component.blocks.length; ++i) {
+					var instructors = component.blocks[i].instructors;
+					
+					if (instructors != null) {
+						for (var j = 0; j < instructors.length; ++j) {							
+							var lastFirst = instructors[j].split(',');
+							var name = 'TBA';
+							
+							if (lastFirst.length == 1 && lastFirst[0] != '') {
+								name = lastFirst[0];
+							} else if (lastFirst.length > 1)  {
+								name = lastFirst[1] + ' ' + lastFirst[0];
+							}
+							
+							if (instr == 'TBA') {
+								instr = name;
+							} else if (instr != name) {
+								instr += ' (+)';
+								return instr;
+							}
+						}
+					}
+				}
+				return instr;
+			},
+			
+			getLocations: function (component) {
+				var loc = 'TBA';
+				
+				for (var i = 0; i < component.blocks.length; ++i) {
+					var currLoc = component.blocks[i].location;
+					
+					if (currLoc == '') {
+						continue;
+					}
+					
+					if (loc == 'TBA') {
+						loc = currLoc;
+					} else if (loc != currLoc) {
+						loc += ' (+)';
+						return loc;
+					}
+				}	
+				
+				return loc;
 			},
 			
 			nextSchedule: function() {

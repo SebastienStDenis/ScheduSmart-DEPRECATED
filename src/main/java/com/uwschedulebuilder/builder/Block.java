@@ -13,12 +13,12 @@ public class Block {
 		
 	private String location;
 	
-	private String instructors;
+	private String[] instructors;
 	
 	private String sectionType;
 		
 	public Block(String startTime, String endTime, String days, String location,
-			String startDate,	String endDate, String instructors, String sectionType) throws IllegalArgumentException {
+			String startDate,	String endDate, String[] instructors, String sectionType) throws IllegalArgumentException {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.days = parseDays(days);		
@@ -93,6 +93,6 @@ public class Block {
 	}
 	
 	public String toString() {
-		return String.format("Block: %s to %s, %s, %s, %s to %s, %s", startTime, endTime, Arrays.toString(days), location, startDate, endDate, instructors);
+		return String.format("Block: %s to %s, %s, %s, %s to %s, %s", startTime, endTime, Arrays.toString(days), location, startDate, endDate, Arrays.toString(instructors));
 	}
 }
