@@ -43,22 +43,22 @@
 	  	</md-toolbar>
 	  	
 	  	<md-content layout="column" flex> 
-	  		<div layout="row" flex="noshrink" layout-align="space-between stretch">
-	  			<div style="min-width: 50px;"></div>
+	  		<div layout="row" flex="noshrink" layout-align="space-between">
+	  			<div class="clearfix" style="min-width: 50px;"></div>
 	  			 			
-	  			<div layout="column" flex="noshrink" layout-align="center center">
-		  			<div layout="row" flex="none" layout-align="center center">
+	  			<div class="clearfix" layout="column" layout-align="center">
+		  			<div layout="row" layout-align="center center">
 			  			<md-button class="md-small" ng-click="ctrl.schedules.prevSchedule()">Prev</md-button>
 						<md-button class="md-small" ng-disabled="true"> {{ ctrl.displayIndex() }} </md-button>
 						<md-button class="md-small" ng-click="ctrl.schedules.nextSchedule()">Next</md-button>		  		
 			  		</div>
 			  		
-			  		<div style="margin-bottom: 16px;" md-whiteframe="2" layout-align="center center">
+			  		<div style="margin: 0px 16px 16px 16px;" md-whiteframe="2">
 			  			<div ng-view></div>
 			  		</div>
 		  		</div>		  		
 		  		
-		  		<div style="min-width: 50px" layout="column" layout-align="end center">
+		  		<div class="clearfix" style="min-width: 50px" layout="column" layout-align="end center">
 		  			<md-button href="https://github.com/SebastienStDenis/UWScheduleBuilder/issues" class="md-icon-button launch" target="_blank">
 				        <md-icon md-font-set="material-icons">feedback</md-icon>
 				    </md-button>

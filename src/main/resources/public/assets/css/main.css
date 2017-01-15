@@ -17,3 +17,9 @@ md-sidenav {
 .md-button.md-small {
     min-width: 1%;
 }
+
+.clearfix {
+	content: "";
+    clear: both;
+    display: table;
+}
