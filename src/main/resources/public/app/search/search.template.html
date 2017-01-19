@@ -7,7 +7,7 @@
 	
 	Select term:
 		
-	<md-radio-group layout="row" layout-wrap layout-align="center center" ng-model="$ctrl.termInd" ng-click="$ctrl.removeCourses()">
+	<md-radio-group layout="row" layout-wrap layout-align="center center" ng-model="$ctrl.termInd" ng-click="$ctrl.changeTerm()">
 		<md-radio-button ng-repeat="term in $ctrl.terms" value="{{ $index }}">
 			{{ term.name }}
 		</md-radio-button>
@@ -15,10 +15,10 @@
 	
 	<md-divider style="width: 90%""></md-divider>
 	
-	Select courses:	
+	Select courses:
 	<md-autocomplete style="width: 90%" placeholder="Search..." md-no-cache="true" md-selected-item="$ctrl.selectedItem" md-search-text="$ctrl.searchText"
 			md-items="item in $ctrl.terms[$ctrl.termInd].courses | filter:$ctrl.searchText" md-item-text="item" md-selected-item-change="$ctrl.addCourse()">
-			<span md-highlight-text="$ctrl.searchText">{{ item }}</span>
+			<span md-highlight-text="$ctrl.searchText" md-highlight-flags="i">{{ item }}</span>
 	</md-autocomplete> 
 	   
 	<md-chips style="width: 90%" placeholder="Courses" ng-model="$ctrl.courses" readonly="true" md-removable="true"></md-chips>

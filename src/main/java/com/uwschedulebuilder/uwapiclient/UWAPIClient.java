@@ -41,6 +41,7 @@ public class UWAPIClient {
 		private class JSONCourseName {
 			String subject;
 			String catalog_number;
+			String title;
 		}
 		
 		JSONCourseName[] data;
@@ -121,7 +122,7 @@ public class UWAPIClient {
 		
 		ArrayList<String> courses = new ArrayList<String>();
 		for (int i = 0; i < obj.data.length; ++i) {
-			courses.add(obj.data[i].subject + " " + obj.data[i].catalog_number);
+			courses.add(obj.data[i].subject + " " + obj.data[i].catalog_number + " - " + obj.data[i].title);
 		}
 		
 		return courses;

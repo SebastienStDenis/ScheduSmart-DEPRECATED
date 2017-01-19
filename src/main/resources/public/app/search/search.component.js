@@ -24,21 +24,27 @@ angular.
 			          }));
 				});
 				
-				self.courses = ['REMOVE'];
+				self.courses = [];
 				
-				self.addCourse = function() {					
-					  if (self.searchText && self.courses.indexOf(self.selectedItem) == -1) {
-						  self.courses.push(self.selectedItem);
+				self.addCourse = function() {
+					  if (self.selectedItem == null) {
+						  return
+					  }
+					  
+					  var shortName = self.selectedItem.split(" - ")[0]
+					  if (self.searchText && self.courses.indexOf(shortName) == -1) {
+						  self.courses.push(shortName);
 					  }
 				
 					  self.searchText = '';
+					  self.selectedItem = '';
 				  }
 				
 				self.noCourses = function() {
 					return self.courses.length == 0;
 				}
 				
-				self.removeCourses = function () {
+				self.changeTerm = function () {
 					  self.courses = [];
 				}
 				

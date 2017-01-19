@@ -9,13 +9,13 @@ import com.uwschedulebuilder.builder.Schedule;
 // ArraySchedules are like Schedules, but with a Collection of arrays instead of a map.
 // Each collection element represents a different course.
 public class CollectionSchedule {
-		Collection<ArrayList<Component>> components;
+		Collection<ArrayList<Component>> courses;
 		
 		boolean closed;
 		double score;
 		
 		public CollectionSchedule(Schedule sched) {
-			this.components = sched.getComponents().values();
+			this.courses = sched.getComponents().values();
 			this.closed = sched.getClosed();
 			this.score = sched.getScore();
 		}
