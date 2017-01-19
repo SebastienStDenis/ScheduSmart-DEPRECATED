@@ -1,11 +1,38 @@
 angular.
 	module('schedules').
 	factory('Schedules', ['$http', '$mdDialog', function($http, $mdDialog) {
+		var today = new Date();
+		var month = today.getMonth()+1;
+		var currYear = today.getFullYear();
+		
+		var monthChar;
+		if (month < 5) {
+			monthChar = '1';
+		} else if (month < 9) {
+			monthChar = '5';
+		} else {
+			monthChar = '9';
+		}
+		
 		return {		
 			schedules: [],
 			index: 0,
+			firstMonth: monthChar,
+			year: currYear,
 			
-			getSchedules: function (path, successFunc) {
+			observerCallbacks: [],
+
+			registerObserverCallback: function(callback){
+			    this.observerCallbacks.push(callback);
+			},
+
+			notifyObservers: function(){
+				for (var i = 0; i < this.observerCallbacks.length; ++i) {
+					this.observerCallbacks[i]();
+				}
+			},
+			
+			getSchedules: function (path, firstMonth, year, successFunc) {
 				var self = this;
 				
 				$mdDialog.show({
@@ -20,6 +47,9 @@ angular.
 				$http.get(path).success(function (data) {
 					self.schedules = data;
 					self.index = 0;
+					self.firstMonth = firstMonth;
+					self.year = year;
+					
 					$mdDialog.cancel();
 					
 					if (self.schedules.length == 0) {
@@ -30,6 +60,7 @@ angular.
 						            ok: 'Close'
 				          }));
 					} else {
+						self.notifyObservers();
 						successFunc();
 					}					
 					
@@ -104,14 +135,15 @@ angular.
 				if (this.index >= this.schedules.length) {
 					this.index = 0;
 				}
+				this.notifyObservers();
 			},
 			
 			prevSchedule: function() {
 				if (this.index <= 0) {
 					this.index = this.schedules.length;
-				}
-				
+				}				
 				this.index--;
+				this.notifyObservers();
 			}
 		}
 	}

@@ -1,0 +1,84 @@
+.calendar {
+  max-width: 1280px;
+  min-width: 500px;
+  background: white;
+}
+
+header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.headcol {
+  width: 60px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  border: 0;
+  position: relative;
+  top: -10px;
+}
+
+thead th {
+  font-size: 16px;
+  width: 100%;
+}
+
+tr, tr td {
+  height: 20px;
+  width: auto;
+}
+
+tr:not(:last-child) td:not(.headcol) {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+tr td:not(.headcol):not(:last-child) {
+  border-right: 1px solid #eee;
+}
+
+tbody tr td {
+  position: relative;
+  vertical-align: top;
+  height: 40px;
+  padding: 0;
+  width: auto;
+}
+
+.event {
+  /*background: #00B4FC;*/
+  color: white;
+  border-radius: 2px;
+  font-size: 14px;
+  padding: 2px;
+  margin: 1px;
+  /*position: absolute;*/
+  overflow-y: auto;
+}
+
+td p {
+	margin: 0px;
+}
+
+.event.single {
+  height: 83%;
+}
+
+.event.double {
+  height: 183%;
+}
+
+.event.triple {
+  height: 283%;
+}
+
+.event.quadruple {
+  height: 383%;
+}

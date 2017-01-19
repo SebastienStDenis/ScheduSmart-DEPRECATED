@@ -1,15 +1,47 @@
-<div>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
-	<p>This is a calendar</p>
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="assets/css/week-view.css">
+
+<div class="calendar">  
+  <header layout-align="center center">
+    <div layout="row" style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
+      <md-button ng-click="$ctrl.prevWeek()">prev</md-button>
+      <h1 style="margin: 0px;">
+      	{{ $ctrl.weekDates[0].getDate() }} {{ $ctrl.months[$ctrl.weekDates[0].getMonth()] }} – {{ $ctrl.weekDates[6].getDate() }} {{$ctrl.months[$ctrl.weekDates[6].getMonth()]}} {{ $ctrl.weekDates[0].getFullYear() }}
+      </h1>
+      <md-button ng-click="$ctrl.nextWeek()">vext</md-button>
+      {{$ctrl.Schedules.firstMonth}}
+    </div>
+    
+    <table>
+	 <thead>
+	    <tr>
+	      <th class="headcol"></th>
+	      <th ng-repeat="day in $ctrl.weekDates">{{ $ctrl.days[$index] }} {{ day.getDate() }}</th>		      
+	    </tr>
+	 </thead>
+	</table>
+  </header>
+  
+  <div> 
+    <table>	
+      <tbody>
+  	    <tr ng-repeat="hour in $ctrl.week" ng-if="$ctrl.minInd <= $index && $index <= $ctrl.maxInd">
+  		  <td class="headcol"><span ng-if="$index != $ctrl.minInd">{{ $ctrl.getTime($index) }}</span></td>
+  		  <td ng-repeat="block in hour track by $index">
+  		    <div layout="column" ng-if="block != null" class="event" ng-style="block.style">
+  			  <p><b>{{block.name}}</b></p>
+  			  <p>{{block.instructor}}</p>
+  			  <p>{{block.location}}</p>
+  			  <!-- <p>{{slot.time}}</p>
+  			  <p>{{slot.date}}</p>  -->
+  			</div>
+  		  </td>  	
+  	    </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+</html>
+
+

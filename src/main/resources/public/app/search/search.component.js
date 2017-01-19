@@ -65,24 +65,32 @@ angular.
 				
 				self.getSchedules = function () {
 					path = '/api/v1/schedules?';
-					path += 'term=' + self.terms[self.termInd].code;
+					
+					var term = self.terms[self.termInd].code
+					path += 'term=' + term;
+					
 					for (var i = 0; i < self.courses.length; ++i) {
 						path += '&courses=' + self.courses[i].replace(/\s+/g, '');
 					}
+					
 					for (var i = 0; i < self.sections.length; ++i) {
 						var section = self.sections[i];
 						if (section.selected) {
 							path += '&ignore=' + section.name;
 						}
 					}
+					
 					path += '&classtime=' + self.classTime;
 					path += '&daylength=' + self.dayLength;
 					path += '&omitclosed=' + (self.omitClosed ? '1' : '0');
 					  
 					//path = '/api/v1/schedules?term=1171&courses=CS240&courses=CS241&courses=CS251&courses=STV205&classtime=1&daylength=2&omitclosed=0';
 					
-					Schedules.getSchedules(path, $mdSidenav('left').toggle);
+					var year = '20' + term.substring(1, 3);
+					
+					Schedules.getSchedules(path, term.charAt(3), year, $mdSidenav('left').toggle);
 				}
+				
 				
 				self.showHelp = function() {
 					$scope.$emit('ShowHelp')
