@@ -14,7 +14,7 @@
 </head>
 <body ng-app="uwScheduleBuilderApp" layout="row" ng-controller="AppController as ctrl" ng-cloak>  
   <md-sidenav ng-hide="ctrl.loading" md-is-open="ctrl.sidenavOpen" flex md-whiteframe="5" md-component-id="left"
-  	md-is-locked-open="$mdMedia('gt-sm')" class="md-sidenav-left" layout="column" layout-align="start stretch">		
+  	md-is-locked-open="$mdMedia('gt-md')" class="md-sidenav-left" layout="column" layout-align="start stretch">		
 	  <search flex="noshrink" layout="row"></search>	
   </md-sidenav>
   	  	
@@ -26,7 +26,7 @@
   		<md-toolbar class="md-primary md-hue-2">		
 	    	<div md-whiteframe="3" class="md-toolbar-tools">
 	      		<md-button md-no-ink md-border class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
-		        	<i hide-gt-sm class="material-icons">search</i>		        	
+		        	<i hide-gt-md class="material-icons">search</i>		        	
 		      	</md-button>
 		      	
 		      	<span flex></span>
@@ -58,7 +58,7 @@
 			  		</div>
 		  		</div>		  		
 		  		
-		  		<div class="clearfix" style="min-width: 50px" layout="column" layout-align="end center">
+		  		<div class="clearfix" style="min-width: 50px;" layout="column" layout-align="end center">
 		  			<md-button href="https://github.com/SebastienStDenis/UWScheduleBuilder/issues" class="md-icon-button launch" target="_blank">
 				        <md-icon md-font-set="material-icons">feedback</md-icon>
 				    </md-button>

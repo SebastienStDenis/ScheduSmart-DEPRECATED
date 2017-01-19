@@ -49,6 +49,11 @@ public class Schedule {
 		return components;
 	}
 	
+	// getSize returns the number of courses in the schedule
+	public int getSize() {
+		return components.size();
+	}
+	
 	// getClosed returns the closed field
 	public boolean getClosed() {
 		return closed;

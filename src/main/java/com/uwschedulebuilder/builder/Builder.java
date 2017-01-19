@@ -38,6 +38,10 @@ public class Builder {
 	}
 	
 	private void addValidSchedule(Schedule schedule) {
+		if (schedule.getSize() == 0) {
+			return;
+		}
+		
 		ListIterator<Schedule> validIt = validSchedules.listIterator();
 		
 		double scheduleScore = schedule.getScore();

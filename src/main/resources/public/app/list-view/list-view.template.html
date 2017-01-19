@@ -1,4 +1,4 @@
-<div style="width: 400px" ng-repeat="course in $ctrl.Schedules.schedules[$ctrl.Schedules.index].components" >
+<div style="width: 400px" ng-repeat="course in $ctrl.Schedules.schedules[$ctrl.Schedules.index].courses" >
 	<md-toolbar class="md-theme-light">
 	    <h2 class="md-toolbar-tools">
 	      <span>{{ course[0].name }}</span>
@@ -7,7 +7,7 @@
 	
 	<md-content>
 	    <md-list>
-	      <md-list-item class="md-2-line" ng-repeat="comp in course">
+	      <md-list-item class="md-2-line" ng-repeat="comp in course" style="background: white">
 	        <div class="md-list-item-text">
 	          <h3>{{ comp.sectionName }} ({{ comp.classNumber }})</h3>
 	          <p>{{ $ctrl.Schedules.getInstructors(comp) }}, {{ $ctrl.Schedules.getLocations(comp) }}</p>

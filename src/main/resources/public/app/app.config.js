@@ -16,7 +16,7 @@ angular.
 				when('/week', {
 					template: '<week-view></week-view>'
 				}).
-				otherwise('/list');
+				otherwise('/week');
 			
 	}
 ]);

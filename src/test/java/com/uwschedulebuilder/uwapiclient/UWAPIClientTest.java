@@ -16,7 +16,7 @@ public class UWAPIClientTest {
 
 	@Test
 	public void testGetSections() {
-		String className = "CS241";
+		String className = "CS100";
 		String term = "1171";
 		
 		ArrayList<Section> sections = null;

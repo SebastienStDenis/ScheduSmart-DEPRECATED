@@ -16,16 +16,16 @@ public class BuilderTest {
 
 	@Test
 	public void testGetSchedules() {
-		String[] classes = {"CS240", "CS241", "CS251", "STV205", "ME482"};
+		String[] classes = {"CS135"};
 		
 		String term = "1171";
-		String[] ignoreSecs = {"SEM", "TUT"};
+		String[] ignoreSecs = {"TST", "LEC"};
 		ScorePreferences prefs = new ScorePreferences(1, 1);
 		
 		Builder builder = new Builder();
 		ArrayList<Schedule> scheds = null;
 		try {
-			scheds = builder.getSchedules(classes, term, ignoreSecs, false, prefs);
+			scheds = builder.getSchedules(classes, term, ignoreSecs, true, prefs);
 		} catch (UWAPIException e) {
 			fail(e.toString());
 		}
