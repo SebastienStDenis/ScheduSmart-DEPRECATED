@@ -52,7 +52,9 @@ angular.
 					
 					$mdDialog.cancel();
 					
-					if (self.schedules.length == 0) {
+					self.notifyObservers();
+					
+					if (self.schedules.length === 0) {
 						$mdDialog.show(
 				        		$mdDialog.alert({
 						            title: 'Notice',
@@ -60,14 +62,13 @@ angular.
 						            ok: 'Close'
 				          }));
 					} else {
-						self.notifyObservers();
 						successFunc();
 					}					
 					
 				}).error(function (data, status) {
 					$mdDialog.cancel();
 					var msg = 'Cannot access service. Please try again later.';
-					if (status == 400) {
+					if (status === 400) {
 						msg = data;
 					}
 					
@@ -91,15 +92,15 @@ angular.
 							var lastFirst = instructors[j].split(',');
 							var name = 'TBA';
 							
-							if (lastFirst.length == 1 && lastFirst[0] != '') {
+							if (lastFirst.length === 1 && lastFirst[0] !== '') {
 								name = lastFirst[0];
 							} else if (lastFirst.length > 1)  {
 								name = lastFirst[1] + ' ' + lastFirst[0];
 							}
 							
-							if (instr == 'TBA') {
+							if (instr === 'TBA') {
 								instr = name;
-							} else if (instr != name) {
+							} else if (instr !== name) {
 								instr += ' (+)';
 								return instr;
 							}
@@ -115,13 +116,13 @@ angular.
 				for (var i = 0; i < component.blocks.length; ++i) {
 					var currLoc = component.blocks[i].location;
 					
-					if (currLoc == '') {
+					if (currLoc === '') {
 						continue;
 					}
 					
-					if (loc == 'TBA') {
+					if (loc === 'TBA') {
 						loc = currLoc;
-					} else if (loc != currLoc) {
+					} else if (loc !== currLoc) {
 						loc += ' (+)';
 						return loc;
 					}

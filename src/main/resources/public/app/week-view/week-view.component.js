@@ -6,10 +6,10 @@ angular.
 			function WeekViewController($scope, Schedules) {
 				var self = this;
 				
-				self.months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-				self.days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+				self.months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+				self.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 				
-				self.colors = ['#F44336', '#2196F3', '#4CAF50', '#FF9800', '#9C27B0', '#607D8B', '#EC407A', '#00BCD4', '#3F51B5', ];
+				self.colors = ['#2196F3', '#F44336', '#4CAF50', '#FF9800', '#9C27B0', '#607D8B', '#EC407A', '#00BCD4', '#3F51B5', ];
 				self.colorsLen = self.colors.length;
 				
 				self.Schedules = Schedules;
@@ -24,16 +24,16 @@ angular.
 				
 				self.getTime = function(index) {
 					var hour = Math.floor(index/2).toString();
-					var min = "00";
-					if (index % 2 == 1) {
-						min = "30";
+					var min = '00';
+					if (index % 2 === 1) {
+						min = '30';
 					}
 					
 					return hour+':'+min;
 				}
 				
 				self.getIndex = function(time) {
-					var hourMin = time.split(":");
+					var hourMin = time.split(':');
 					
 					if (hourMin.length < 2) {
 						return -1;
@@ -42,7 +42,7 @@ angular.
 					var hour = parseInt(hourMin[0]);
 					var min = parseInt(hourMin[1]);
 					
-					if (min == 0) {
+					if (min === 0) {
 						return 2 * hour;
 					} else if (min <= 30) {
 						return 2 * hour + 1;
@@ -55,7 +55,7 @@ angular.
 					var startIndex = self.getIndex(startTime);
 					var endIndex = self.getIndex(endTime);
 					
-					if (startIndex == -1 || endIndex == -1) {
+					if (startIndex === -1 || endIndex === -1) {
 						return '0%';
 					}
 					
@@ -161,7 +161,7 @@ angular.
 									
 									var instructor = 'TBA';								
 									if (blocks[k].instructors.length > 0) {
-										var nameSplit = blocks[k].instructors[0].split(",");
+										var nameSplit = blocks[k].instructors[0].split(',');
 										if (nameSplit.length >= 2) {
 											instructor = nameSplit[1] + ' ' + nameSplit[0];
 										} else {
@@ -180,15 +180,15 @@ angular.
 										name: name,
 										instructor: instructor,
 										location: location,
-										time: blocks[k].startTime + "-" + blocks[k].endTime, // !!!remove self field!!!
-										date: blocks[k].startDate + "-" + blocks[k].endDate // !!!remove self field!!!
+										time: blocks[k].startTime + '-' + blocks[k].endTime, // !!!remove self field!!!
+										date: blocks[k].startDate + '-' + blocks[k].endDate // !!!remove self field!!!
 									}
 									
 									if ((blocks[k].startDate == undefined || blocks[k].endDate == undefined) ||
 											self.inWeek(blocks[k].startDate, blocks[k].endDate)) {
 										var startIndex = self.getIndex(blocks[k].startTime);
 										var endIndex = self.getIndex(blocks[k].endTime);
-										if (startIndex == -1 || endIndex == -1) {
+										if (startIndex === -1 || endIndex === -1) {
 											continue;
 										}
 																			
@@ -218,11 +218,11 @@ angular.
 						self.maxInd = 32;
 					}
 					
-					if (self.minInd != 0 && self.minInd % 2 == 0) {
+					if (self.minInd !== 0 && self.minInd % 2 === 0) {
 						self.minInd--;
 					}	
 					
-					if (self.maxInd % 2 == 1) {
+					if (self.maxInd % 2 === 1) {
 						self.maxInd--;
 					}					
 				}
@@ -236,7 +236,7 @@ angular.
 					self.firstDate.setDate(1);
 					self.firstDate.setHours(0, 0, 0, 0);
 					
-					while (self.firstDate.getDay() != 0) {
+					while (self.firstDate.getDay() !== 0) {
 				        self.firstDate.setDate(self.firstDate.getDate() + 1);
 				    }
 					
@@ -272,9 +272,9 @@ angular.
 				/*
 				self.week[30][5] = {
 						style: {'background':'#3F51B5', 'height':'183%'},
-						name: "ACTSC 102 - TUT 101",
-						instructor: "Joe John",
-						location: "DC 2145"
+						name: 'ACTSC 102 - TUT 101',
+						instructor: 'Joe John',
+						location: 'DC 2145'
 				}
 				*/
 		}

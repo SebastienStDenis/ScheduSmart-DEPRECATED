@@ -1,26 +1,25 @@
 <div style="width: 400px" ng-repeat="course in $ctrl.Schedules.schedules[$ctrl.Schedules.index].courses" >
-	<md-toolbar class="md-theme-light">
-	    <h2 class="md-toolbar-tools">
-	      <span>{{ course[0].name }}</span>
-	    </h2>
-	</md-toolbar>
+  <md-toolbar class="md-theme-light">
+    <h2 class="md-toolbar-tools">
+	  <span>{{ course[0].name }}</span>
+	</h2>
+  </md-toolbar>
 	
-	<md-content>
-	    <md-list>
-	      <md-list-item class="md-2-line" ng-repeat="comp in course" style="background: white">
-	        <div class="md-list-item-text">
-	          <h3>{{ comp.sectionName }} ({{ comp.classNumber }})</h3>
-	          <p>{{ $ctrl.Schedules.getInstructors(comp) }}, {{ $ctrl.Schedules.getLocations(comp) }}</p>
-	        </div>
-	        <md-icon style="margin-left: 5px;"md-font-set="material-icons" ng-if="comp.closed">
-	        	<md-tooltip md-direction="left">
-          			Closed
-        		</md-tooltip>
-	        	error
-        	</md-icon>
-			</md-button>	        
-	        <md-divider ng-if="!$last"></md-divider>
-	      </md-list-item>
-	    </md-list>
-	</md-content>
+  <md-content>
+    <md-list>
+      <md-list-item class="md-2-line" ng-repeat="comp in course" style="background: white">
+        <div class="md-list-item-text">
+          <h3>{{ comp.sectionName }} ({{ comp.classNumber }})</h3>
+          <p>{{ $ctrl.Schedules.getInstructors(comp) }}, {{ $ctrl.Schedules.getLocations(comp) }}</p>
+        </div>
+        <md-icon style="margin-left: 5px;"md-font-set="material-icons" ng-if="comp.closed">
+          <md-tooltip md-direction="left">
+            Closed
+          </md-tooltip>
+          error
+        </md-icon>        
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-content>
 </div>

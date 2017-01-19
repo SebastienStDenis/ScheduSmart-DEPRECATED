@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html>
-<link rel="stylesheet" href="assets/css/week-view.css">
+<link rel="stylesheet" href="assets/css/week-view.css" />
 
 <div class="calendar">  
   <header layout-align="center center">
     <div layout="row" style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
       <md-button ng-click="$ctrl.prevWeek()">prev</md-button>
       <h1 style="margin: 0px;">
-      	{{ $ctrl.weekDates[0].getDate() }} {{ $ctrl.months[$ctrl.weekDates[0].getMonth()] }} – {{ $ctrl.weekDates[6].getDate() }} {{$ctrl.months[$ctrl.weekDates[6].getMonth()]}} {{ $ctrl.weekDates[0].getFullYear() }}
+      	{{ $ctrl.weekDates[0].getDate() }}
+      	{{ $ctrl.months[$ctrl.weekDates[0].getMonth()] }}
+      	–
+      	{{ $ctrl.weekDates[6].getDate() }}
+      	{{$ctrl.months[$ctrl.weekDates[6].getMonth()]}}
+      	{{ $ctrl.weekDates[0].getFullYear() }}
       </h1>
       <md-button ng-click="$ctrl.nextWeek()">vext</md-button>
       {{$ctrl.Schedules.firstMonth}}
@@ -42,6 +45,6 @@
     </table>
   </div>
 </div>
-</html>
+
 
 

@@ -19,7 +19,7 @@ angular.
 	  
 	  self.displayIndex = function() {
 		  var schedCount = self.schedules.schedules.length;
-		  if (schedCount == 0) {
+		  if (schedCount === 0) {
 			  return 'no schedules';
 		  } else {
 			  return String(self.schedules.index+1) + ' / ' + String(schedCount);

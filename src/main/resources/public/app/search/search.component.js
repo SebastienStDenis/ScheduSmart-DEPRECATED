@@ -9,7 +9,7 @@ angular.
 				self.terms = [];
 				self.termInd = 0;
 				
-				self.schedules = Schedules;
+				self.Schedules = Schedules;
 				
 				$http.get('api/v1/allcourses').success(function (data) {
 					self.terms = data;
@@ -32,7 +32,7 @@ angular.
 					  }
 					  
 					  var shortName = self.selectedItem.split(" - ")[0]
-					  if (self.searchText && self.courses.indexOf(shortName) == -1) {
+					  if (self.searchText && self.courses.indexOf(shortName) === -1) {
 						  self.courses.push(shortName);
 					  }
 				
@@ -41,7 +41,7 @@ angular.
 				  }
 				
 				self.noCourses = function() {
-					return self.courses.length == 0;
+					return self.courses.length === 0;
 				}
 				
 				self.changeTerm = function () {

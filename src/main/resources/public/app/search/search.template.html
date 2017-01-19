@@ -1,67 +1,73 @@
-<md-content flex style="min-height: {{ 700 + ($ctrl.courses.length / 2) * 40 }}px;" layout="column" layout-align="space-between center">
-	<md-toolbar class="md-tall md-primary">		
-	   	<div class="md-toolbar-tools" layout-fill layout="column" style="{width: 36px; height: 36px;}" layout-align="center center" ng-style="{'background-image':'url(/assets/img/searchpic.jpg)'}">
-	   		<p class="header-cursive">Search</p>	      		
-	    </div>			
-	</md-toolbar>
+<md-content flex style="min-height: {{ 700 + ($ctrl.courses.length / 2) * 40 }}px;" 
+  layout="column" layout-align="space-between center">
+  <md-toolbar class="md-tall md-primary">		
+    <div class="md-toolbar-tools" layout-fill layout="column" style="{width: 36px; height: 36px;}" 
+      layout-align="center center" ng-style="{'background-image':'url(/assets/img/searchpic.jpg)'}">
+	  <p class="header-cursive">Search</p>	      		
+	</div>			
+  </md-toolbar>
 	
-	Select term:
+  Select term:
 		
-	<md-radio-group layout="row" layout-wrap layout-align="center center" ng-model="$ctrl.termInd" ng-click="$ctrl.changeTerm()">
-		<md-radio-button ng-repeat="term in $ctrl.terms" value="{{ $index }}">
-			{{ term.name }}
-		</md-radio-button>
-	</md-radio-group>
+  <md-radio-group layout="row" layout-wrap layout-align="center center" 
+    ng-model="$ctrl.termInd" ng-click="$ctrl.changeTerm()">
+	<md-radio-button ng-repeat="term in $ctrl.terms" value="{{ $index }}">
+	  {{ term.name }}
+	</md-radio-button>
+  </md-radio-group>
 	
-	<md-divider style="width: 90%""></md-divider>
+  <md-divider style="width: 90%""></md-divider>
 	
-	Select courses:
-	<md-autocomplete style="width: 90%" placeholder="Search..." md-no-cache="true" md-selected-item="$ctrl.selectedItem" md-search-text="$ctrl.searchText"
-			md-items="item in $ctrl.terms[$ctrl.termInd].courses | filter:$ctrl.searchText" md-item-text="item" md-selected-item-change="$ctrl.addCourse()">
-			<span md-highlight-text="$ctrl.searchText" md-highlight-flags="i">{{ item }}</span>
-	</md-autocomplete> 
-	   
-	<md-chips style="width: 90%" placeholder="Courses" ng-model="$ctrl.courses" readonly="true" md-removable="true"></md-chips>
+  Select courses:
+  <md-autocomplete style="width: 90%" placeholder="Search..." md-no-cache="true" md-selected-item="$ctrl.selectedItem"
+    md-search-text="$ctrl.searchText" md-items="item in $ctrl.terms[$ctrl.termInd].courses | filter:$ctrl.searchText"
+    md-item-text="item" md-selected-item-change="$ctrl.addCourse()">
+		<span md-highlight-text="$ctrl.searchText" md-highlight-flags="i">{{ item }}</span>
+  </md-autocomplete> 
+   
+  <md-chips style="width: 90%" placeholder="Courses" ng-model="$ctrl.courses" readonly="true" md-removable="true"></md-chips>
+
+  Ignore sections:			
+  <md-grid-list style="width: 250px" md-cols="3" md-rows="2" md-row-height="30px">
+	<md-grid-tile ng-repeat="section in $ctrl.sections">
+	  <md-checkbox ng-model="section.selected">{{ section.name }}</md-checkbox>
+	</md-grid-tile>
+  </md-grid-list>
 	
-	Ignore sections:			
-	<md-grid-list style="width: 250px" md-cols="3" md-rows="2" md-row-height="30px">
-		<md-grid-tile ng-repeat="section in $ctrl.sections">
-			<md-checkbox ng-model="section.selected">{{ section.name }}</md-checkbox>
-		</md-grid-tile>
-	</md-grid-list>
-		
-	<md-divider style="width: 90%"></md-divider>
+  <md-divider style="width: 90%"></md-divider>
+
+  Prefered class time:
+  <md-radio-group layout="row" layout-wrap ng-model="$ctrl.classTime" layout-align="center center">
+	<md-radio-button value="0">none</md-radio-button>
+	<md-radio-button value="1">morning</md-radio-button>
+	<md-radio-button value="2">afternoon</md-radio-button>
+  </md-radio-group>
+
+  <md-divider style="width: 90%"></md-divider>
+
+  Day length preference:
+  <md-radio-group layout="row" layout-wrap ng-model="$ctrl.dayLength" layout-align="center center">
+	<md-radio-button value="0">none</md-radio-button>
+	<md-radio-button value="1">shorter days</md-radio-button>
+	<md-radio-button value="2">less school days</md-radio-button>
+  </md-radio-group>
+
+  <md-divider style="width: 90%"></md-divider>
+
+  Hide closed sections:
+  <md-switch style="margin: 0" ng-model="$ctrl.omitClosed"></md-switch>
+
+  <md-divider style="width: 90%"></md-divider>
+
+  <div layout="row" layout-align="center center">
+	<div style="width: 40px;"></div>
+	<md-button ng-disabled="$ctrl.noCourses()" ng-click="$ctrl.getSchedules()" class="md-raised md-accent">
+	  Search
+	</md-button>
+	<md-button class="md-icon-button" ng-click="$ctrl.showHelp()">
+		<md-icon md-font-set="material-icons">help</md-icon>
+	</md-button>
+  </div>
 	
-	Prefered class time:
-	<md-radio-group layout="row" layout-wrap ng-model="$ctrl.classTime" layout-align="center center">
-		<md-radio-button value="0">none</md-radio-button>
-		<md-radio-button value="1">morning</md-radio-button>
-		<md-radio-button value="2">afternoon</md-radio-button>
-	</md-radio-group>
-	
-	<md-divider style="width: 90%"></md-divider>
-	
-	Day length preference:
-	<md-radio-group layout="row" layout-wrap ng-model="$ctrl.dayLength" layout-align="center center">
-		<md-radio-button value="0">none</md-radio-button>
-		<md-radio-button value="1">shorter days</md-radio-button>
-		<md-radio-button value="2">less school days</md-radio-button>
-	</md-radio-group>
-	
-	<md-divider style="width: 90%"></md-divider>
-	
-	Hide closed sections:
-	<md-switch style="margin: 0" ng-model="$ctrl.omitClosed"></md-switch>
-	
-	<md-divider style="width: 90%"></md-divider>
-	
-	<div layout="row" layout-align="center center">
-		<div style="width: 40px;"></div>
-		<md-button ng-disabled="$ctrl.noCourses()" ng-click="$ctrl.getSchedules()" class="md-raised md-accent">Search</md-button>
-		<md-button class="md-icon-button" ng-click="$ctrl.showHelp()">
-			<md-icon md-font-set="material-icons">help</md-icon>
-		</md-button>
-	</div>
-	
-	<div></div>	
+  <div></div>	
 </md-content>
