@@ -1,0 +1,33 @@
+.view-frame.ng-enter-prepare,
+.view-frame.ng-leave-prepare {
+  opacity: 0;
+}
+
+.view-frame.ng-enter,
+.view-frame.ng-leave {
+  background: white;
+}
+
+.view-frame.ng-enter {
+  animation: 0.5s fade-in;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+
+.animate-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  animation: 0.5s fade-in;
+}

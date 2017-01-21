@@ -24,7 +24,7 @@ angular.
 			          }));
 				});
 				
-				self.courses = [];
+				self.courses = ['RMV'];
 				
 				self.addCourse = function() {
 					  if (self.selectedItem == null) {

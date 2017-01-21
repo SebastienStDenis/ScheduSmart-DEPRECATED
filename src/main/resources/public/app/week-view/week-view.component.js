@@ -9,7 +9,7 @@ angular.
 				self.months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 				self.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 				
-				self.colors = ['#2196F3', '#F44336', '#4CAF50', '#FF9800', '#9C27B0', '#607D8B', '#EC407A', '#00BCD4', '#3F51B5', ];
+				self.colors = ['#2196F3', '#F44336', '#4CAF50', '#FF9800', '#607D8B', '#AB47BC', '#EC407A', '#00BCD4', '#3F51B5', ];
 				self.colorsLen = self.colors.length;
 				
 				self.Schedules = Schedules;
@@ -24,12 +24,16 @@ angular.
 				
 				self.getTime = function(index) {
 					var hour = Math.floor(index/2).toString();
+					if (hour > 12) {
+						hour -= 12;
+					}
+					
 					var min = '00';
 					if (index % 2 === 1) {
 						min = '30';
 					}
 					
-					return hour+':'+min;
+					return hour + ':' + min;
 				}
 				
 				self.getIndex = function(time) {
@@ -56,11 +60,14 @@ angular.
 					var endIndex = self.getIndex(endTime);
 					
 					if (startIndex === -1 || endIndex === -1) {
-						return '0%';
+						return '0px';
 					}
 					
-					var height = (endIndex-startIndex)*100 - 17;
-					return height.toString()+'%';					
+					// !!! when height is odd, subtract 1
+					// add subtract for :10
+					
+					var height = (endIndex-startIndex)*43 - 4 - 12;
+					return height.toString()+'px';					
 				}
 				
 				self.inWeek = function(startDate, endDate) {
@@ -151,11 +158,14 @@ angular.
 					
 					if (self.Schedules.schedules.length > 0) {					
 						var courses = self.Schedules.schedules[self.Schedules.index].courses;
+						
 						for (var i = 0; i < courses.length; ++i) {
 							var color = self.colors[i % self.colorsLen];
+							
 							for (var j = 0; j < courses[i].length; ++j) {
 								var blocks = courses[i][j].blocks;
 								var name = courses[i][j].name + ' - ' + courses[i][j].sectionName;
+								
 								for (var k = 0; k < blocks.length; ++k) {
 									var location = blocks[k].location;
 									
@@ -173,19 +183,21 @@ angular.
 									}
 									
 									var height = self.getHeight(blocks[k].startTime, blocks[k].endTime);
-									var style = {'height':height, 'background':color};
+									
+									var style = {'height':height, 'border-color':color, 'color':color};  //var style = {'height':height, 'background':color}; // background
 									
 									var block = {
 										style: style,
 										name: name,
 										instructor: instructor,
 										location: location,
-										time: blocks[k].startTime + '-' + blocks[k].endTime, // !!!remove self field!!!
-										date: blocks[k].startDate + '-' + blocks[k].endDate // !!!remove self field!!!
+										time: blocks[k].startTime + '-' + blocks[k].endTime, // !!!remove this field!!!
+										date: blocks[k].startDate + '-' + blocks[k].endDate // !!!remove this field!!!
 									}
 									
 									if ((blocks[k].startDate == undefined || blocks[k].endDate == undefined) ||
 											self.inWeek(blocks[k].startDate, blocks[k].endDate)) {
+										
 										var startIndex = self.getIndex(blocks[k].startTime);
 										var endIndex = self.getIndex(blocks[k].endTime);
 										if (startIndex === -1 || endIndex === -1) {
@@ -215,15 +227,7 @@ angular.
 					}
 					
 					if (self.maxInd <= -1) {
-						self.maxInd = 32;
-					}
-					
-					if (self.minInd !== 0 && self.minInd % 2 === 0) {
-						self.minInd--;
-					}	
-					
-					if (self.maxInd % 2 === 1) {
-						self.maxInd--;
+						self.maxInd = 28;
 					}					
 				}
 				
@@ -246,18 +250,9 @@ angular.
 				Schedules.registerObserverCallback(self.resetAndUpdate);
 								
 				self.minInd = 19; // always odd
-				self.maxInd = 32; // always even
+				self.maxInd = 28; // always even
 				
 				self.resetAndUpdate();
-				
-				self.nextWeek = function() {
-					++self.weekIndex;
-					if (self.weekIndex > 11) {
-						self.weekIndex = 0;
-					}
-					
-					self.update();					
-				}
 				
 				self.prevWeek = function() {
 					--self.weekIndex;
@@ -268,15 +263,36 @@ angular.
 					self.update();
 				}
 				
+				self.nextWeek = function() {
+					++self.weekIndex;
+					if (self.weekIndex > 11) {
+						self.weekIndex = 0;
+					}
+					
+					self.update();					
+				}				
 
 				/*
-				self.week[30][5] = {
-						style: {'background':'#3F51B5', 'height':'183%'},
+				self.week[21][5] = {
+						style: {'background':'#3F51B5', 'border-width':'0px', 'height':'283'},
+						name: 'ACTSC 102 - TUT 101',
+						instructor: 'Joe John',
+						location: 'DC 2145'
+				}
+				self.week[21][3] = {
+						style: {'background':'white', 'border':'1px solid #3F51B5', 'height':'183%'},
+						name: 'ACTSC 102 - TUT 101',
+						instructor: 'Joe John',
+						location: 'DC 2145'
+				}
+				self.week[21][4] = {
+						style: {'background':'white', 'border':'1px solid #3F51B5', 'color':'#3F51B5', 'height':'253%'},
 						name: 'ACTSC 102 - TUT 101',
 						instructor: 'Joe John',
 						location: 'DC 2145'
 				}
 				*/
+				
 		}
 	]
 });

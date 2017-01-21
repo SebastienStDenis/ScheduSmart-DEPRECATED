@@ -6,6 +6,7 @@
 
   <link rel="shortcut icon" href="assets/img/favicon.ico" />
   <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/app.animations.css" />
 
   <!-- Angular Material style sheet -->
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" />
@@ -17,7 +18,7 @@
 </head>
 <body ng-app="uwScheduleBuilderApp" layout="row" ng-controller="AppController as ctrl" ng-cloak>  
   <md-sidenav ng-hide="ctrl.loading" md-is-open="ctrl.sidenavOpen" flex md-whiteframe="5" md-component-id="left"
-  	md-is-locked-open="$mdMedia('gt-md')" class="md-sidenav-left" layout="column" layout-align="start stretch">		
+  	md-is-locked-open="$mdMedia('gt-md')" class="md-sidenav-left animate-show-hide" layout="column" layout-align="start stretch">		
 	<search flex="noshrink" layout="row"></search>	
   </md-sidenav>
   	  	
@@ -25,10 +26,10 @@
 	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
   </div>
   
-  <div layout="column" layout-fill ng-hide="ctrl.loading">  		
+  <div layout="column" layout-fill ng-hide="ctrl.loading" class="animate-show-hide">  		
     <md-toolbar class="md-primary md-hue-2">		
 	  <div md-whiteframe="3" class="md-toolbar-tools">
-	    <md-button md-no-ink md-border class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
+	    <md-button md-no-ink class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
 		  <i hide-gt-md class="material-icons">search</i>		        	
 		</md-button>
 		      	
@@ -39,7 +40,7 @@
 	      		
 	    <span flex></span>
 										      		
-	    <md-button ng-href="{{ ctrl.isList() ? '#!/week' : '#!/list' }}" class="md-icon-button">
+	    <md-button ng-click="ctrl.changeView()" class="md-icon-button">
 	    	<i class="material-icons"> {{ ctrl.isList() ? 'view_week' : 'view_list' }} </i>
 	    </md-button>	      		
 	  </div>			
@@ -49,16 +50,27 @@
 	  <div layout="row" flex="noshrink" layout-align="space-between">
 	  	<div class="clearfix" style="min-width: 50px;"></div>
 	  			 			
- 		<div class="clearfix" layout="column" layout-align="center">
+ 		<div class="clearfix" layout="column" layout-align="start">
   		  <div layout="row" layout-align="center center">
-	  	    <md-button class="md-small" ng-click="ctrl.schedules.prevSchedule()">Prev</md-button>
+	  	    <md-button class="md-small" ng-click="ctrl.Schedules.prevSchedule()">Prev</md-button>
 		    <md-button class="md-small" ng-disabled="true"> {{ ctrl.displayIndex() }} </md-button>
-			<md-button class="md-small" ng-click="ctrl.schedules.nextSchedule()">Next</md-button>		  		
+			<md-button class="md-small" ng-click="ctrl.Schedules.nextSchedule()">Next</md-button>		  		
 	  	  </div>
+	  	  
+	  	  <span flex></span>
 	  		
-	  	  <div style="margin: 0px 16px 16px 16px;" md-whiteframe="2">
-	  		<div ng-view></div>
+	  	  <div ng-show="ctrl.noSchedules()" layout="column" layout-align="center center">
+	  	  	<md-button class="md-icon-button" ng-click="ctrl.openSideNav()">		        	
+		  		<i class="material-icons">search</i>		        	
+			</md-button>
+			<p style="margin: 0px;">Use the search menu to generate schedules.</p>
+	  	  </div>	
+	  			
+	  	  <div ng-hide="ctrl.noSchedules()" class="animate-show-hide" style="margin: 0px 16px 16px 16px;" md-whiteframe="2">
+	  		<div ng-view class="view-frame"></div>
 	  	  </div>
+	  	  
+	  	  <span flex></span>
   		</div>		  		
 		  		
   		<div class="clearfix" style="min-width: 50px;" layout="column" layout-align="end center">
@@ -76,7 +88,8 @@
   		</div>    
 	  </div>	
 	</md-content>
-  </div>	
+  </div>
+  
 
   <!-- Angular.js Libraries -->
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>

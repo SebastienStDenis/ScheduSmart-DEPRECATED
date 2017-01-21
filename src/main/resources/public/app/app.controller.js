@@ -15,19 +15,37 @@ angular.
 	  
 	  self.sidenavOpen = true;
 	  
-	  self.schedules = Schedules;
+	  self.Schedules = Schedules;
+	  
+	  self.noSchedules = function() {
+		  console.log(self.Schedules.schedules.length);
+		  if (self.Schedules.schedules.length === 0) {
+			  return true;
+		  } else {
+			  console.log('return false');
+			  return false;
+		  }
+	  }
 	  
 	  self.displayIndex = function() {
-		  var schedCount = self.schedules.schedules.length;
+		  var schedCount = self.Schedules.schedules.length;
 		  if (schedCount === 0) {
 			  return 'no schedules';
 		  } else {
-			  return String(self.schedules.index+1) + ' / ' + String(schedCount);
+			  return String(self.Schedules.index+1) + ' / ' + String(schedCount);
 		  }
 	  }
 	  
 	  self.isList = function() {
 		  return $location.path() == '/list';
+	  }
+	  
+	  self.changeView = function() {
+		  if (self.isList()) {
+			  $location.path('/week').replace();
+		  } else {
+			  $location.path('/list').replace();
+		  }
 	  }
 	  
 	  self.showHelp = function() {
