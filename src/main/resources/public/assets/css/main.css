@@ -3,17 +3,6 @@ md-sidenav {
   max-width: 350px !important;
 }
 
-.header-cursive {
-	font-family: 'Dawning of a New Day';
-	font-size: 36px;
-	font-color: black;
-	font-weight: bold;
-}
-
-.verticalLine {
-  border-left: thick solid #ff0000;
-}
-
 .md-button.md-small {
     min-width: 1%;
 }
@@ -22,4 +11,12 @@ md-sidenav {
 	content: "";
     clear: both;
     display: table;
+}
+
+.sidebar {
+	min-width: 50px;
+}
+
+.view-container {
+	margin: 0px 16px 16px 16px;
 }

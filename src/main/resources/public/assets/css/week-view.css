@@ -33,10 +33,6 @@ table {
   top: -22px;
 }
 
-md-tooltip ._md-content {
-    height: auto;
-}
-
 thead th {
   font-size: 16px;
   width: 100%;

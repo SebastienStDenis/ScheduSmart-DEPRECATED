@@ -1,0 +1,22 @@
+.smaller-width {
+	width: 90%;
+}
+
+md-divider {
+	width: 90%;
+}
+
+md-switch {
+	margin: 0;
+}
+
+.section-list {
+	width: 250px;
+}
+
+md-toolbar p {
+	font-family: 'Dawning of a New Day';
+	font-size: 36px;
+	font-color: black;
+	font-weight: bold;
+}

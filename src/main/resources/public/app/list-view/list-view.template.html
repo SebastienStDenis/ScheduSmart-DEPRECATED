@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="assets/css/list-view.css" />
+
 <div style="width: 400px" ng-repeat="course in $ctrl.Schedules.schedules[$ctrl.Schedules.index].courses" ng-cloak>
   <md-toolbar class="md-theme-light">
     <h2 class="md-toolbar-tools">
@@ -7,12 +9,12 @@
 	
   <md-content>
     <md-list>
-      <md-list-item class="md-2-line" ng-repeat="comp in course" style="background: white">
+      <md-list-item class="md-2-line white-background" ng-repeat="comp in course">
         <div class="md-list-item-text">
           <h3>{{ comp.sectionName }} ({{ comp.classNumber }})</h3>
           <p>{{ $ctrl.Schedules.getInstructors(comp) }}, {{ $ctrl.Schedules.getLocations(comp) }}</p>
         </div>
-        <md-icon style="margin-left: 5px;"md-font-set="material-icons" ng-if="comp.closed">
+        <md-icon class="warning-icon" md-font-set="material-icons" ng-if="comp.closed">
           <md-tooltip md-direction="left">
             Closed
           </md-tooltip>

@@ -48,7 +48,7 @@
 	  	
 	<md-content layout="column" flex> 
 	  <div layout="row" flex="noshrink" layout-align="space-between">
-	  	<div class="clearfix" style="min-width: 50px;"></div>
+	  	<div class="clearfix sidebar"></div>
 	  			 			
  		<div class="clearfix" layout="column" layout-align="start">
   		  <div layout="row" layout-align="center center">
@@ -66,14 +66,14 @@
 			<p style="margin: 0px;">Use the search menu to generate schedules.</p>
 	  	  </div>	
 	  			
-	  	  <div ng-hide="ctrl.noSchedules()" class="animate-show-hide" style="margin: 0px 16px 16px 16px;" md-whiteframe="2">
+	  	  <div ng-hide="ctrl.noSchedules()" class="animate-show-hide view-container" md-whiteframe="2">
 	  		<div ng-view class="view-frame"></div>
 	  	  </div>
 	  	  
 	  	  <span flex></span>
   		</div>		  		
 		  		
-  		<div class="clearfix" style="min-width: 50px;" layout="column" layout-align="end center">
+  		<div class="clearfix sidebar"layout="column" layout-align="end center">
   		  <md-button href="https://github.com/SebastienStDenis/UWScheduleBuilder/issues" 
   		    class="md-icon-button launch" target="_blank">
 		    <md-icon md-font-set="material-icons">feedback</md-icon>
