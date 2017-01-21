@@ -1,4 +1,4 @@
-package com.uwschedulebuilder.uwapiclient;
+package com.schedusmart.uwapiclient;
 
 public class UWAPIException extends Exception {
 

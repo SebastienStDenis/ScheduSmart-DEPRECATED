@@ -1,10 +1,10 @@
-package com.uwschedulebuilder.bootstrap;
+package com.schedusmart.bootstrap;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.uwschedulebuilder.builder.Component;
-import com.uwschedulebuilder.builder.Schedule;
+import com.schedusmart.builder.Component;
+import com.schedusmart.builder.Schedule;
 
 // ArraySchedules are like Schedules, but with a Collection of arrays instead of a map.
 // Each collection element represents a different course.

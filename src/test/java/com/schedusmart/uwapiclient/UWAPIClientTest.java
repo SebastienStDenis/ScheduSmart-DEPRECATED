@@ -1,12 +1,12 @@
-package com.uwschedulebuilder.uwapiclient;
+package com.schedusmart.uwapiclient;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import com.uwschedulebuilder.builder.Section;
-import com.uwschedulebuilder.builder.Term;
-import com.uwschedulebuilder.uwapiclient.UWAPIClient;
-import com.uwschedulebuilder.uwapiclient.UWAPIException;
+import com.schedusmart.builder.Section;
+import com.schedusmart.builder.Term;
+import com.schedusmart.uwapiclient.UWAPIClient;
+import com.schedusmart.uwapiclient.UWAPIException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

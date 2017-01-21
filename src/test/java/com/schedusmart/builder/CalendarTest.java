@@ -1,13 +1,13 @@
-package com.uwschedulebuilder.builder;
+package com.schedusmart.builder;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.uwschedulebuilder.builder.Block;
-import com.uwschedulebuilder.builder.Calendar;
-import com.uwschedulebuilder.builder.Component;
-import com.uwschedulebuilder.builder.Schedule;
+import com.schedusmart.builder.Block;
+import com.schedusmart.builder.Calendar;
+import com.schedusmart.builder.Component;
+import com.schedusmart.builder.Schedule;
 
 public class CalendarTest {
 

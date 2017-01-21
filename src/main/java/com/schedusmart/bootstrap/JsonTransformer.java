@@ -1,4 +1,4 @@
-package com.uwschedulebuilder.bootstrap;
+package com.schedusmart.bootstrap;
 
 import com.google.gson.Gson;
 import spark.ResponseTransformer;

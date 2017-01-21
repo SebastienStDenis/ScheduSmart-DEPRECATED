@@ -1,4 +1,4 @@
-package com.uwschedulebuilder.bootstrap;
+package com.schedusmart.bootstrap;
 
 import static spark.Spark.get;
 
@@ -8,13 +8,13 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.uwschedulebuilder.builder.Builder;
-import com.uwschedulebuilder.builder.Component;
-import com.uwschedulebuilder.builder.Schedule;
-import com.uwschedulebuilder.builder.ScorePreferences;
-import com.uwschedulebuilder.builder.Term;
-import com.uwschedulebuilder.uwapiclient.UWAPIClient;
-import com.uwschedulebuilder.uwapiclient.UWAPIException;
+import com.schedusmart.builder.Builder;
+import com.schedusmart.builder.Component;
+import com.schedusmart.builder.Schedule;
+import com.schedusmart.builder.ScorePreferences;
+import com.schedusmart.builder.Term;
+import com.schedusmart.uwapiclient.UWAPIClient;
+import com.schedusmart.uwapiclient.UWAPIException;
 
 import spark.Request; 
 

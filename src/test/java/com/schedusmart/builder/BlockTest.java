@@ -1,10 +1,10 @@
-package com.uwschedulebuilder.builder;
+package com.schedusmart.builder;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.uwschedulebuilder.builder.Block;
+import com.schedusmart.builder.Block;
 
 public class BlockTest {
 

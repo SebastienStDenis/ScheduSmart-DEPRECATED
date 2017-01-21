@@ -1,11 +1,11 @@
-package com.uwschedulebuilder.builder;
+package com.schedusmart.builder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ListIterator;
 
-import com.uwschedulebuilder.uwapiclient.UWAPIClient;
-import com.uwschedulebuilder.uwapiclient.UWAPIException;
+import com.schedusmart.uwapiclient.UWAPIClient;
+import com.schedusmart.uwapiclient.UWAPIException;
 
 import java.util.HashMap;
 

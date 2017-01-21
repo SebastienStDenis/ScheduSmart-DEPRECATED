@@ -1,12 +1,12 @@
-package com.uwschedulebuilder.builder;
+package com.schedusmart.builder;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.junit.Test;
 
-import com.uwschedulebuilder.builder.Component;
-import com.uwschedulebuilder.builder.Schedule;
+import com.schedusmart.builder.Component;
+import com.schedusmart.builder.Schedule;
 
 public class ScheduleTest {
 

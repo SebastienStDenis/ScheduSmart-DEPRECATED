@@ -1,4 +1,4 @@
-package com.uwschedulebuilder.builder;
+package com.schedusmart.builder;
 
 import static org.junit.Assert.*;
 
@@ -6,20 +6,20 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import com.uwschedulebuilder.builder.Builder;
-import com.uwschedulebuilder.builder.Schedule;
-import com.uwschedulebuilder.builder.ScorePreferences;
-import com.uwschedulebuilder.uwapiclient.UWAPIException;
+import com.schedusmart.builder.Builder;
+import com.schedusmart.builder.Schedule;
+import com.schedusmart.builder.ScorePreferences;
+import com.schedusmart.uwapiclient.UWAPIException;
 
 // This isn't really a JUnit test, more of a manual helper for using the backend
 public class BuilderTest {
 
 	@Test
 	public void testGetSchedules() {
-		String[] classes = {"CS135"};
+		String[] classes = {"CS241"};
 		
 		String term = "1171";
-		String[] ignoreSecs = {"TST", "LEC"};
+		String[] ignoreSecs = {"TST"};
 		ScorePreferences prefs = new ScorePreferences(1, 1);
 		
 		Builder builder = new Builder();
