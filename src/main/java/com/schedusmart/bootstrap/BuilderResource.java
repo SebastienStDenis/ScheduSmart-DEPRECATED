@@ -3,16 +3,13 @@ package com.schedusmart.bootstrap;
 import static spark.Spark.get;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.schedusmart.builder.Builder;
-import com.schedusmart.builder.Component;
 import com.schedusmart.builder.Schedule;
 import com.schedusmart.builder.ScorePreferences;
-import com.schedusmart.builder.Term;
 import com.schedusmart.uwapiclient.UWAPIClient;
 import com.schedusmart.uwapiclient.UWAPIException;
 

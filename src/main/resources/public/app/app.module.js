@@ -1,4 +1,4 @@
-angular.module('uwScheduleBuilderApp', [
+angular.module('ScheduSmartApp', [
 	'ngMaterial',
 	'ngRoute',
 	'ngAnimate',

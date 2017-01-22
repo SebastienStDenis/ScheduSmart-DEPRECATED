@@ -23,8 +23,10 @@ public class UWAPIClient {
 	private static String baseURL;
 	private static String apiKey;
 	
-	static{
-		try(FileInputStream input = new FileInputStream("src/main/resources/private/config.properties")) {
+	static {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		
+		try(InputStream input = classLoader.getResourceAsStream("private/config.properties")) {
 			Properties prop = new Properties();
 			prop.load(input);
 			

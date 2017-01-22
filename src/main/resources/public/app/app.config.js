@@ -1,5 +1,5 @@
 angular.
-	module('uwScheduleBuilderApp').
+	module('ScheduSmartApp').
 	config(['$mdThemingProvider', '$locationProvider', '$routeProvider',
 		function config($mdThemingProvider, $locationProvider, $routeProvider) {
 			$mdThemingProvider.theme('default')

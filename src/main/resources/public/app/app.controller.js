@@ -1,5 +1,5 @@
 angular.
-	module('uwScheduleBuilderApp').
+	module('ScheduSmartApp').
 	controller('AppController', ['$scope', '$location', '$mdSidenav', '$mdDialog', 'Schedules', function AppController($scope, $location, $mdSidenav, $mdDialog, Schedules) {
 	  var self = this;
 		

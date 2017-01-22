@@ -1,14 +1,12 @@
 package com.schedusmart.bootstrap;
 
-
 import static spark.Spark.*;
+import spark.servlet.SparkApplication;
 
 // Bootstrap is used to bootstrap the web application
-public class Bootstrap {
-	private static final int PORT = 8080;
+public class Bootstrap implements SparkApplication{
 
-	public static void main(String[] args) throws Exception {
-		port(PORT);
+	public void init() {
 		staticFiles.location("/public");
 		new BuilderResource();		
 	}
