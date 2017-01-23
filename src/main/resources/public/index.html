@@ -15,6 +15,17 @@
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /> 
  
   <link href="http://fonts.googleapis.com/css?family=Dawning of a New Day" rel="stylesheet" />	
+  
+  <!-- Google analytics snippet -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-90758200-1', 'auto');
+    ga('send', 'pageview');
+  s</script>
 </head>
 <body ng-app="ScheduSmartApp" layout="row" ng-controller="AppController as ctrl" ng-cloak>  
   <md-sidenav ng-hide="ctrl.loading" md-is-open="ctrl.sidenavOpen" flex md-whiteframe="5" md-component-id="left"
