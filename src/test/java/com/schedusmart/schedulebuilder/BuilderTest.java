@@ -1,4 +1,4 @@
-package com.schedusmart.builder;
+package com.schedusmart.schedulebuilder;
 
 import static org.junit.Assert.*;
 
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import com.schedusmart.builder.Builder;
-import com.schedusmart.builder.Schedule;
-import com.schedusmart.builder.ScorePreferences;
+import com.schedusmart.schedulebuilder.Builder;
+import com.schedusmart.schedulebuilder.Schedule;
+import com.schedusmart.schedulebuilder.ScorePreferences;
 import com.schedusmart.uwapiclient.UWAPIException;
 
 // This isn't really a JUnit test, more of a manual helper for using the backend

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.schedusmart.builder.Builder;
-import com.schedusmart.builder.Schedule;
-import com.schedusmart.builder.ScorePreferences;
+import com.schedusmart.schedulebuilder.Builder;
+import com.schedusmart.schedulebuilder.Schedule;
+import com.schedusmart.schedulebuilder.ScorePreferences;
 import com.schedusmart.uwapiclient.UWAPIClient;
 import com.schedusmart.uwapiclient.UWAPIException;
 

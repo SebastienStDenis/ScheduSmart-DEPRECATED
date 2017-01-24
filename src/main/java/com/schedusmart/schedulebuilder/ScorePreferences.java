@@ -1,4 +1,4 @@
-package com.schedusmart.builder;
+package com.schedusmart.schedulebuilder;
 
 // ScorePreferences stores the preferences to use
 //    when calculating the score of a schedule

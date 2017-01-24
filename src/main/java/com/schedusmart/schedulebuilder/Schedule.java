@@ -1,4 +1,4 @@
-package com.schedusmart.builder;
+package com.schedusmart.schedulebuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

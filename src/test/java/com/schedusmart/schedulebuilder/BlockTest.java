@@ -1,10 +1,10 @@
-package com.schedusmart.builder;
+package com.schedusmart.schedulebuilder;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.schedusmart.builder.Block;
+import com.schedusmart.schedulebuilder.Block;
 
 public class BlockTest {
 

@@ -12,10 +12,10 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
-import com.schedusmart.builder.Block;
-import com.schedusmart.builder.Component;
-import com.schedusmart.builder.Section;
-import com.schedusmart.builder.Term;
+import com.schedusmart.schedulebuilder.Block;
+import com.schedusmart.schedulebuilder.Component;
+import com.schedusmart.schedulebuilder.Section;
+import com.schedusmart.schedulebuilder.Term;
 
 // UWAPIClient is used to access course information from the UW API
 public class UWAPIClient {

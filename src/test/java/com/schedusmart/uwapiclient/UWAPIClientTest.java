@@ -3,8 +3,8 @@ package com.schedusmart.uwapiclient;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import com.schedusmart.builder.Section;
-import com.schedusmart.builder.Term;
+import com.schedusmart.schedulebuilder.Section;
+import com.schedusmart.schedulebuilder.Term;
 import com.schedusmart.uwapiclient.UWAPIClient;
 import com.schedusmart.uwapiclient.UWAPIException;
 
