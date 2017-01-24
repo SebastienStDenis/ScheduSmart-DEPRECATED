@@ -18,11 +18,9 @@ angular.
 	  self.Schedules = Schedules;
 	  
 	  self.noSchedules = function() {
-		  console.log(self.Schedules.schedules.length);
 		  if (self.Schedules.schedules.length === 0) {
 			  return true;
 		  } else {
-			  console.log('return false');
 			  return false;
 		  }
 	  }

@@ -24,7 +24,7 @@ public class Calendar {
 	Calendar() {		
 		this.timeTable = new HashMap<String, ArrayList<LinkedList<Block>>>();
 		this.scorePreferences = new ScorePreferences();
-		resetCalendar();		
+		resetCalendar();
 	}	
 	
 	// resetCalendar() resets the Calendar object to its post-initialization state
@@ -265,221 +265,75 @@ public class Calendar {
 		return true;
 	}
 	
-	private double calculateScoreV2() {
+	private static int NOON_INDEX = 24;
+	
+	// calculateScore uses a top-secret ultra-precise algorithm to return a
+	//    score of the current calendar based on the options in scorePreferences.
+	//    Considers the amount of morning classes, afternoon classes, school
+	//    days and the average day length.  (This algorithm is not very good)
+	private double calculateScore() {
+		double morningClassCount = 0;
+		double afternoonClassCount = 0;
+		double totalClassCount = 0;
 		
-		double morningClassHrs = 0;
-		double afternoonClassHrs = 0;
-		double gapHrs = 0;
-		double[] classHrs = {0, 0, 0, 0, 0, 0, 0};
+		double gapCount = 0;
+		
+		double schoolDaysCount = 0;
 		
 		for (int dayInd = 0; dayInd < DAYS.length; ++dayInd) {
 			ArrayList<LinkedList<Block>> day = timeTable.get(DAYS[dayInd]);
 			
 			boolean dayStarted = false;
-			double currGapHrs = 0;
+			double currentGapCount = 0;
 			
-			for (int hrInd = 0; hrInd < SLOTS_IN_DAY; ++hrInd) {
-				LinkedList<Block> slot = day.get(hrInd);
+			for (int hourInd = 0; hourInd < SLOTS_IN_DAY; ++hourInd) {
+				LinkedList<Block> slot = day.get(hourInd);
 				
 				if (slot.size() == 0 || onlyTests(slot)) {
 					if (dayStarted) {
-						currGapHrs += 0.5;
+						currentGapCount++;
 					}
 					continue;
 				} else {
 					dayStarted = true;
 					
-					gapHrs += currGapHrs;
-					currGapHrs = 0;
+					gapCount += currentGapCount;
+					currentGapCount = 0;
 					
-					if (hrInd < 24) {
-						morningClassHrs += 0.5;
+					if (hourInd < NOON_INDEX) {
+						morningClassCount++;
 					} else {
-						afternoonClassHrs += 0.5;
+						afternoonClassCount++;
 					}
 					
-					classHrs[dayInd] += 0.5;
-				}
-			}
-		}
-		
-		
-		int classDays = 0;
-		double classTime = 0;
-		for (int i = 0; i < 7; ++i) {
-			classTime += classHrs[i];
-			if (classHrs[i] != 0) {
-				++classDays;
-			}
-		}
-		
-		// each score should be a number from 0-10 (except outliers in extreme cases))
-		
-		double morningScore = morningClassHrs * 2.5 / classDays; // (morningClassHrs/4) * (10/classDays)
-		double afternoonScore = afternoonClassHrs / classDays; // (afternoonClassHrs/10) * (10/classDays)
-		
-		double avgDailyHrs = classTime/5; // expected hrs per day for balanced week
-		
-		double balancedScore = 10;
-		for (int i = 0; i < 7; ++i) {
-			if (classHrs[i] > avgDailyHrs) {
-				double overAverage = (classHrs[i] - avgDailyHrs) * 5 / classDays; // (classHrs[i]-avgDailyHrs)/4 * (10/classDays) * 2
-				balancedScore -= overAverage;
-			}
-		}		
-		
-		double daysOffScore = 10 - 2.5*(classDays-1); // subtract 2.5 points per class day beyond 1
-				
-		double gapScore = (double)(15 - gapHrs) / 1.5; // (15-gapHrs)/15 * 10
-		
-		
-		double score = 0;
-		
-		if (classDays != 0) {
-		
-			switch (scorePreferences.getClassTimes()) {
-			case 1:
-				score += 2*morningScore;
-				score += afternoonScore;
-				break;
-			case 2:
-				score += morningScore;
-				score += 2*afternoonScore;
-				break;
-			default:
-				score += 1.5*morningScore;
-				score += 1.5*afternoonScore;
-				break;			
-			}
-			
-			switch (scorePreferences.getDayPreference()) {
-			case 1:
-				score += 2*balancedScore;
-				score += daysOffScore;
-				break;
-			case 2:
-				score += balancedScore;
-				score += 2*daysOffScore;
-				break;
-			default:
-				score += 1.5*balancedScore;
-				score += 1.5*daysOffScore;
-				break;			
-			}
-			
-			score += 1.5 * gapScore;			
-		}
-		
-		return score;
-	}
-	
-
-	// calculateScore uses a top-secret ultra-precise algorithm to return a
-	//    score of the current calendar based on the options in scorePreferences.
-	//    Considers the amount of morning classes, afternoon classes, school
-	//    days and the average day length.  (This algorithm is not very good)
-	private double calculateScore() {		
-		double noEarlyCount = 0;
-		double noLateCount = 0;		
-		double shortDaysCount = 0;		
-		double schoolDays = 0;
-		
-		for (int daysPos = 0; daysPos < DAYS.length; ++daysPos) {
-			ArrayList<LinkedList<Block>> day = timeTable.get(DAYS[daysPos]);
-		
-			boolean dayStarted = false;
-			
-			int startInd = 0;      // index of first slot of day
-			int endInd = 0;        // index of last slot of day
-			double classHours = 0; // total class hours of day
-			
-			for (int ind = 0; ind < SLOTS_IN_DAY; ++ind) {
-				LinkedList<Block> slot = day.get(ind);
-				
-				if (slot.size() == 0 || onlyTests(slot)) {
-					// don't consider "TST" sections for calculating score
-					continue;
-				} else {
-					if (!dayStarted) {
-						startInd = ind;
-						dayStarted = true;
-						classHours += 0.5;
-					}
-					classHours += 0.5;
-					endInd = ind;
+					totalClassCount++;
 				}
 			}
 			
 			if (dayStarted) {
-				++schoolDays;
-				
-				if (startInd <= 16) {
-					noEarlyCount += (startInd-16) / 2;
-				} else if (startInd <= 26) {
-					noEarlyCount += startInd - 16;
-				} else {
-					noEarlyCount += 10;
-				}
-				
-				if (endInd <= 24) {
-					noLateCount += 10;
-				} else if (endInd <= 34) {
-					noLateCount += 34 - endInd;
-				} else {
-					noLateCount += (34-endInd)/2.0;
-				}
-			
-				if (classHours <= 1) {
-					shortDaysCount += 10;
-				} else if (classHours <= 6) {
-					shortDaysCount += (6-classHours) * 2;
-				} else {
-					shortDaysCount += (6-classHours);
-				}
+				schoolDaysCount++;
 			}
 		}
 		
-		double score = 0;
+		double classTimeScore = 0;		
+		if (scorePreferences.getClassTimes() == 1) {
+			classTimeScore = morningClassCount / totalClassCount;
+		} else if (scorePreferences.getClassTimes() == 2) {
+			classTimeScore = afternoonClassCount / totalClassCount;
+		}
 		
-		if (schoolDays != 0) {
-			noEarlyCount /= schoolDays;
-			noLateCount /= schoolDays;
-			switch (scorePreferences.getClassTimes()) {
-			case 1:
-				score += 2*noLateCount;
-				score += noEarlyCount;
-				break;
-			case 2:
-				score += noLateCount;
-				score += 2*noEarlyCount;
-				break;
-			default:
-				score += 1.5*noLateCount;
-				score += 1.5*noEarlyCount;
-				break;			
-			}
-			
-			shortDaysCount /= schoolDays;
-			switch (scorePreferences.getDayPreference()) {
-			case 1:
-				score += 2*shortDaysCount;
-				score += 7-schoolDays;
-				break;
-			case 2:
-				score += shortDaysCount;
-				score += 2*(7-schoolDays);
-				break;
-			default:
-				score += 1.5*shortDaysCount;
-				score += 1.5*(7-schoolDays);
-				break;			
-			}
-		} else {
-			score = 0;
-		}		
+		double dayPreferenceScore = 0;
+		if (scorePreferences.getDayPreference() == 1) {
+			dayPreferenceScore = (schoolDaysCount - 1) / 4;
+		} else if (scorePreferences.getDayPreference() == 2) {
+			dayPreferenceScore = 1 - ((schoolDaysCount - 1) / 4);
+		}
 		
-		return score;
+		double gapScore = 1 - (gapCount / (10 * schoolDaysCount));
+		
+		return 20*classTimeScore + 20*dayPreferenceScore + 10*gapScore;
 	}
+	
 	
 	// makeSchedule returns a Schedule object based on the current contents of the Calendar
 	public Schedule makeSchedule() {
