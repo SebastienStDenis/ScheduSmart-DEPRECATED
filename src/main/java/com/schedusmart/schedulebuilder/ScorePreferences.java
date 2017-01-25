@@ -1,7 +1,6 @@
 package com.schedusmart.schedulebuilder;
 
-// ScorePreferences stores the preferences to use
-//    when calculating the score of a schedule
+// ScorePreferences stores the preferences to use when calculating the score of a schedule
 public class ScorePreferences {
 	int classTimes; // 0 - no preference, 1 - prefer early classes, 2 - prefer late classes
 	int dayPreference; // 0 - no preference, 1 - prefer light days, 2- prefer free days	

@@ -9,13 +9,13 @@ public class Block {
 	private String endTime;
 	private String startDate;
 	private String endDate;
-	private String[] days; // valid entries are "M", "T", "W", "Th", "F"
+	private String[] days; // valid entries are "M", "T", "W", "Th", "F", "S", "Su"
 		
 	private String location;
 	
 	private String[] instructors;
 	
-	private String sectionType;
+	private String sectionType; // "LEC", "TUT", ...
 		
 	public Block(String startTime, String endTime, String days, String location,
 			String startDate,	String endDate, String[] instructors, String sectionType) throws IllegalArgumentException {

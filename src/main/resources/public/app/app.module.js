@@ -1,3 +1,4 @@
+// module for the main application
 angular.module('ScheduSmartApp', [
 	'ngMaterial',
 	'ngRoute',

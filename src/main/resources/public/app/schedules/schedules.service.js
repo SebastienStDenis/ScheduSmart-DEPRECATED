@@ -1,8 +1,9 @@
+// the schedules service is used to retrieve and store schedule information retrieved from the ScheduSmart backend
 angular.
 	module('schedules').
 	factory('Schedules', ['$http', '$mdDialog', function($http, $mdDialog) {
 		var today = new Date();
-		var month = today.getMonth()+1;
+		var month = today.getMonth() + 1;
 		var currYear = today.getFullYear();
 		
 		var monthChar;
@@ -17,10 +18,10 @@ angular.
 		return {		
 			schedules: [],
 			index: 0,
-			firstMonth: monthChar,
+			firstMonth: monthChar, // first month of the term (1, 5 or 9)
 			year: currYear,
 			
-			observerCallbacks: [],
+			observerCallbacks: [], // observer pattern for notifying of schedule changes
 
 			registerObserverCallback: function(callback){
 			    this.observerCallbacks.push(callback);
@@ -32,6 +33,9 @@ angular.
 				}
 			},
 			
+			// getSchedules calls the ScheduSmart backend at path to generate and store schedules.
+			//    firstMonth and year correspond to the selected term for the schedules, and
+			//    successFunc is called if the call succeeds.
 			getSchedules: function (path, firstMonth, year, successFunc) {
 				var self = this;
 				
@@ -100,7 +104,7 @@ angular.
 							
 							if (instr === 'TBA') {
 								instr = name;
-							} else if (instr !== name) {
+							} else if (instr !== name) { // multiple instructors, just add (+)
 								instr += ' (+)';
 								return instr;
 							}
@@ -110,6 +114,8 @@ angular.
 				return instr;
 			},
 			
+			// getLocations returns a shortened and formatted string
+			//     representing the locations for component
 			getLocations: function (component) {
 				var loc = 'TBA';
 				
@@ -122,7 +128,7 @@ angular.
 					
 					if (loc === 'TBA') {
 						loc = currLoc;
-					} else if (loc !== currLoc) {
+					} else if (loc !== currLoc) { // multiple locations, just add (+)
 						loc += ' (+)';
 						return loc;
 					}
@@ -131,6 +137,7 @@ angular.
 				return loc;
 			},
 			
+			// nextSchedule increments (with wrap-around) the index for the schedule array
 			nextSchedule: function() {
 				this.index++;
 				if (this.index >= this.schedules.length) {
@@ -138,7 +145,8 @@ angular.
 				}
 				this.notifyObservers();
 			},
-			
+
+			// prevSchedule decrements (with wrap-around) the index for the schedule array
 			prevSchedule: function() {
 				if (this.index <= 0) {
 					this.index = this.schedules.length;

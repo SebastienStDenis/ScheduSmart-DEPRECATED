@@ -6,7 +6,7 @@ import java.util.ArrayList;
 //    a course (eg. all "LEC" components of CS 241)
 public class Section {
 	private ArrayList<Component> components;
-	private String type; // ex: "LEC"
+	private String type; // eg. "LEC"
 	
 	public Section() {
 		this.type = "";
@@ -18,7 +18,7 @@ public class Section {
 		components = new ArrayList<Component>();
 	}
 	
-	// getComponent returns the Component at position ind in components
+	// getComponent returns the Component at position ind in the components field
 	public Component getComponent(int ind) {
 		return components.get(ind);
 	}

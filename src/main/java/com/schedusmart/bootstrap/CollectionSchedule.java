@@ -6,10 +6,9 @@ import java.util.Collection;
 import com.schedusmart.schedulebuilder.Component;
 import com.schedusmart.schedulebuilder.Schedule;
 
-// ArraySchedules are like Schedules, but with a Collection of arrays instead of a map.
-// Each collection element represents a different course.
+// CollectionSchedules are like Schedules (in the 'schedulebuilder' package), but with a Collection of arrays instead of a map.
 public class CollectionSchedule {
-		Collection<ArrayList<Component>> courses;
+		Collection<ArrayList<Component>> courses; // each ArrayList represents a different course
 		
 		boolean closed;
 		double score;

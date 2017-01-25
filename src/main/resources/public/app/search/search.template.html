@@ -12,7 +12,7 @@
   Select term:
 		
   <md-radio-group layout="row" layout-wrap layout-align="center center" 
-    ng-model="$ctrl.termInd" ng-click="$ctrl.changeTerm()">
+    ng-model="$ctrl.termInd" ng-click="$ctrl.resetCourses()">
 	<md-radio-button ng-repeat="term in $ctrl.terms" value="{{ $index }}">
 	  {{ term.name }}
 	</md-radio-button>
@@ -29,7 +29,7 @@
    
   <md-chips class="smaller-width" placeholder="Courses" ng-model="$ctrl.courses" readonly="true" md-removable="true"></md-chips>
 
-  Ignore sections:			
+  Hide sections:			
   <md-grid-list class="section-list" md-cols="3" md-rows="2" md-row-height="30px">
 	<md-grid-tile ng-repeat="section in $ctrl.sections">
 	  <md-checkbox ng-model="section.selected">{{ section.name }}</md-checkbox>

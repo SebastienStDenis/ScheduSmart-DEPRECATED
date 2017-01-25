@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class Builder {
 	private ArrayList<Section> allSections;
 	private Calendar cal;
-	private HashMap<String, Integer> assocNums; // map of Course names to it's current assoc_number being used
+	private HashMap<String, Integer> assocNums; // the keys are course names, the values are the corresponding assoc_numbers being used for each
 	
 	private ArrayList<Schedule> validSchedules;
 
@@ -37,6 +37,8 @@ public class Builder {
 		omitClosed = false;
 	}
 	
+	// addValidSchedule adds schedule to the validSchedules field at the
+	//    correct position (sorted from highest score to lowest)
 	private void addValidSchedule(Schedule schedule) {
 		if (schedule.getSize() == 0) {
 			return;
@@ -56,11 +58,13 @@ public class Builder {
 	}
 	
 	// nextSection adds all valid schedules to validSchedules starting at the Section
-	//    pointed to by secIt and ahead (calls itself recursively and with recursion)
+	//    pointed to by secIt (calls itself recursively)
+	// ignoredSections must be sorted (done in getSchedules())
 	private void nextSection(ListIterator<Section> secIt) {
 		if (secIt.hasNext()) {
 			Section sec = secIt.next();
 			
+			// skip current section if the type is in ignoredSections
 			if (ignoredSections != null && ignoredSections.length > 0) {
 				int foundPos = Arrays.binarySearch(ignoredSections, sec.getType());
 				if (foundPos >= 0 && foundPos < ignoredSections.length && ignoredSections[foundPos].equals(sec.getType())) {
@@ -91,9 +95,9 @@ public class Builder {
 						addedAssoc = true;
 					}
 					
-					// this will return after eventually reaching the end of allSections or
-					//    having no more possibilities.  Afterwards, we remove the
-					//    just-added component and try again with the next.
+					// this will return after eventually trying all valid possibilities.
+					//    Afterwards, we remove the just-added component and try again
+					//    with the next.
 					nextSection(allSections.listIterator(secIt.nextIndex()));
 					
 					cal.removeComponent(comp); // backtracking
@@ -108,7 +112,8 @@ public class Builder {
 	}
 	
 	// getSchedules returns a list of all possible schedules based on classes, term, ignoredSections, and omitClosed
-	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections, boolean omitClosed, ScorePreferences scorePreferences) throws UWAPIException {
+	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections, 
+			boolean omitClosed, ScorePreferences scorePreferences) throws UWAPIException {
 		resetBuilder();
 		
 		cal.setScorePreferences(scorePreferences);
@@ -124,6 +129,7 @@ public class Builder {
 			allSections.addAll(UWAPIClient.getSections(classes[pos], term));
 		}
 		
+		// sort sections in allSections from least amount of components to most
 		allSections.sort((sec1, sec2) -> Integer.compare(sec1.componentsSize(), sec2.componentsSize()));
 		
 		nextSection(allSections.listIterator());

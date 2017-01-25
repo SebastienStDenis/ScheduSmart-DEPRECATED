@@ -51,7 +51,7 @@ tr td:not(.headcol):not(:last-child) {
   border-right: 1px solid #eee;
 }
 
-.cell{
+.cell {
   position: relative;
   vertical-align: top;
   height: 40px;

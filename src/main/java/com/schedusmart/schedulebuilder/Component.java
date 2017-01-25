@@ -3,13 +3,13 @@ package com.schedusmart.schedulebuilder;
 import java.util.ArrayList;
 
 
-// Component represents one course component of a certain course (ex: CS 241 TUT 001)
+// Component represents one course component of a certain course (eg. CS 241 TUT 001)
 public class Component {
-	private String name; // ex: "CS 241"
-	private int classNumber; // ex: "1234"
-	private String sectionName; // ex: "TUT 001"
+	private String name; // eg. "CS 241"
+	private int classNumber; // eg. "1234"
+	private String sectionName; // eg. "TUT 001"
 	
-	private int assocClass;	
+	private int assocClass;	// associated class number
 	private boolean closed; // true if component is closed or full
 	
 	private ArrayList<Block> blocks;
@@ -54,7 +54,7 @@ public class Component {
 		this.closed = closed;
 	}
 	
-	// getBlock returns the block at position ind of the blocks fields
+	// getBlock returns the block at position ind in the blocks field
 	public Block getBlock(int ind) {
 		return blocks.get(ind);
 	}

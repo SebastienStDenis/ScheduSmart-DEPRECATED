@@ -1,3 +1,4 @@
+// the weekView component shows the current schedule in 'schedules' as a weekly calendar
 angular.
 	module('weekView').
 	component('weekView', {
@@ -14,15 +15,16 @@ angular.
 				
 				self.Schedules = Schedules;
 				
-				self.weekDates = new Array(7);
+				self.weekDates = new Array(7); // Date objects representing each day of the current week (Sunday first)
 			
-				self.week = new Array(48);
+				self.week = new Array(48); // array of array containing all class blocks in the current week
 								
-				self.firstDate = new Date();
+				self.firstDate = new Date(); // date representing the first Sunday of the term
 				
 				self.weekIndex = 0;
 				
-				self.getTime = function(index) {
+				// getTimeFromIndex returns a 12H string representation corresponding to index (0-47)
+				self.getTimeFromIndex = function(index) {
 					var hour = Math.floor(index/2).toString();
 					if (hour > 12) {
 						hour -= 12;
@@ -36,6 +38,7 @@ angular.
 					return hour + ':' + min;
 				}
 				
+				// getIndex returns the correct index (0-47) corresponding to the 24H time string
 				self.getIndex = function(time) {
 					var hourMin = time.split(':');
 					
@@ -55,6 +58,8 @@ angular.
 					}	
 				}
 				
+				// getHeight returns the correct css height value (eg '100 px') for a
+				//    schedule element with startTime and endTime (24H time strings)
 				self.getHeight = function(startTime, endTime) {
 					var startIndex = self.getIndex(startTime);
 					var endIndex = self.getIndex(endTime);
@@ -63,13 +68,12 @@ angular.
 						return '0px';
 					}
 					
-					// !!! when height is odd, subtract 1
-					// add subtract for :10
-					
-					var height = (endIndex-startIndex)*43 - 4 - 12;
+					var height = (endIndex-startIndex)*43 - 16; // -4 to make up for padding, -12 since classes end at :20 and :50
 					return height.toString()+'px';					
 				}
 				
+				// inWeek returns true if the range startDate-endDate (format: 'MM/DD') overlap
+				//    with the current week (ie. self.weekdates)
 				self.inWeek = function(startDate, endDate) {
 					var start1 = new Date(self.weekDates[0].getTime());
 					var end1 = new Date(self.weekDates[6].getTime());
@@ -108,6 +112,7 @@ angular.
 					return false;
 				}
 				
+				// addBlock adds block at index to self.week on days found in the array days ('Su', 'M', 'T', 'W', 'Th', 'F', 'S')
 				self.addBlock = function(block, days, index) {
 					for (var i = 0; i < days.length; ++i) {
 						var dayIndex = 0;
@@ -139,6 +144,11 @@ angular.
 					}
 				}
 				
+				self.minInd = 19; // first index shown in the week view
+				self.maxInd = 28; // last index shown in the week view
+				
+				// update sets weekDates to the correct days according to weekIndex and updates
+				//    week to the current schedule in Schedules (if any)
 				self.update = function() {
 					var sunday = new Date(self.firstDate.getTime());
 					sunday.setDate(sunday.getDate() + 7*self.weekIndex);
@@ -220,6 +230,7 @@ angular.
 						}
 					}				
 					
+					// adjust minInd and maxInd
 					if (self.minInd >= 48) {
 						self.minInd = 19;
 					} else {
@@ -231,6 +242,7 @@ angular.
 					}					
 				}
 				
+				// resetAndUpdate resets the week view and calls self.update
 				self.resetAndUpdate = function() {	
 					self.weekIndex = 0;
 					
@@ -245,15 +257,9 @@ angular.
 				    }
 					
 					self.update();
-				}
-				
-				Schedules.registerObserverCallback(self.resetAndUpdate);
-								
-				self.minInd = 19; // always odd
-				self.maxInd = 28; // always even
-				
-				self.resetAndUpdate();
-				
+				}				
+
+				// prevWeek updates the week view to the previous week (with wrap-around)
 				self.prevWeek = function() {
 					--self.weekIndex;
 					if (self.weekIndex < 0) {
@@ -263,6 +269,7 @@ angular.
 					self.update();
 				}
 				
+				// nextWeek updates the week view to the next week (with wrap-around)
 				self.nextWeek = function() {
 					++self.weekIndex;
 					if (self.weekIndex > 11) {
@@ -270,29 +277,11 @@ angular.
 					}
 					
 					self.update();					
-				}				
-
-				/*
-				self.week[21][5] = {
-						style: {'background':'#3F51B5', 'border-width':'0px', 'height':'283'},
-						name: 'ACTSC 102 - TUT 101',
-						instructor: 'Joe John',
-						location: 'DC 2145'
 				}
-				self.week[21][3] = {
-						style: {'background':'white', 'border':'1px solid #3F51B5', 'height':'183%'},
-						name: 'ACTSC 102 - TUT 101',
-						instructor: 'Joe John',
-						location: 'DC 2145'
-				}
-				self.week[21][4] = {
-						style: {'background':'white', 'border':'1px solid #3F51B5', 'color':'#3F51B5', 'height':'253%'},
-						name: 'ACTSC 102 - TUT 101',
-						instructor: 'Joe John',
-						location: 'DC 2145'
-				}
-				*/
 				
+				Schedules.registerObserverCallback(self.resetAndUpdate); // call resetAndUpdate when the current schedule changes
+				
+				self.resetAndUpdate(); // initial call to resetAndUpdate				
 		}
 	]
 });

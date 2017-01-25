@@ -6,15 +6,15 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 // Calendar takes Component objects, determines if they make a valid
-//    schedule and return a Schedule object from them
+//    schedule and returns a Schedule object from them
 public class Calendar {
 	
-	// the keys are days "M", "T", ... and the values are arrays of 48 linked lists (corresponding
+	// the map keys are days "su", "M", "T", ... and the values are arrays of 48 linked lists (corresponding
 	//    to the 48 half-hours in the day - index 0 is 0:00, index 1 is 0:30, ...).
-	//    The linked lists are sorted by the start date of each block.
-	private HashMap<String, ArrayList<LinkedList<Block>>> timeTable; // the linkedLists are sorted by the startDate of each block
+	//    The linked lists represent all blocks at that time and are sorted by the start date of each block.
+	private HashMap<String, ArrayList<LinkedList<Block>>> timeTable;
 	
-	private ArrayList<Component> components;
+	private ArrayList<Component> components; // all components currently in the calendar
 	
 	ScorePreferences scorePreferences;
 	
@@ -30,6 +30,7 @@ public class Calendar {
 	// resetCalendar() resets the Calendar object to its post-initialization state
 	public void resetCalendar() {
 		components = new ArrayList<Component>();
+		
 		for (int pos = 0; pos < DAYS.length; ++ pos) {
 			ArrayList<LinkedList<Block>> dayArr = new ArrayList<LinkedList<Block>>(SLOTS_IN_DAY);
 			for (int dayPos = 0; dayPos < SLOTS_IN_DAY; ++dayPos) {
@@ -267,10 +268,9 @@ public class Calendar {
 	
 	private static int NOON_INDEX = 24;
 	
-	// calculateScore uses a top-secret ultra-precise algorithm to return a
-	//    score of the current calendar based on the options in scorePreferences.
-	//    Considers the amount of morning classes, afternoon classes, school
-	//    days and the average day length.  (This algorithm is not very good)
+	// calculateScore returns a score of the current calendar based on the options
+	//    in scorePreferences.  Considers the amount of morning classes, afternoon
+	//    classes, and school days.
 	private double calculateScore() {
 		double morningClassCount = 0;
 		double afternoonClassCount = 0;

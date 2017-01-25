@@ -24,8 +24,9 @@ angular.
 			          }));
 				});
 				
-				self.courses = [];
+				self.courses = []; // currently selected courses
 				
+				// addCourse adds the simple name version (eg. CS 241) of self.selectedItem to courses
 				self.addCourse = function() {
 					  if (self.selectedItem == null) {
 						  return
@@ -40,11 +41,13 @@ angular.
 					  self.selectedItem = '';
 				  }
 				
+				// noCourses returns true if no courses have been selected
 				self.noCourses = function() {
 					return self.courses.length === 0;
 				}
 				
-				self.changeTerm = function () {
+				// resetCourses resets all selected courses
+				self.resetCourses = function () {
 					  self.courses = [];
 				}
 				
@@ -63,6 +66,8 @@ angular.
 				
 				self.omitClosed = false;
 				
+				// getSchedules uses the Schedules service to generate schedules
+				//    based on current courses and preferences
 				self.getSchedules = function () {
 					path = '/api/v1/schedules?';
 					
@@ -88,10 +93,10 @@ angular.
 					
 					var year = '20' + term.substring(1, 3);
 					
-					Schedules.getSchedules(path, term.charAt(3), year, $mdSidenav('left').toggle);
+					Schedules.getSchedules(path, term.charAt(3), year, $mdSidenav('left').toggle); // close search menu if successful
 				}
 				
-				
+				// showHelp opens the help dialog
 				self.showHelp = function() {
 					$scope.$emit('ShowHelp')
 				}

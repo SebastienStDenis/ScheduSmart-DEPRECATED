@@ -35,7 +35,7 @@
     <table>	
       <tbody>
   	    <tr ng-repeat="hour in $ctrl.week" ng-if="$ctrl.minInd <= $index && $index <= $ctrl.maxInd">
-  		  <td class="headcol"><span ng-if="$index != $ctrl.minInd">{{ $ctrl.getTime($index) }}</span></td>
+  		  <td class="headcol"><span ng-if="$index != $ctrl.minInd">{{ $ctrl.getTimeFromIndex($index) }}</span></td>
   		  <td ng-repeat="block in hour track by $index">
   		    
   		    <div class="cell">

@@ -77,6 +77,7 @@ public class BuilderResource {
 		ArrayList<Schedule> scheduleList = builder.getSchedules(courses, term, ignoredSecs, omitClosed, new ScorePreferences(classTime, dayPref));
 		int scheduleCount = scheduleList.size();
 		
+		// scheduleList to array of CollecctionSchedule objects
 		CollectionSchedule[] schedules = new CollectionSchedule[scheduleCount];
 		
 		for (int i = 0; i < scheduleCount; ++i) {		

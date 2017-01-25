@@ -1,7 +1,9 @@
+// configure the main application
 angular.
 	module('ScheduSmartApp').
 	config(['$mdThemingProvider', '$locationProvider', '$routeProvider',
 		function config($mdThemingProvider, $locationProvider, $routeProvider) {
+			// set color palette
 			$mdThemingProvider.theme('default')
 			    .primaryPalette('grey')
 			    .accentPalette('amber')
@@ -9,6 +11,7 @@ angular.
 			
 			$locationProvider.hashPrefix('!');
 			
+			// set up routes for list-view and week-view, default to week-view
 			$routeProvider.
 				when('/list', {
 					template: '<list-view></list-view>'

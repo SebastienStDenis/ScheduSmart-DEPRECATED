@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
 
-// Schedule represents a complete course schedule, with a set on Component objects
+// Schedule represents a complete course schedule, with a set of Component objects
 public class Schedule {
 	// each pair is a course name and its corresponding list of components
 	private HashMap<String, ArrayList<Component>> components;
@@ -16,7 +16,7 @@ public class Schedule {
 	public Schedule(ArrayList<Component> componentList, double score) {
 		components = new HashMap<String, ArrayList<Component>>();
 		
-		// add each component in component
+		// add each component in componentList to this.components
 		ListIterator<Component> compIt = componentList.listIterator();
 		while (compIt.hasNext()) {
 			Component comp = compIt.next();

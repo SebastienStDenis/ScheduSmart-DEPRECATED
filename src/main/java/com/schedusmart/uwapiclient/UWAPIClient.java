@@ -1,6 +1,5 @@
 package com.schedusmart.uwapiclient;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -20,9 +19,10 @@ import com.schedusmart.schedulebuilder.Term;
 // UWAPIClient is used to access course information from the UW API
 public class UWAPIClient {
 	
-	private static String baseURL;
-	private static String apiKey;
+	private static String BASE_URL;
+	private static String API_KEY;
 	
+	// load UW API base url and api key from private/config.properties
 	static {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		
@@ -30,10 +30,10 @@ public class UWAPIClient {
 			Properties prop = new Properties();
 			prop.load(input);
 			
-			baseURL = prop.getProperty("uwbaseurl");
-			apiKey = prop.getProperty("uwapikey");
-		} catch (IOException exc) {
-			exc.printStackTrace();
+			BASE_URL = prop.getProperty("uwbaseurl");
+			API_KEY = prop.getProperty("uwapikey");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}		
 	}
 	
@@ -100,15 +100,15 @@ public class UWAPIClient {
 		}
 	}
 		
-	// getTerm returns an array of course names based on UW API data
+	// getTermCourses returns an array of course names based on UW API data
 	//    for the provided 4-digit term code	
-	private static ArrayList<String> getTerm(String term) throws UWAPIException {
+	private static ArrayList<String> getTermCourses(String term) throws UWAPIException {
 		JSONTermCourses obj;
 		try {
-			String url = baseURL + 
+			String url = BASE_URL + 
 					"/" + term +
 					"/courses.json" +
-					"?key=" + apiKey;
+					"?key=" + API_KEY;
 			
 			String data = getJSON(url);
 			
@@ -133,14 +133,14 @@ public class UWAPIClient {
 	// getTerms returns term information from the UWaterloo API for each term with course
 	//    info available one the API.  The information is returned as an array of Term objects
 	public static Term[] getTerms() throws UWAPIException {
-		String[] termCodes = {"1171"};
-		ArrayList<Term> termCourses = new ArrayList<Term>();
+		String[] termCodes = {"1171"}; //TODO: generate valid term codes automatically
+		ArrayList<Term> terms = new ArrayList<Term>();
 		
 		for (int i = 0; i < termCodes.length; ++i) {
 			String code = termCodes[i];
 			
-			String name = code.substring(1, 3);
-			
+			// get term name (eg. W17) from term code (eg. 1171)
+			String name = code.substring(1, 3);			
 			char seasonNum = code.charAt(3);
 			if (seasonNum == '1') {
 				name = "W" + name;
@@ -151,24 +151,23 @@ public class UWAPIClient {
 			}
 			
 			try {
-				ArrayList<String> courses = UWAPIClient.getTerm(code);
-				termCourses.add(new Term(name, code, courses));
+				ArrayList<String> courses = UWAPIClient.getTermCourses(code);
+				terms.add(new Term(name, code, courses));
 			} catch (UWAPIException e) {
 				continue;
 			}			
 		}
 		
-		if (termCourses.size() == 0) {
+		if (terms.size() == 0) {
 			throw new UWAPIException("No term information found");
 		} else {
-			Term[] termCoursesArr = new Term[termCourses.size()];
-			for (int i = 0; i < termCoursesArr.length; ++i) {
-				termCoursesArr[i] = termCourses.get(i);
+			Term[] termsArray = new Term[terms.size()];
+			for (int i = 0; i < termsArray.length; ++i) {
+				termsArray[i] = terms.get(i);
 			}
-			return termCoursesArr;
+			return termsArray;
 		}
-	}
-	
+	}	
 	
 	
 	// getSections returns a list of Sections based on UW API data for the provided className and term.
@@ -176,6 +175,7 @@ public class UWAPIClient {
 	public static ArrayList<Section> getSections(String className, String term) throws UWAPIException {
 		JSONCourse obj;		
 		try {
+			// split className into subject (eg. 'CS') and catalog number (eg. '241')
 			int nameLen = className.length();
 			int pos = 0;
 			while (pos < nameLen && !Character.isDigit(className.charAt(pos))) {
@@ -185,12 +185,12 @@ public class UWAPIClient {
 			String subject = className.substring(0, pos);
 			String catalogNum = className.substring(pos);
 			
-			String url = baseURL + 
+			String url = BASE_URL + 
 					"/" + term + 
 					"/" + subject + 
 					"/" + catalogNum + 
 					"/schedule.json" + 
-					"?key=" + apiKey;
+					"?key=" + API_KEY;
 			
 			String data = getJSON(url);
 			
@@ -254,9 +254,7 @@ public class UWAPIClient {
 			
 			if (comp.blocksSize() == 0) {
 				continue NextComponent;
-			}
-			
-			
+			}			
 			
 			ListIterator<Section> secIt = sections.listIterator();
 			boolean added = false;
@@ -271,6 +269,7 @@ public class UWAPIClient {
 				}				
 			}
 			
+			// if not added, the section is not yet present in sections, so create a new one
 			if (!added) {
 				Section sec = new Section(compType);
 				sec.addComponent(comp);
