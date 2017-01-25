@@ -177,36 +177,33 @@ angular.
 								var name = courses[i][j].name + ' - ' + courses[i][j].sectionName;
 								
 								for (var k = 0; k < blocks.length; ++k) {
-									var location = blocks[k].location;
-									
-									var instructor = 'TBA';								
-									if (blocks[k].instructors.length > 0) {
-										var nameSplit = blocks[k].instructors[0].split(',');
-										if (nameSplit.length >= 2) {
-											instructor = nameSplit[1] + ' ' + nameSplit[0];
-										} else {
-											instructor = nameSplit[0];
-										}
-									}								
-									if (blocks[k].instructors.length > 1) {
-										instructor += ' (+)';
-									}
-									
-									var height = self.getHeight(blocks[k].startTime, blocks[k].endTime);
-									
-									var style = {'height':height, 'border-color':color, 'color':color};  //var style = {'height':height, 'background':color}; // background
-									
-									var block = {
-										style: style,
-										name: name,
-										instructor: instructor,
-										location: location,
-										time: blocks[k].startTime + '-' + blocks[k].endTime, // !!!remove this field!!!
-										date: blocks[k].startDate + '-' + blocks[k].endDate // !!!remove this field!!!
-									}
-									
+									// check if blocks[k] occurs within the current week (no start/end dates means occurs in all weeks)
 									if ((blocks[k].startDate == undefined || blocks[k].endDate == undefined) ||
-											self.inWeek(blocks[k].startDate, blocks[k].endDate)) {
+											self.inWeek(blocks[k].startDate, blocks[k].endDate)) {										
+										var location = blocks[k].location;
+										
+										// get shortened version of instructors for current block
+										var instructor = 'TBA';								
+										if (blocks[k].instructors.length > 0) {
+											var nameSplit = blocks[k].instructors[0].split(',');
+											if (nameSplit.length >= 2) {
+												instructor = nameSplit[1] + ' ' + nameSplit[0];
+											} else {
+												instructor = nameSplit[0];
+											}
+										}								
+										if (blocks[k].instructors.length > 1) {
+											instructor += ' (+)';
+										}
+										
+										var height = self.getHeight(blocks[k].startTime, blocks[k].endTime);
+										
+										var block = {
+											style: {'height':height, 'border-color':color, 'color':color},
+											name: name,
+											instructor: instructor,
+											location: location
+										}
 										
 										var startIndex = self.getIndex(blocks[k].startTime);
 										var endIndex = self.getIndex(blocks[k].endTime);

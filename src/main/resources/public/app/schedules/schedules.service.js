@@ -46,45 +46,51 @@ angular.
 	                clickOutsideToClose: false,
 	                fullscreen: false,
 	                escapeToClose: false,
+	                onComplete: generateSchedules, // wait for progress to show, then make call to backend
 	              })
-				
-				$http.get(path).success(function (data) {
-					self.schedules = data;
-					self.index = 0;
-					self.firstMonth = firstMonth;
-					self.year = year;
-					
-					$mdDialog.cancel();
-					
-					self.notifyObservers();
-					
-					if (self.schedules.length === 0) {
+	              
+				function generateSchedules() {
+					$http.get(path).success(function (data) {
+						self.schedules = data;
+						self.index = 0;
+						self.firstMonth = firstMonth;
+						self.year = year;
+						
+						$mdDialog.cancel(); // cancel progress dialog
+						
+						self.notifyObservers();
+						
+						if (self.schedules.length === 0) {
+							$mdDialog.show(
+					        		$mdDialog.alert({
+							            title: 'Notice',
+							            textContent: 'No valid schedules exist. Try again with different options.',
+							            ok: 'Close'
+					          }));
+						} else {
+							successFunc();
+						}					
+						
+					}).error(function (data, status) {
+						$mdDialog.cancel(); // cancel progress dialog
+						
+						var msg = 'Cannot access service. Please try again later.';
+						if (status === 400) {
+							msg = data;
+						}
+						
 						$mdDialog.show(
 				        		$mdDialog.alert({
-						            title: 'Notice',
-						            textContent: 'No valid schedules exist. Try again with different options.',
+						            title: 'Error',
+						            textContent: msg,
 						            ok: 'Close'
 				          }));
-					} else {
-						successFunc();
-					}					
-					
-				}).error(function (data, status) {
-					$mdDialog.cancel();
-					var msg = 'Cannot access service. Please try again later.';
-					if (status === 400) {
-						msg = data;
-					}
-					
-					$mdDialog.show(
-			        		$mdDialog.alert({
-					            title: 'Error',
-					            textContent: msg,
-					            ok: 'Close'
-			          }));
-				});
+					});
+				}				
 			},
 			
+			// getInstructors returns a shortened and formatted string
+			//     representing the instructors for component
 			getInstructors: function (component) {
 				var instr = 'TBA';
 				

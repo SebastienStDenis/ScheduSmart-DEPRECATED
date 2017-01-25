@@ -1,17 +1,20 @@
+// the search component is used for selecting courses and schedule preferences
 angular.
 	module('search').
 	component('search', {
 		templateUrl: 'app/search/search.template.html',
 		controller: ['$scope', '$http', '$mdSidenav', '$mdDialog', 'Schedules',
-			function ListViewController($scope, $http, $mdSidenav, $mdDialog, Schedules) {
+			function SearchController($scope, $http, $mdSidenav, $mdDialog, Schedules) {
 				var self = this;
 								
-				self.terms = [];
+				// terms is an array of {name, code, courses} objects, where name is the term name (eg. W17), code is 
+				//    the term code (eg. 1171), and courses is an array of course names
+				self.terms = []; 
 				self.termInd = 0;
 				
 				self.Schedules = Schedules;
 				
-				$http.get('api/v1/allcourses').success(function (data) {
+				$http.get('api/v1/allcourses').success(function (data) { // get course names for all available terms
 					self.terms = data;
 					$scope.$emit('SearchReady')
 				}).error(function (data, status) {					
