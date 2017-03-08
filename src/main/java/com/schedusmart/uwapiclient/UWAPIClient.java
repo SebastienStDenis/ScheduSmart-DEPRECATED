@@ -133,7 +133,7 @@ public class UWAPIClient {
 	// getTerms returns term information from the UWaterloo API for each term with course
 	//    info available one the API.  The information is returned as an array of Term objects
 	public static Term[] getTerms() throws UWAPIException {
-		String[] termCodes = {"1171"}; //TODO: generate valid term codes automatically
+		String[] termCodes = {"1171", "1175"}; //TODO: generate valid term codes automatically
 		ArrayList<Term> terms = new ArrayList<Term>();
 		
 		for (int i = 0; i < termCodes.length; ++i) {
