@@ -30,6 +30,7 @@ public class BuilderResource {
 	
 	private void setupEndpoints() {
 		get(API_CONTEXT + "/schedules", "application/json", (request, response) -> {
+			response.header("Content-Encoding", "gzip");
 			try {
 				return getSchedules(request);
 			} catch (UWAPIException e) {
@@ -46,6 +47,7 @@ public class BuilderResource {
 		}, new JsonTransformer());
 		
 		get(API_CONTEXT + "/allcourses", "application/json", (request, response) -> {
+			response.header("Content-Encoding", "gzip");
 			try {
 				return UWAPIClient.getTerms();
 			} catch (UWAPIException e) {
