@@ -10,15 +10,20 @@ public class Component {
 	private String sectionName; // eg. "TUT 001"
 	
 	private int assocClass;	// associated class number
+	private String rel1; // related class 1
+	private String rel2; // related class 2
 	private boolean closed; // true if component is closed or full
 	
 	private ArrayList<Block> blocks;
 	
-	public Component(String name, int classNumber, String sectionName, int assocClass, boolean closed) {
+	public Component(String name, int classNumber, String sectionName, int assocClass,
+			String rel1, String rel2, boolean closed) {
 		this.name = name;
 		this.classNumber = classNumber;
 		this.sectionName = sectionName;
 		this.assocClass = assocClass;
+		this.rel1 = rel1;
+		this.rel2 = rel2;
 		this.closed = closed;
 		
 		blocks = new ArrayList<Block>();
@@ -42,6 +47,16 @@ public class Component {
 	// getAssocClass returns the assocClass field
 	public int getAssocClass() {
 		return assocClass;
+	}
+	
+	// getRel1 returns the rel1 field
+	public String getRel1() {
+		return rel1;
+	}
+		
+	// getRel2 returns the rel2 field
+	public String getRel2() {
+		return rel2;
 	}
 	
 	// getClosed returns the closed field
@@ -70,8 +85,8 @@ public class Component {
 	}
 	
 	public String toString() {
-		return String.format("Component: %s %d %s, assoc %d, closed - %b, blocks - %s", 
-				name, classNumber, sectionName, assocClass, closed, blocks.toString());
+		return String.format("Component: %s %d %s, assoc %d, rel1 %s, rel2 %s, closed - %b, blocks - %s", 
+				name, classNumber, sectionName, assocClass, rel1, rel2, closed, blocks.toString());
 		//return String.format("(%s %s (%d))", name, sectionName, assocClass);
 	}
 }

@@ -77,6 +77,8 @@ public class UWAPIClient {
 			int class_number;
 			String section;
 			int associated_class;
+			String related_component_1;
+			String related_component_2;
 			int enrollment_capacity;
 			int enrollment_total;
 			JSONBlock[] classes;
@@ -213,7 +215,8 @@ public class UWAPIClient {
 			String name = curr.subject + " " + curr.catalog_number;			
 			boolean closed = (curr.enrollment_total >= curr.enrollment_capacity);
 			
-			Component comp = new Component(name, curr.class_number, curr.section, curr.associated_class, closed);
+			Component comp = new Component(name, curr.class_number, curr.section, curr.associated_class,
+					curr.related_component_1, curr.related_component_2, closed);
 			
 			String compType = (curr.section.split(" "))[0];
 			

@@ -15,6 +15,8 @@ public class Builder {
 	private ArrayList<Section> allSections;
 	private Calendar cal;
 	private HashMap<String, Integer> assocNums; // the keys are course names, the values are the corresponding assoc_numbers being used for each
+	private HashMap<String, String> rel1Codes;
+	private HashMap<String, String> rel2Codes;
 	
 	private ArrayList<Schedule> validSchedules;
 
@@ -30,6 +32,8 @@ public class Builder {
 		allSections = new ArrayList<Section>();
 		cal = new Calendar();
 		assocNums = new HashMap<String, Integer>();
+		rel1Codes = new HashMap<String, String>();
+		rel2Codes = new HashMap<String, String>();
 		
 		validSchedules = new ArrayList<Schedule>();
 		
@@ -86,7 +90,55 @@ public class Builder {
 				// if there is a value in assocNums for this class, comp's assocClass must match it or be 99
 				if (assocNums.containsKey(course) && assocClass != 99 && assocClass != assocNums.get(course)) {
 						continue;
-				}				
+				}
+				
+				// if section 0XX (eg LEC 001, TUT 012 ...) has a rel1 number, the corresponding 1YY section must have that catalog number
+				// if section 0XX has a rel2 number, the corresponding 2YY section must have that catalog number
+				String catNum = comp.getSectionName().split(" ")[1];
+				boolean rel1Added = false;
+				boolean rel2Added = false;
+				
+				if (catNum.charAt(0) == '0') {
+					String rel1 = comp.getRel1();					
+					if (rel1 != null) {
+						if (!rel1.equals(rel1Codes.getOrDefault(course, rel1))) {
+							continue;
+						}
+						if (!rel1.equals("99") && !rel1Codes.containsKey(course)) {
+							rel1Codes.put(course, rel1);
+							rel1Added = true;
+						}
+					}
+					
+					String rel2 = comp.getRel2();					
+					if (rel2 != null) {
+						if (!rel2.equals(rel2Codes.getOrDefault(course, rel2))) {
+							continue;
+						}
+						if (!rel2.equals("99") && !rel2Codes.containsKey(course)) {
+							rel2Codes.put(course, rel2);
+							rel2Added = true;
+						}
+					}					
+				} else if (catNum.charAt(0) == '1') {
+					if (!catNum.equals(rel1Codes.getOrDefault(course, catNum))) {
+						continue;
+					}
+					
+					if (!rel1Codes.containsKey(course)) {
+						rel1Codes.put(course, catNum);
+						rel1Added = true;
+					}					
+				} else if (catNum.charAt(0) == '2') {
+					if (!catNum.equals(rel2Codes.getOrDefault(course, catNum))) {
+						continue;
+					}
+					
+					if (!rel2Codes.containsKey(course)) {
+						rel2Codes.put(course, catNum);
+						rel2Added = true;
+					}	
+				}
 				
 				if (cal.addComponent(comp)) {
 					boolean addedAssoc = false;
@@ -103,6 +155,12 @@ public class Builder {
 					cal.removeComponent(comp); // backtracking
 					if (addedAssoc) {
 						assocNums.remove(course);
+					}
+					if (rel1Added) {
+						rel1Codes.remove(course);
+					}
+					if (rel2Added) {
+						rel2Codes.remove(course);
 					}
 				}
 			}			
