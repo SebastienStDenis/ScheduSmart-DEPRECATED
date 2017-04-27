@@ -1,8 +1,8 @@
 // configure the main application
 angular.
 	module('ScheduSmartApp').
-	config(['$mdThemingProvider', '$locationProvider', '$routeProvider',
-		function config($mdThemingProvider, $locationProvider, $routeProvider) {
+	config(['$mdThemingProvider', '$locationProvider', '$routeProvider', '$mdGestureProvider',
+		function config($mdThemingProvider, $locationProvider, $routeProvider, $mdGestureProvider) {
 			// set color palette
 			$mdThemingProvider.theme('default')
 			    .primaryPalette('grey')
@@ -20,6 +20,8 @@ angular.
 					template: '<week-view></week-view>'
 				}).
 				otherwise('/week');
+			
+			$mdGestureProvider.skipClickHijack();
 			
 	}
 ]);

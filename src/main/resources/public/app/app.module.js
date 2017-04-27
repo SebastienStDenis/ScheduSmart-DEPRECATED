@@ -3,6 +3,7 @@ angular.module('ScheduSmartApp', [
 	'ngMaterial',
 	'ngRoute',
 	'ngAnimate',
+	'ngSanitize',
 	'schedules',
 	'search',
 	'weekView',
