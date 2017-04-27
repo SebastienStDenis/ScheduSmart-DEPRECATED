@@ -22,7 +22,7 @@ angular.
 			        .show(
 			        		$mdDialog.alert({
 					            title: 'Error',
-					            textContent: 'Cannot access service. Please try again later.',
+					            htmlContent: data + "<BR/><BR/>Please try again later.  Click <a href='https://github.com/SebastienStDenis/ScheduSmart/issues'>here</a> to report an issue.",
 					            ok: 'Close'
 			          }));
 				});
