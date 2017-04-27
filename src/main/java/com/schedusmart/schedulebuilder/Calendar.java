@@ -331,7 +331,7 @@ public class Calendar {
 		
 		double gapScore = 1 - (gapCount / (10 * schoolDaysCount));
 		
-		return 20*classTimeScore + 20*dayPreferenceScore + 10*gapScore;
+		return 20*classTimeScore + 20*dayPreferenceScore + 20*gapScore;
 	}
 	
 	
