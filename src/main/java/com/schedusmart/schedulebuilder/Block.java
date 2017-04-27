@@ -18,7 +18,8 @@ public class Block {
 	private String sectionType; // "LEC", "TUT", ...
 		
 	public Block(String startTime, String endTime, String days, String location,
-			String startDate,	String endDate, String[] instructors, String sectionType) throws IllegalArgumentException {
+			String startDate,	String endDate, String[] instructors, String sectionType)
+					throws IllegalArgumentException {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.days = parseDays(days);		

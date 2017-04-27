@@ -16,7 +16,7 @@ public class UWAPIClientTest {
 
 	@Test
 	public void testGetSections() {
-		String className = "CS100";
+		String className = "CS240";
 		String term = "1171";
 		
 		ArrayList<Section> sections = null;
@@ -33,7 +33,7 @@ public class UWAPIClientTest {
 	public void testGetTermCourses() {
 		try {
 			Term[] terms = UWAPIClient.getTerms();
-			System.out.println(Arrays.toString(terms));
+			//System.out.println(Arrays.toString(terms));
 		} catch (UWAPIException e) {
 			fail(e.toString());
 		}
