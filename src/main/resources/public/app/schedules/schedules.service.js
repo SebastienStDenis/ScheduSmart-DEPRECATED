@@ -37,6 +37,8 @@ angular.
 			//    firstMonth and year correspond to the selected term for the schedules, and
 			//    successFunc is called if the call succeeds.
 			getSchedules: function (path, firstMonth, year, successFunc) {
+				//console.log(path);
+				
 				var self = this;
 				
 				$mdDialog.show({

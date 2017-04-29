@@ -14,7 +14,7 @@ angular.
 				
 				self.Schedules = Schedules;
 				
-				$http.get('api/v1/allcourses').success(function (data) { // get course names for all available terms
+				$http.get('/api/v1/allcourses').success(function (data) { // get course names for all available terms
 					self.terms = data;
 					$scope.$emit('SearchReady')
 				}).error(function (data, status) {					

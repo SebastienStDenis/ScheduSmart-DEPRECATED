@@ -179,9 +179,7 @@ public class Builder {
 	
 	// getSchedules returns a list of all possible schedules based on classes, term, ignoredSections, and omitClosed
 	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections, 
-			boolean omitClosed, ScorePreferences scorePreferences) throws UWAPIException {
-		resetBuilder();
-		
+			boolean omitClosed, ScorePreferences scorePreferences) throws UWAPIException {		
 		cal.setScorePreferences(scorePreferences);
 		
 		if (ignoredSections != null) {
@@ -191,7 +189,7 @@ public class Builder {
 		
 		this.omitClosed = omitClosed;
 		
-		for (int pos = 0; pos < classes.length; ++pos) {
+		for (int pos = 0; pos < classes.length; ++pos) {	
 			allSections.addAll(UWAPIClient.getSections(classes[pos], term));
 		}
 		
