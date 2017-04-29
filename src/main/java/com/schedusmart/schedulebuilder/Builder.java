@@ -24,11 +24,6 @@ public class Builder {
 	private boolean omitClosed; // don't include schedules that are closed/full
 	
 	public Builder() {
-		resetBuilder();
-	}
-	
-	// resetBuilder resets the fields of the Builder object to its post-initialization state
-	private void resetBuilder() {
 		allSections = new ArrayList<Section>();
 		cal = new Calendar();
 		assocNums = new HashMap<String, Integer>();

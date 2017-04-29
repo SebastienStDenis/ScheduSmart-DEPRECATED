@@ -19,12 +19,10 @@ import spark.Request;
 public class BuilderResource {
 	private static final String API_CONTEXT = "api/v1";
 	
-	private final Builder builder;
 	private Logger logger;
 		
 	public BuilderResource() {
 		logger = LoggerFactory.getLogger(BuilderResource.class);
-		this.builder = new Builder();
 		setupEndpoints();
 	}
 	
@@ -75,11 +73,11 @@ public class BuilderResource {
 		int classTime = Integer.parseInt(request.queryParams("classtime"));
 		int dayPref = Integer.parseInt(request.queryParams("daylength"));
 		boolean omitClosed = request.queryParams("omitclosed").equals("1");
-		
-		ArrayList<Schedule> scheduleList = builder.getSchedules(courses, term, ignoredSecs, omitClosed, new ScorePreferences(classTime, dayPref));
+				
+		ArrayList<Schedule> scheduleList = new Builder().getSchedules(courses, term, ignoredSecs, omitClosed, new ScorePreferences(classTime, dayPref));
 		int scheduleCount = scheduleList.size();
 		
-		// scheduleList to array of CollecctionSchedule objects
+		// scheduleList to array of CollectionSchedule objects
 		CollectionSchedule[] schedules = new CollectionSchedule[scheduleCount];
 		
 		for (int i = 0; i < scheduleCount; ++i) {		
