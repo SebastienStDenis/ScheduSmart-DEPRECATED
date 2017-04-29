@@ -95,8 +95,8 @@ public class Builder {
 				// if section 0XX (eg LEC 001, TUT 012 ...) has a rel1 number, the corresponding 1YY section must have that catalog number
 				// if section 0XX has a rel2 number, the corresponding 2YY section must have that catalog number
 				String catNum = comp.getSectionName().split(" ")[1];
-				boolean rel1Added = false;
-				boolean rel2Added = false;
+				String rel1Add = "";
+				String rel2Add = "";
 				
 				if (catNum.charAt(0) == '0') {
 					String rel1 = comp.getRel1();					
@@ -105,8 +105,8 @@ public class Builder {
 							continue;
 						}
 						if (!rel1.equals("99") && !rel1Codes.containsKey(course)) {
-							rel1Codes.put(course, rel1);
-							rel1Added = true;
+							//rel1Codes.put(course, rel1);
+							rel1Add = rel1;
 						}
 					}
 					
@@ -116,8 +116,8 @@ public class Builder {
 							continue;
 						}
 						if (!rel2.equals("99") && !rel2Codes.containsKey(course)) {
-							rel2Codes.put(course, rel2);
-							rel2Added = true;
+							//rel2Codes.put(course, rel2);
+							rel2Add = rel2;
 						}
 					}					
 				} else if (catNum.charAt(0) == '1') {
@@ -126,8 +126,8 @@ public class Builder {
 					}
 					
 					if (!rel1Codes.containsKey(course)) {
-						rel1Codes.put(course, catNum);
-						rel1Added = true;
+						//rel1Codes.put(course, catNum);
+						rel1Add = catNum;
 					}					
 				} else if (catNum.charAt(0) == '2') {
 					if (!catNum.equals(rel2Codes.getOrDefault(course, catNum))) {
@@ -135,8 +135,8 @@ public class Builder {
 					}
 					
 					if (!rel2Codes.containsKey(course)) {
-						rel2Codes.put(course, catNum);
-						rel2Added = true;
+						//rel2Codes.put(course, catNum);
+						rel2Add = catNum;
 					}	
 				}
 				
@@ -145,6 +145,13 @@ public class Builder {
 					if (!assocNums.containsKey(course) && assocClass != 99) {
 						assocNums.put(course, assocClass);
 						addedAssoc = true;
+					}
+					
+					if (!rel1Add.equals("")) {
+						rel1Codes.put(course, rel1Add);
+					}
+					if (!rel2Add.equals("")) {
+						rel2Codes.put(course, rel2Add);
 					}
 					
 					// this will return after eventually trying all valid possibilities.
@@ -156,10 +163,11 @@ public class Builder {
 					if (addedAssoc) {
 						assocNums.remove(course);
 					}
-					if (rel1Added) {
+					
+					if (!rel1Add.equals("")) {
 						rel1Codes.remove(course);
 					}
-					if (rel2Added) {
+					if (!rel2Add.equals("")) {
 						rel2Codes.remove(course);
 					}
 				}
