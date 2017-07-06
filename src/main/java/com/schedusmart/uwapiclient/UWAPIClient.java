@@ -136,23 +136,9 @@ public class UWAPIClient {
 	// getTerms returns term information from the UWaterloo API for each term with course
 	//    info available one the API.  The information is returned as an array of Term objects
 	public static Term[] getTerms() throws UWAPIException {
-		int month = Calendar.getInstance().get(Calendar.MONTH);
-		int year = Calendar.getInstance().get(Calendar.YEAR) % 100; // last two digits
-				
-		String[] termCodes = new String[2];
-		
-		if (month <= Calendar.APRIL) {
-			termCodes[0] = "1" + year + "1";
-			termCodes[1] = "1" + year + "5";
-		} else if (month <= Calendar.AUGUST) {
-			termCodes[0] = "1" + year + "5";
-			termCodes[1] = "1" + year + "9";
-		} else {
-			termCodes[0] = "1" + year + "9";
-			termCodes[1] = "1" + (year + 1) + "1";
-		}
-		
 		ArrayList<Term> terms = new ArrayList<Term>();
+				
+		String[] termCodes = {"1175", "1179"};
 		
 		for (int i = 0; i < termCodes.length; ++i) {
 			String code = termCodes[i];

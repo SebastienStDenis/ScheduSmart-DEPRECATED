@@ -100,7 +100,6 @@ public class Builder {
 							continue;
 						}
 						if (!rel1.equals("99") && !rel1Codes.containsKey(course)) {
-							//rel1Codes.put(course, rel1);
 							rel1Add = rel1;
 						}
 					}
@@ -111,7 +110,6 @@ public class Builder {
 							continue;
 						}
 						if (!rel2.equals("99") && !rel2Codes.containsKey(course)) {
-							//rel2Codes.put(course, rel2);
 							rel2Add = rel2;
 						}
 					}					
@@ -121,7 +119,6 @@ public class Builder {
 					}
 					
 					if (!rel1Codes.containsKey(course)) {
-						//rel1Codes.put(course, catNum);
 						rel1Add = catNum;
 					}					
 				} else if (catNum.charAt(0) == '2') {
@@ -130,7 +127,6 @@ public class Builder {
 					}
 					
 					if (!rel2Codes.containsKey(course)) {
-						//rel2Codes.put(course, catNum);
 						rel2Add = catNum;
 					}	
 				}
