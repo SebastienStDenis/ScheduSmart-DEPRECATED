@@ -138,7 +138,7 @@ public class UWAPIClient {
 	public static Term[] getTerms() throws UWAPIException {
 		ArrayList<Term> terms = new ArrayList<Term>();
 				
-		String[] termCodes = {"1175", "1179"};
+		String[] termCodes = {"1179", "1181"};
 		
 		for (int i = 0; i < termCodes.length; ++i) {
 			String code = termCodes[i];
