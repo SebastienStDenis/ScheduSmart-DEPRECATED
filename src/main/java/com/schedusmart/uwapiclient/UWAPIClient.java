@@ -133,25 +133,55 @@ public class UWAPIClient {
 		return courses;
 	}
 	
+	private static String makeTermCode(int year, int month) {
+		String yearCode = Integer.toString(year).substring(2);
+		
+		String monthCode;
+		if (month <= 4) {
+			monthCode = "1";
+		} else if (month <= 8) {
+			monthCode = "5";
+		} else {
+			monthCode = "9";
+		}
+		
+		return "1" + yearCode + monthCode;
+	}
+	
 	// getTerms returns term information from the UWaterloo API for each term with course
 	//    info available one the API.  The information is returned as an array of Term objects
 	public static Term[] getTerms() throws UWAPIException {
 		ArrayList<Term> terms = new ArrayList<Term>();
-				
-		String[] termCodes = {"1181"};
+		ArrayList<String> termCodes = new ArrayList<String>();
 		
-		for (int i = 0; i < termCodes.length; ++i) {
-			String code = termCodes[i];
+		int year = Calendar.getInstance().get(Calendar.YEAR);		
+		int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		termCodes.add(makeTermCode(year, month));
+		
+		month += 4;
+		if (month > 12) {
+			month = 1;
+			year++;
+		}
+		
+		termCodes.add(makeTermCode(year, month));
+		
+		for (int i = 0; i < termCodes.size(); ++i) {
+			String code = termCodes.get(i);
 			
 			// get term name (eg. W17) from term code (eg. 1171)
 			String name = code.substring(1, 3);			
 			char seasonNum = code.charAt(3);
 			if (seasonNum == '1') {
-				name = "W" + name;
+				name = "Winter " + name;
 			} else if (seasonNum == '5') {
-				name = "S" + name;
+				name = "Spring " + name;
 			} else {
-				name = "F" + name;
+				name = "Fall " + name;
+			}
+			
+			if (i > 0) {
+				name += "*";
 			}
 			
 			try {

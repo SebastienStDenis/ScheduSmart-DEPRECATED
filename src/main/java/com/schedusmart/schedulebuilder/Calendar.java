@@ -317,9 +317,9 @@ public class Calendar {
 		
 		double classTimeScore = 0;		
 		if (scorePreferences.getClassTimes() == 1) {
-			classTimeScore = morningClassCount / totalClassCount;
+			classTimeScore = (totalClassCount != 0) ? (morningClassCount / totalClassCount) : 1;
 		} else if (scorePreferences.getClassTimes() == 2) {
-			classTimeScore = afternoonClassCount / totalClassCount;
+			classTimeScore = (totalClassCount != 0) ? (afternoonClassCount / totalClassCount) : 1;
 		}
 		
 		double dayPreferenceScore = 0;
@@ -329,7 +329,7 @@ public class Calendar {
 			dayPreferenceScore = 1 - ((schoolDaysCount - 1) / 4);
 		}
 		
-		double gapScore = 1 - (gapCount / (10 * schoolDaysCount));
+		double gapScore = (schoolDaysCount != 0) ? (1 - (gapCount / (10 * schoolDaysCount))) : 0;
 		
 		return 20*classTimeScore + 20*dayPreferenceScore + 20*gapScore;
 	}

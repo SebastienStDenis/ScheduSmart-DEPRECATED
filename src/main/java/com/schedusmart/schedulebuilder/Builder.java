@@ -180,7 +180,7 @@ public class Builder {
 		
 		this.omitClosed = omitClosed;
 		
-		for (int pos = 0; pos < classes.length; ++pos) {	
+		for (int pos = 0; pos < classes.length; ++pos) {
 			allSections.addAll(UWAPIClient.getSections(classes[pos], term));
 		}
 		

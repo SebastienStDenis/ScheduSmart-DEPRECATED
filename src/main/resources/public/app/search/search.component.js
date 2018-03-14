@@ -45,7 +45,7 @@ angular.
 				  }
 				
 				// noCourses returns true if no courses have been selected
-				self.noCourses = function() {
+				self.noCourses = function () {
 					return self.courses.length === 0;
 				}
 				
@@ -97,6 +97,13 @@ angular.
 					var year = '20' + term.substring(1, 3);
 					
 					Schedules.getSchedules(path, term.charAt(3), year, $mdSidenav('left').toggle); // close search menu if successful
+				}
+				
+				// return the set of courses that match the string search
+				self.filterCourses = function(search) {
+					var sanitize = (str => str.replace(/ |-|'/g, '').toLowerCase())
+					var searchClean = sanitize(search)
+					return self.terms[self.termInd].courses.filter(name => (sanitize(name).includes(searchClean)))
 				}
 				
 				// showHelp opens the help dialog

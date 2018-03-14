@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="assets/css/search.css" />
 
-<md-content flex style="min-height: {{ 700 + ($ctrl.courses.length / 2) * 40 }}px; max-height: {{ 1000 + ($ctrl.courses.length / 2) * 40 }}px;" 
+<md-content flex style="min-height: {{ 750 + ($ctrl.courses.length / 2) * 40 }}px; max-height: {{ 1000 + ($ctrl.courses.length / 2) * 40 }}px;" 
   layout="column" layout-align="space-between center">
   <md-toolbar class="md-tall md-primary">		
     <div class="md-toolbar-tools" layout-fill layout="column" style="{width: 36px; height: 36px;}" 
@@ -17,12 +17,12 @@
 	  {{ term.name }}
 	</md-radio-button>
   </md-radio-group>
-	
+  
   <md-divider></md-divider>
-	
+		
   Select courses:
   <md-autocomplete class="smaller-width" placeholder="Search..." md-no-cache="true" md-selected-item="$ctrl.selectedItem"
-    md-search-text="$ctrl.searchText" md-items="item in $ctrl.terms[$ctrl.termInd].courses | filter:$ctrl.searchText"
+    md-search-text="$ctrl.searchText"  md-items="item in $ctrl.filterCourses($ctrl.searchText)"
     md-item-text="item" md-selected-item-change="$ctrl.addCourse()">
 		<span md-highlight-text="$ctrl.searchText" md-highlight-flags="i">{{ item }}</span>
   </md-autocomplete> 
@@ -41,8 +41,8 @@
   Preferred class time:
   <md-radio-group layout="row" layout-wrap ng-model="$ctrl.classTime" layout-align="center center">
 	<md-radio-button value="0">none</md-radio-button>
-	<md-radio-button value="1">morning</md-radio-button>
-	<md-radio-button value="2">afternoon</md-radio-button>
+	<md-radio-button value="1">end early</md-radio-button>
+	<md-radio-button value="2">start late</md-radio-button>
   </md-radio-group>
 
   <md-divider></md-divider>
@@ -70,6 +70,8 @@
 		<md-icon md-font-set="material-icons">help</md-icon>
 	</md-button>
   </div>
+
+  <font size="1" ng-show="$ctrl.terms.length > 1">*complete course information may not be available</font>
 	
   <div></div>	
 </md-content>
