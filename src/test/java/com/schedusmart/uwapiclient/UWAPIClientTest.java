@@ -1,15 +1,12 @@
 package com.schedusmart.uwapiclient;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
-
 import com.schedusmart.schedulebuilder.Section;
 import com.schedusmart.schedulebuilder.Term;
-import com.schedusmart.uwapiclient.UWAPIClient;
-import com.schedusmart.uwapiclient.UWAPIException;
+import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import static org.junit.Assert.fail;
 
 // These aren't really a JUnit tests, more like helpers for manually testing the Client
 public class UWAPIClientTest {
@@ -26,7 +23,7 @@ public class UWAPIClientTest {
 			fail(e.toString());
 		}
 		
-		System.out.println(sections);
+		//System.out.println(sections);
 	}	
 	
 	@Test

@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: ScheduSmart API for schedusmart.com
+Outputs:
+  S3BucketSecureURL:
+    Description: Name of S3 bucket which holds ScheduSmart website contents
+    Value:
+      Fn::Join:
+      - ''
+      - - https://
+        - Fn::GetAtt:
+          - ScheduSmartWebBucket
+          - DomainName
+  ScheduSmartApiUrl:
+    Description: URL for application api
+    Export:
+      Name: ScheduSmartApiUrl
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod
+  WebsiteURL:
+    Description: URL for ScheduSmart hosted on S3
+    Value:
+      Fn::GetAtt:
+      - ScheduSmartWebBucket
+      - WebsiteURL
+Resources:
+  BucketPolicy:
+    Properties:
+      Bucket:
+        Ref: ScheduSmartWebBucket
+      PolicyDocument:
+        Id: ScheduSmartS3Policy
+        Statement:
+        - Action: s3:GetObject
+          Effect: Allow
+          Principal: '*'
+          Resource:
+            Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - Ref: ScheduSmartWebBucket
+              - /*
+          Sid: PublicReadForGetBucketObjects
+        Version: 2012-10-17
+    Type: AWS::S3::BucketPolicy
+  ScheduSmartFunction:
+    Properties:
+      CodeUri: s3://schedusmart-api-source/686ace98d5e21ada89fb6fec90def173
+      Events:
+        GetResource:
+          Properties:
+            Method: any
+            Path: /{proxy+}
+          Type: Api
+      Handler: com.schedusmart.bootstrap.StreamLambdaHandler::handleRequest
+      MemorySize: 512
+      Policies: AWSLambdaBasicExecutionRole
+      Runtime: java8
+      Timeout: 15
+    Type: AWS::Serverless::Function
+  ScheduSmartWebBucket:
+    DeletionPolicy: Retain
+    Properties:
+      AccessControl: PublicRead
+      BucketName: schedusmart-web
+      WebsiteConfiguration:
+        ErrorDocument: index.html
+        IndexDocument: index.html
+    Type: AWS::S3::Bucket
+Transform: AWS::Serverless-2016-10-31

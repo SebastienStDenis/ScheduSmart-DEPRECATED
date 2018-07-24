@@ -1,10 +1,8 @@
 package com.schedusmart.schedulebuilder;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
-import com.schedusmart.schedulebuilder.Block;
+import static org.junit.Assert.assertArrayEquals;
 
 public class BlockTest {
 

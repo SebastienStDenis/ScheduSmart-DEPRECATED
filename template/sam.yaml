@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: ScheduSmart API for schedusmart.com
+Resources:
+  ScheduSmartFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.schedusmart.bootstrap.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: ../target/schedusmart-1.0-SNAPSHOT.jar
+      MemorySize: 512
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 15
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+  ScheduSmartWebBucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: schedusmart-web
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+      DeletionPolicy: Retain
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: ScheduSmartS3Policy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref ScheduSmartWebBucket
+                - /*
+      Bucket: !Ref ScheduSmartWebBucket
+
+Outputs:
+  ScheduSmartApiUrl:
+    Description: URL for application api
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod'
+    Export:
+      Name: ScheduSmartApiUrl
+  WebsiteURL:
+      Value: !GetAtt
+        - ScheduSmartWebBucket
+        - WebsiteURL
+      Description: URL for ScheduSmart hosted on S3
+  S3BucketSecureURL:
+    Value: !Join
+      - ''
+      - - 'https://'
+        - !GetAtt
+          - ScheduSmartWebBucket
+          - DomainName
+    Description: Name of S3 bucket which holds ScheduSmart website contents

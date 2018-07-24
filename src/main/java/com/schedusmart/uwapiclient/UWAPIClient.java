@@ -1,43 +1,40 @@
 package com.schedusmart.uwapiclient;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.ListIterator;
-import java.util.Properties;
-import java.util.Scanner;
-import java.util.Calendar;
-
 import com.google.gson.Gson;
 import com.schedusmart.schedulebuilder.Block;
 import com.schedusmart.schedulebuilder.Component;
 import com.schedusmart.schedulebuilder.Section;
 import com.schedusmart.schedulebuilder.Term;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.*;
 
 // UWAPIClient is used to access course information from the UW API
+@Slf4j
 public class UWAPIClient {
 	
-	private static String BASE_URL;
-	private static String API_KEY;
-	
+	private static String BASE_URL;// = "https://api.uwaterloo.ca/v2/terms";
+	private static String API_KEY;// = "e2bb5103ef385e98bd6a2c004b4e15b0";
+
 	// load UW API base url and api key from private/config.properties
 	static {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		
-		try(InputStream input = classLoader.getResourceAsStream("private/config.properties")) {
+
+		try (InputStream input = classLoader.getResourceAsStream("private/config.properties")) {
 			Properties prop = new Properties();
 			prop.load(input);
-			
+
 			BASE_URL = prop.getProperty("uwbaseurl");
 			API_KEY = prop.getProperty("uwapikey");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
 
 	// UWAPI term course data is deserialized into instances of this class
 	private class JSONTermCourses {
