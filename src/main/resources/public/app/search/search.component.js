@@ -13,8 +13,27 @@ angular.
 				self.termInd = 0;
 				
 				self.Schedules = Schedules;
-				
-				$http.get('/api/v1/allcourses').success(function (data) { // get course names for all available terms
+
+                var schedusmartApi;
+
+                for (var stack of JSON.parse(stackData).Stacks) {
+                  if (stack.StackName === "ScheduSmartApi") {
+                    var found = false;
+                    for (var output of stack.Outputs) {
+                      if (output.OutputKey == "ScheduSmartApiUrl") {
+                        schedusmartApi = output.OutputValue;
+                        found = true;
+                        break;
+                      }
+                    }
+
+                    if (found) {
+                      break;
+                    }
+                  }
+                }
+
+				$http.get(schedusmartApi + '/api/v1/allcourses').success(function (data) { // get course names for all available terms
 					self.terms = data;
 					$scope.$emit('SearchReady')
 				}).error(function (data, status) {					
@@ -72,25 +91,15 @@ angular.
 				// getSchedules uses the Schedules service to generate schedules
 				//    based on current courses and preferences
 				self.getSchedules = function () {
-					path = '/api/v1/schedules?';
-					
+					path = schedusmartApi + '/api/v1/schedules?';
+
 					var term = self.terms[self.termInd].code
-					path += 'term=' + term;
-					
-					for (var i = 0; i < self.courses.length; ++i) {
-						path += '&courses=' + self.courses[i].replace(/\s+/g, '');
-					}
-					
-					for (var i = 0; i < self.sections.length; ++i) {
-						var section = self.sections[i];
-						if (section.selected) {
-							path += '&ignore=' + section.name;
-						}
-					}
-					
-					path += '&classtime=' + self.classTime;
-					path += '&daylength=' + self.dayLength;
-					path += '&omitclosed=' + (self.omitClosed ? '1' : '0');
+					path += 'term=' + term +
+					 '&courses=' + self.courses.map(c => c.replace(/\s+/g, '')).join(',') +
+					 '&ignore=' + self.sections.filter(sec => sec.selected).map(sec => sec.name).join(',') +
+					 '&classtime=' + self.classTime +
+					 '&daylength=' + self.dayLength +
+					 '&omitclosed=' + (self.omitClosed ? '1' : '0');
 					  
 					//path = '/api/v1/schedules?term=1171&courses=CS240&courses=CS241&courses=CS251&courses=STV205&classtime=1&daylength=2&omitclosed=0';
 					

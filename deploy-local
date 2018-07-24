@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# deploy-local deploys the application locally
+# serves the Lambda Api using sam local
+# serves the website using python SimpleHTTPServer on http://localhost:8080
+# use option '-b' to clean/build before deploying
+
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+if [[ $1 = "-b" ]]; then
+    mvn clean;
+    mvn package;
+fi
+
+echo -e "${YELLOW}Running ScheduSmart on http://localhost:8080${NC}";
+trap 'kill %1' SIGINT;
+sam local start-api --template template/sam.yaml & 
+cd src/main/resources/public; python -m SimpleHTTPServer 8080;

@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: S3 bucket to store ScheduSmartApi JARs
+Resources:
+  ScheduSmartApiBucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: schedusmart-api-source
+Outputs:
+  S3BucketSecureURL:
+    Value: !Join
+      - ''
+      - - 'https://'
+        - !GetAtt
+          - ScheduSmartApiBucket
+          - DomainName
+    Description: Name of S3 bucket which holds ScheduSmartApi JARs

@@ -1,11 +1,11 @@
 package com.schedusmart.bootstrap;
 
+import com.schedusmart.schedulebuilder.Component;
+import com.schedusmart.schedulebuilder.Schedule;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import com.schedusmart.schedulebuilder.Component;
-import com.schedusmart.schedulebuilder.Schedule;
 
 // CollectionSchedules are like Schedules (in the 'schedulebuilder' package), but with a Collection of arrays instead of a map.
 public class CollectionSchedule {

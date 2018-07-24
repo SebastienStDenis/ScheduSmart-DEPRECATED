@@ -1,16 +1,17 @@
 package com.schedusmart.schedulebuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ListIterator;
-
 import com.schedusmart.uwapiclient.UWAPIClient;
 import com.schedusmart.uwapiclient.UWAPIException;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.ListIterator;
 
 // Builder is used to compute and return a list of valid 
 //    Schedules based on the courses provided to it
+@Slf4j
 public class Builder {
 	private ArrayList<Section> allSections;
 	private Calendar cal;
@@ -58,7 +59,7 @@ public class Builder {
 	
 	// nextSection adds all valid schedules to validSchedules starting at the Section
 	//    pointed to by secIt (calls itself recursively)
-	// ignoredSections must be sorted (done in getSchedules())
+	// ignoredSections must be sorted (done in buildSchedules())
 	private void nextSection(ListIterator<Section> secIt) {
 		if (secIt.hasNext()) {
 			Section sec = secIt.next();
@@ -168,9 +169,9 @@ public class Builder {
 		}
 	}
 	
-	// getSchedules returns a list of all possible schedules based on classes, term, ignoredSections, and omitClosed
-	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections, 
-			boolean omitClosed, ScorePreferences scorePreferences) throws UWAPIException {		
+	// buildSchedules returns a list of all possible schedules based on classes, term, ignoredSections, and omitClosed
+	public ArrayList<Schedule> getSchedules(String[] classes, String term, String[] ignoredSections,
+			boolean omitClosed, ScorePreferences scorePreferences) throws UWAPIException {
 		cal.setScorePreferences(scorePreferences);
 		
 		if (ignoredSections != null) {

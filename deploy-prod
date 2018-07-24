@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+mvn clean
+mvn package
+
+aws cloudformation deploy --template-file template/api-bucket.yaml --stack-name ScheduSmartApiBucket --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
+
+aws cloudformation package --template-file template/sam.yaml --output-template-file template/output-sam.yaml --s3-bucket schedusmart-api-source
+aws cloudformation deploy --template-file template/output-sam.yaml --stack-name ScheduSmartApi --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
+
+echo "stackData = '$(aws cloudformation describe-stacks --stack-name ScheduSmartApi | sed 's/ //g' | tr '\n' ' ')'" > src/main/resources/public/assets/config/stack.js
+aws s3 cp src/main/resources/public/ s3://schedusmart-web/ --recursive
+

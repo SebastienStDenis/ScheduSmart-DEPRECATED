@@ -1,13 +1,9 @@
 package com.schedusmart.schedulebuilder;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
-import com.schedusmart.schedulebuilder.Block;
-import com.schedusmart.schedulebuilder.Calendar;
-import com.schedusmart.schedulebuilder.Component;
-import com.schedusmart.schedulebuilder.Schedule;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class CalendarTest {
 

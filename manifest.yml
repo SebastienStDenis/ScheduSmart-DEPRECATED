@@ -1,6 +1,0 @@
----
-applications:
-- name: schedusmart
-  memory: 512M
-  host: www
-  domain: schedusmart.com
