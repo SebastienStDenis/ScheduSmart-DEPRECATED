@@ -44,7 +44,7 @@ Resources:
     Type: AWS::S3::BucketPolicy
   ScheduSmartFunction:
     Properties:
-      CodeUri: s3://schedusmart-api-source/ca8a5c70dbb7dafcf06d74b5de8aaeb6
+      CodeUri: s3://schedusmart-api-source/94d155a19cdc5f4afebcf4743e1d9eb2
       Events:
         GetResource:
           Properties:
