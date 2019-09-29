@@ -11,5 +11,5 @@ aws cloudformation package --template-file template/sam.yaml --output-template-f
 aws cloudformation deploy --template-file template/output-sam.yaml --stack-name ScheduSmartApi --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset
 
 echo "stackData = '$(aws cloudformation describe-stacks --stack-name ScheduSmartApi | sed 's/ //g' | tr '\n' ' ')'" > src/main/resources/public/assets/config/stack.js
-aws s3 cp src/main/resources/public/ s3://schedusmart-web/ --recursive
+aws s3 cp src/main/resources/public/ s3://www.schedusmart.com/ --recursive
 

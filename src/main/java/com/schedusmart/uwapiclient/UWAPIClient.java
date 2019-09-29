@@ -18,8 +18,8 @@ import java.util.*;
 @Slf4j
 public class UWAPIClient {
 	
-	private static String BASE_URL;// = "https://api.uwaterloo.ca/v2/terms";
-	private static String API_KEY;// = "e2bb5103ef385e98bd6a2c004b4e15b0";
+	private static String BASE_URL;
+	private static String API_KEY;
 
 	// load UW API base url and api key from private/config.properties
 	static {

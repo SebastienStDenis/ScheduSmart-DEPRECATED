@@ -5,10 +5,11 @@ import com.schedusmart.schedulebuilder.Term;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.fail;
 
-// These aren't really a JUnit tests, more like helpers for manually testing the Client
+// These aren't really JUnit tests, more like helpers for manually testing the Client
 public class UWAPIClientTest {
 
 	@Test
