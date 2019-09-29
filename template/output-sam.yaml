@@ -44,7 +44,7 @@ Resources:
     Type: AWS::S3::BucketPolicy
   ScheduSmartFunction:
     Properties:
-      CodeUri: s3://schedusmart-api-source/686ace98d5e21ada89fb6fec90def173
+      CodeUri: s3://schedusmart-api-source/ca8a5c70dbb7dafcf06d74b5de8aaeb6
       Events:
         GetResource:
           Properties:
@@ -61,7 +61,7 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       AccessControl: PublicRead
-      BucketName: schedusmart-web
+      BucketName: www.schedusmart.com
       WebsiteConfiguration:
         ErrorDocument: index.html
         IndexDocument: index.html

@@ -21,7 +21,7 @@ Resources:
   ScheduSmartWebBucket:
       Type: 'AWS::S3::Bucket'
       Properties:
-        BucketName: schedusmart-web
+        BucketName: www.schedusmart.com
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html

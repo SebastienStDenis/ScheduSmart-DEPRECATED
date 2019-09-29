@@ -29,9 +29,9 @@ public class BuilderTest {
 		int schedsLen = scheds.size();
 
 
-		//for (int pos = 0; pos < schedsLen; ++pos) {
-		//	System.out.println(scheds.get(pos));
-		//}
+		for (int pos = 0; pos < schedsLen; ++pos) {
+			//System.out.println(scheds.get(pos));
+		}
 		//System.out.println(schedsLen);
 	}
 
